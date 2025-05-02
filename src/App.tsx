@@ -1,6 +1,9 @@
 import { Helmet } from 'react-helmet';
+import { RouterProvider } from 'react-router-dom';
 import './App.css';
+import { createAppRouter } from './lib/routing';
 
+const router = createAppRouter();
 function App() {
   return (
     <>
@@ -12,9 +15,7 @@ function App() {
           content="World of Minifigs Builder - Create Your Custom Minifigs"
         />
       </Helmet>
-
-      <h1>World of Minifigs</h1>
-      <p>mini-figs.</p>
+      <RouterProvider router={router} />
     </>
   );
 }
