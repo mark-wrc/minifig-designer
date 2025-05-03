@@ -6,7 +6,7 @@ const PageLayout = memo(() => (
     <main>
       <Outlet />
     </main>
-    <footer>© 2025 My fucking app</footer>
+    <footer className="text-red-500">© 2025 My fucking app</footer>
   </>
 ));
 
