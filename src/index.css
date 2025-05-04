@@ -41,8 +41,11 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Color Palette */ 
-  --color-sunny: oklch(0.88 0.1579 94.4);   /* can use this url https://oklch.com to convert hex to oklch */
+  /* Color Palette */
+  --color-sunny: oklch(
+    0.88 0.1579 94.4
+  ); /* can use this url https://oklch.com to convert hex to oklch */
+  --color-minifig-lavander-blue: oklch(0.48 0.0618 252.37);
 }
 
 :root {
@@ -114,9 +117,18 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+#root {
+  all: unset;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#body {
+  @apply bg-minifig-lavander-blue;
+}
+
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50 m-0 p-0;
   }
   body {
     @apply bg-background text-foreground;

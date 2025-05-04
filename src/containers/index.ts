@@ -1,1 +1,2 @@
-export * from './MInifigBuilderSection';
+export * from './MinifigBuilderSection';
+export * from './CategorySection';

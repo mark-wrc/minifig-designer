@@ -1,5 +1,5 @@
 const MinifigBuilderSection = () => {
-  return <div>test</div>;
+  return <div>asdasd</div>;
 };
 
 export default MinifigBuilderSection;

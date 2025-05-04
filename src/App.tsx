@@ -15,6 +15,7 @@ function App() {
           content="World of Minifigs Builder - Create Your Custom Minifigs"
         />
       </Helmet>
+
       <RouterProvider router={router} />
     </>
   );

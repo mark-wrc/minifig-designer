@@ -6,3 +6,9 @@ export enum IFigureCategories {
   Display = 'Display',
   Extras = 'Extras',
 }
+
+export interface ICategoryItem {
+  id: string;
+  title: IFigureCategories;
+  image: string;
+}

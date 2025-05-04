@@ -1,9 +1,8 @@
-import { IFigureCategories } from '@/types/FigureCategories';
+import { ICategoryItem, IFigureCategories } from '@/types/FigureCategories';
 
 export interface CategorySelectorProps {
-  onClick: (category: string) => void;
+  onClick: (category: IFigureCategories) => void;
   className?: string;
-  categories: IFigureCategories;
-  selectedCategory: string;
-  children?: React.ReactNode;
+  item: ICategoryItem;
+  isSelected?: boolean;
 }

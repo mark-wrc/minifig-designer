@@ -2,9 +2,14 @@ import { memo } from 'react';
 import { CategorySelectorProps } from './CategorySelector.types';
 import { cn } from '@/lib/utils';
 
-const Category = memo<CategorySelectorProps>(({ children, className }) => (
-  <div className={cn(' bg-gray-300', className)}>{children}</div>
+const CategorySelector = memo<CategorySelectorProps>(({ className, onClick, item }) => (
+  <div onClick={() => onClick(item.title)} className={cn(' bg-sunny', className)}>
+    <div>
+      <img src={item.image} className="w-full" />
+    </div>
+    <span className="text-black">{item.title}</span>
+  </div>
 ));
-Category.displayName = 'Category';
+CategorySelector.displayName = 'CategorySelector';
 
-export default Category;
+export default CategorySelector;
