@@ -49,6 +49,10 @@ const CategorySection = () => {
 
   return (
     <section className=" container mx-auto m-10">
+      <header className="mb-5 text-center">
+        <h1 className="text-4xl text-white font-bold">CREATE YOUR OWN</h1>
+        <h3 className="font-bold text-white">START BUILDING</h3>
+      </header>
       <div className="flex gap-4 flex-wrap mx-auto justify-center rounded-3xl ">
         {categories.map((category) => (
           <CategorySelector
