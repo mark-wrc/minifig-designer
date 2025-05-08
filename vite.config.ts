@@ -20,9 +20,9 @@ export default defineConfig({
     }),
   ],
 
-  server: {
-    port: 3001, //placeholder:Port for the main app
-  },
+  // server: {
+  //   port: 3000,
+  // },
   build: {
     modulePreload: false,
     target: 'esnext',

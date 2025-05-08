@@ -3,7 +3,10 @@ import { CategorySelectorProps } from './CategorySelector.types';
 import { cn } from '@/lib/utils';
 
 const CategorySelector = memo<CategorySelectorProps>(({ className, onClick, item }) => (
-  <div onClick={() => onClick(item.title)} className={cn(' bg-sunny', className)}>
+  <div
+    onClick={() => onClick(item.title)}
+    className={cn(' bg-sunny cursor-pointer hover:bg-yellow-500', className)}
+  >
     <div>
       <img src={item.image} className="w-full" />
     </div>
