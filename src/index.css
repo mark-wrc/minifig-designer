@@ -42,11 +42,11 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   /* Color Palette */
-  --color-sunny: oklch(
-    0.88 0.1579 94.4
-  ); /* can use this url https://oklch.com to convert hex to oklch */
+  --color-sunny: oklch(0.88 0.1579 94.4);
   --color-minifig-lavander-blue: oklch(0.48 0.0618 252.37);
+  --color-soft-gray: oklch(0.94 0 0);
 
+  /* Fonts */
   --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
 }
 
