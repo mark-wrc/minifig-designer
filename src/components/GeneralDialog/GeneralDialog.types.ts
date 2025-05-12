@@ -7,6 +7,4 @@ export interface IGeneralDialogProps {
   className?: string;
   disableClickOutside?: boolean;
   disableEscapeKey?: boolean;
-  title?: string;
-  description?: string;
 }

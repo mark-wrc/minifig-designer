@@ -11,8 +11,6 @@ const GeneralDialog = memo<IGeneralDialogProps>(
     children,
     disableClickOutside = false,
     disableEscapeKey = true,
-    title,
-    description,
   }) => (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
@@ -34,8 +32,6 @@ const GeneralDialog = memo<IGeneralDialogProps>(
             }
           }}
         >
-          <Dialog.Title>{title}</Dialog.Title>
-          <Dialog.Description>{description}</Dialog.Description>
           {children}
         </Dialog.Content>
       </Dialog.Portal>
