@@ -1,25 +1,42 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
-// interface ErrorResponse {
-//   code?: number;
-//   message?: string;
-// }
+interface ErrorResponse {
+  code?: number;
+  message?: string;
+}
 
-export const instance = axios.create({
-  baseURL: 'https://api-test',
+export const axiosInstance = axios.create({
+  baseURL: '/api/v1',
   headers: {
     'Content-Type': 'application/json',
+    Accept: 'application/json',
   },
+  withCredentials: true,
 });
 
-// instance.interceptors.response.use(
-//   async (response) => response,
-//   async (error: AxiosError<ErrorResponse>) => {
-//     if (error.response?.status === 401) {
-//       localStorage.removeItem('token');
-//       localStorage.removeItem('user');
-//       window.location.href = '/login';
-//     }
-//     return Promise.reject(error);
-//   },
-// );
+axiosInstance.interceptors.request.use(
+  (config) => {
+    console.log('Request:', {
+      url: config.url,
+      method: config.method,
+      data: config.data,
+    });
+    return config;
+  },
+  (error) => {
+    console.error('Request Error:', error);
+    return Promise.reject(error);
+  },
+);
+
+axiosInstance.interceptors.response.use(
+  async (response) => response,
+  async (error: AxiosError<ErrorResponse>) => {
+    const errorResponse = error.response?.data;
+    return Promise.reject({
+      status: error.response?.status,
+      code: errorResponse?.code,
+      message: errorResponse?.message || error.message,
+    });
+  },
+);

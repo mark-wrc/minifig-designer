@@ -1,16 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { persistStore } from 'redux-persist';
-// import rootReducer from './rootReducer';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage/session';
+import rootReducer from './rootReducer';
 
-// const persistConfig = {
-//   key: 'root',
-//   storage: sessionStorage,
-// };
+const persistConfig = {
+  key: 'root',
+  storage,
+  whiteList: ['minifigBuilder'],
+};
 
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {},
+  reducer: persistedReducer,
   middleware: (getdefaultMiddleware) =>
     getdefaultMiddleware({
       serializableCheck: {
@@ -21,5 +23,5 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-export type Appdispatch = typeof store.dispatch;
-export type AppStore = typeof store;
+export type RootState = ReturnType<typeof store.getState>;
+export default rootReducer;

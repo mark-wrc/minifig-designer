@@ -21,8 +21,15 @@ export default defineConfig({
   ],
 
   server: {
-    port: 3000,
+    proxy: {
+      '/api/v1': {
+        target: 'http://localhost:4001',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
+
   build: {
     modulePreload: false,
     target: 'esnext',
