@@ -4,4 +4,7 @@ export * from './ColorPicker';
 export * from './CategorySelector';
 export * from './PageLayout';
 export * from './MinifigPart';
+export * from './GeneralDialog';
+export * from './GeneralDialogTitle';
+export * from './GeneralDialogDescription';
 export * from './CreateMinifigModal';
