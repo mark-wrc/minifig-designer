@@ -1,8 +1,13 @@
-import { MinifigPart, MinifigPartType } from '@/types';
+import { MinifigPartType } from '@/types';
 
 export interface IMinifigCanvasProps {
   projectTitle?: string;
-  bodyParts?: Partial<Record<MinifigPartType, MinifigPart>>;
+  bodyParts: {
+    [key in MinifigPartType]?: {
+      image: string;
+      type: MinifigPartType;
+    };
+  };
   onPartClick?: (type: MinifigPartType) => void;
   onTitleEdit?: () => void;
   onSkinChange?: () => void;

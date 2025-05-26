@@ -1,5 +1,4 @@
 export enum MinifigPartType {
-  HATS_AND_HAIR = 'HATS_AND_HAIR',
   HEAD = 'HEAD',
   TORSO = 'TORSO',
   LEGS = 'LEGS',
@@ -7,7 +6,6 @@ export enum MinifigPartType {
 }
 
 export interface MinifigPart {
-  id: string;
   type: MinifigPartType;
   image: string;
   selected?: boolean;

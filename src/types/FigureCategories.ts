@@ -1,3 +1,5 @@
+import { MinifigPartType } from './MinifigActions';
+
 export enum IFigureCategories {
   HatsAndHair = 'Hats and Hair',
   Head = 'Head',
@@ -11,4 +13,5 @@ export interface ICategoryItem {
   id: string;
   title: IFigureCategories;
   image: string;
+  type?: MinifigPartType;
 }

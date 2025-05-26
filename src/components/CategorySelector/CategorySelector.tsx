@@ -2,17 +2,18 @@ import { memo } from 'react';
 import { CategorySelectorProps } from './CategorySelector.types';
 import { cn } from '@/lib/utils';
 
-const CategorySelector = memo<CategorySelectorProps>(({ className, onClick, item }) => (
-  <div
-    onClick={() => onClick(item.title)}
-    className={cn(' bg-sunny cursor-pointer hover:bg-yellow-500', className)}
-  >
-    <div>
-      <img src={item.image} className="w-full" />
+const CategorySelector = memo<CategorySelectorProps>(({ className, onClick, item }) => {
+  return (
+    <div
+      onClick={() => item.type && onClick(item.type)}
+      className={cn(' bg-sunny cursor-pointer hover:bg-yellow-500 text-center', className)}
+    >
+      <div>
+        <img src={item.image} alt={item.title} className="w-28" />
+      </div>
     </div>
-    <span className="text-black">{item.title}</span>
-  </div>
-));
+  );
+});
 CategorySelector.displayName = 'CategorySelector';
 
 export default CategorySelector;

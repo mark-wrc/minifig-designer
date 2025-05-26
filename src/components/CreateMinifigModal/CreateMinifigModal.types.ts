@@ -1,5 +1,6 @@
-import React from 'react';
-
 export interface ICreateMinifigModalProps {
-  children?: React.ReactNode;
+  initialProjectName?: string;
+  onClose?: () => void;
+  mode?: 'create' | 'edit';
+  characterId?: string;
 }

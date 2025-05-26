@@ -1,5 +1,5 @@
 import { RootState } from '@/store';
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tabs, TabsList } from '../ui/tabs';
 import { TabsTrigger } from '@radix-ui/react-tabs';
@@ -15,6 +15,8 @@ const MinifigTabs = memo(() => {
   );
   const dispatch = useDispatch();
 
+  const [showModal, setShowModal] = useState(false);
+
   const handleDeleteCharacter = useCallback(
     (id: string, e: React.MouseEvent) => {
       e.stopPropagation();
@@ -24,7 +26,7 @@ const MinifigTabs = memo(() => {
   );
 
   return (
-    <div className=" w-full flex border-2 border-red-300 border-solid">
+    <div className=" w-full flex py-4">
       <Tabs
         value={activeCharacterId || undefined}
         onValueChange={(value) => dispatch(setActiveMinifigure(value))}
@@ -56,7 +58,11 @@ const MinifigTabs = memo(() => {
           ))}
         </TabsList>
       </Tabs>
-      <CreateMinifigModal />
+      <Button className=" cursor-pointer" onClick={() => setShowModal(true)}>
+        Create New Project
+      </Button>
+
+      {showModal && <CreateMinifigModal mode="create" onClose={() => setShowModal(false)} />}
     </div>
   );
 });

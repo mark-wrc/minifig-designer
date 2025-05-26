@@ -1,9 +1,11 @@
+import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
+import { DummyParts, MinifigPartData } from '@/constants/DummyParts';
+import { MinifigPartType } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Character {
   id: string;
   name: string;
-  hatsAndHair: string;
   head: string;
   torso: string;
   legs: string;
@@ -13,27 +15,31 @@ interface Character {
 interface MinifigBuilderState {
   characters: Character[];
   activeCharacterId: string | null;
+  wardrobeItems: MinifigPartData[];
+  selectedCategory: MinifigPartType | null;
 }
 
 const createEmptyCharacter = (name: string): Character => ({
   id: crypto.randomUUID(),
   name,
-  hatsAndHair: '',
-  head: '',
-  torso: '',
-  legs: '',
-  accessories: '',
+  head: BaseMinifigParts[MinifigPartType.HEAD].image,
+  torso: BaseMinifigParts[MinifigPartType.TORSO].image,
+  legs: BaseMinifigParts[MinifigPartType.LEGS].image,
+  accessories: BaseMinifigParts[MinifigPartType.ACCESSORIES].image,
 });
 
 const initialState: MinifigBuilderState = {
   characters: [],
   activeCharacterId: null,
+  wardrobeItems: [],
+  selectedCategory: null,
 };
 
 const minifigBuilderSlice = createSlice({
   name: 'minifigBuilder',
   initialState,
   reducers: {
+    // Create Minigure Tab
     createMinifigure: (state, action: PayloadAction<string>) => {
       const newMinifigure = createEmptyCharacter(action.payload);
       if (!state.characters) {
@@ -42,15 +48,48 @@ const minifigBuilderSlice = createSlice({
       state.characters.push(newMinifigure);
       state.activeCharacterId = newMinifigure.id;
     },
+
+    // For category Section
+    setSelectedCategory: (state, action: PayloadAction<MinifigPartType>) => {
+      state.selectedCategory = action.payload;
+      state.wardrobeItems = DummyParts[action.payload];
+    },
+
+    // Selected Minifigure part usecase: fetch minifig parts
+    setSelectedPart: (state, action: PayloadAction<MinifigPartData>) => {
+      const character = state.characters.find((char) => char.id === state.activeCharacterId);
+      if (!character) return;
+
+      const { type, image } = action.payload;
+      // If no payload or image, revert to placeholder
+      if (!image) {
+        character[type.toLowerCase() as keyof Character] = BaseMinifigParts[type].image;
+        return;
+      }
+      character[type.toLowerCase() as keyof Character] = image;
+    },
+
     setActiveMinifigure: (state, action: PayloadAction<string>) => {
       state.activeCharacterId = action.payload;
     },
+
+    // Delete Minifigure Tab
     deleteMinifigure: (state, action: PayloadAction<string>) => {
       state.characters = state.characters.filter((char) => char.id != action.payload);
 
       if (state.activeCharacterId === action.payload) {
         state.activeCharacterId = state.characters.length > 0 ? state.characters[0].id : null;
       }
+    },
+
+    // Remove Cetain Minifure Parts eg. HEAD or COCK
+    removePart: (state, action: PayloadAction<MinifigPartType>) => {
+      const character = state.characters.find((char) => char.id === state.activeCharacterId);
+      if (!character) return;
+
+      const partType = action.payload.toLowerCase() as keyof Character;
+      // reset to base/placeholder image
+      character[partType] = BaseMinifigParts[action.payload].image;
     },
 
     renameCharacter: (state, action: PayloadAction<{ id: string; name: string }>) => {
@@ -60,12 +99,6 @@ const minifigBuilderSlice = createSlice({
       }
     },
 
-    setHatsAndHair: (state, action: PayloadAction<string>) => {
-      const activeCharacter = state.characters.find((char) => char.id === state.activeCharacterId);
-      if (activeCharacter) {
-        activeCharacter.hatsAndHair = action.payload;
-      }
-    },
     setHead: (state, action: PayloadAction<string>) => {
       const activeCharacter = state.characters.find((char) => char.id === state.activeCharacterId);
       if (activeCharacter) {
@@ -90,6 +123,8 @@ const minifigBuilderSlice = createSlice({
         activeCharacter.accessories = action.payload;
       }
     },
+
+    // for debug purpose
     resetBuilder: (state) => {
       state.characters = [];
       state.activeCharacterId = null;
@@ -102,12 +137,14 @@ export const {
   setActiveMinifigure,
   deleteMinifigure,
   renameCharacter,
-  setHatsAndHair,
   setHead,
   setTorso,
   setLegs,
   setAccessories,
   resetBuilder,
+  setSelectedPart,
+  setSelectedCategory,
+  removePart,
 } = minifigBuilderSlice.actions;
 
 export default minifigBuilderSlice.reducer;

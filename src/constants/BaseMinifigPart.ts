@@ -4,7 +4,7 @@ import { DefaultHead, DefaultTorso, DefaultLegs } from '@/assets/images';
 export const BaseMinifigParts = {
   [MinifigPartType.HEAD]: {
     id: 'placeholder',
-    type: MinifigPartType.HATS_AND_HAIR,
+    type: MinifigPartType.HEAD,
     image: DefaultHead,
     isPlaceholder: true,
   },

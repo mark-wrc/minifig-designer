@@ -1,30 +1,56 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { IMinifigCanvasProps } from './MinifigCanvas.types';
 import { MinifigPartType } from '@/types';
 import { MinifigPart } from '../MinifigPart';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { renameCharacter } from '@/store/minifigBuilder/minifigBuilderSlice';
+import { setSelectedPart } from '@/store/minifigBuilder/minifigBuilderSlice';
+import { MinifigPartData } from '@/constants/DummyParts';
+import { CreateMinifigModal } from '../CreateMinifigModal';
 
 const MinifigCanvas = memo<IMinifigCanvasProps>(({ bodyParts }) => {
   const dispatch = useDispatch();
-
-  const { characters, activeCharacterId } = useSelector(
+  const wardrobeRef = useRef<HTMLDivElement>(null);
+  const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
+  const [showModal, setShowModal] = useState(false);
+  const { characters, activeCharacterId, wardrobeItems, selectedCategory } = useSelector(
     (state: RootState) => state.minifigBuilder,
   );
 
   const activeCharacter = characters.find((char) => char.id === activeCharacterId);
 
-  const handleTitleEdit = useCallback(() => {
-    const newTitle = prompt('Enter new title:', activeCharacter?.name);
-    if (newTitle?.trim() && activeCharacter?.id) {
-      dispatch(renameCharacter({ id: activeCharacter.id, name: newTitle.trim() }));
-    }
-  }, [activeCharacter?.id, activeCharacter?.name, dispatch]);
+  // ref: https://www.javascripttutorial.net/javascript-dom/javascript-scrollintoview/
+  useEffect(() => {
+    if (selectedCategory && wardrobeRef.current)
+      wardrobeRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+  }, [selectedCategory]);
 
-  if (!activeCharacter) {
-    return <div>Create a new Project to start Building</div>;
-  }
+  const handleTitleEdit = useCallback(() => {
+    if (!activeCharacter) return;
+    setModalMode('edit');
+    setShowModal(true);
+  }, [activeCharacter]);
+
+  const handleCategoryClick = useCallback(
+    (item: MinifigPartData) => {
+      if (characters.length === 0) {
+        setShowModal(true);
+        setModalMode('create');
+        return;
+      }
+
+      dispatch(setSelectedPart(item));
+    },
+    [characters.length, dispatch],
+  );
+
+  const handleCloseModal = useCallback(() => {
+    setShowModal(false);
+    setModalMode('create');
+  }, []);
 
   return (
     <div className=" flex  h-full w-full p-6 gap-4">
@@ -32,7 +58,7 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ bodyParts }) => {
 
       <section className="flex-1/2">
         <header className="flex flex-col mb-10 ">
-          <h3 className=' text-center font-black'>{activeCharacter.name}</h3>
+          <h3 className=" text-center font-black">{activeCharacter?.name}</h3>
 
           <button className=" underline" onClick={handleTitleEdit}>
             <span>Edit Project Title</span>
@@ -53,7 +79,31 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ bodyParts }) => {
       </section>
 
       {/* Wardrobe section */}
-      <section className="w-full border-solid border-blue-300 border-2">test</section>
+      <section ref={wardrobeRef} className="w-full border-solid border-blue-300 border-2">
+        {
+          <div className="flex flex-col gap-4">
+            {wardrobeItems?.map((item) => (
+              <div
+                key={item.id}
+                className="w-fit p-4 cursor-pointer"
+                onClick={() => handleCategoryClick(item)}
+              >
+                <img className=" w-28" src={item.image} alt={item.name} />
+                <p>{item.name} </p>
+              </div>
+            ))}
+          </div>
+        }
+
+        {showModal && (
+          <CreateMinifigModal
+            initialProjectName={modalMode === 'edit' ? activeCharacter?.name : ''}
+            characterId={modalMode == 'edit' ? activeCharacter?.id : undefined}
+            mode={modalMode}
+            onClose={handleCloseModal}
+          />
+        )}
+      </section>
     </div>
   );
 });

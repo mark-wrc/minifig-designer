@@ -1,8 +1,10 @@
-import { ICategoryItem, IFigureCategories } from '@/types/FigureCategories';
+import { MinifigPartType } from '@/types';
+import { ICategoryItem } from '@/types/FigureCategories';
 
 export interface CategorySelectorProps {
-  onClick: (category: IFigureCategories) => void;
+  onClick: (category: MinifigPartType) => void;
   className?: string;
   item: ICategoryItem;
   isSelected?: boolean;
+  type?: MinifigPartType;
 }
