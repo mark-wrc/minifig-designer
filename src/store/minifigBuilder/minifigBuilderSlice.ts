@@ -56,6 +56,7 @@ const minifigBuilderSlice = createSlice({
     },
 
     // Selected Minifigure part usecase: fetch minifig parts
+    // NOTE: this reducer is for test only
     setSelectedPart: (state, action: PayloadAction<MinifigPartData>) => {
       const character = state.characters.find((char) => char.id === state.activeCharacterId);
       if (!character) return;
@@ -82,7 +83,7 @@ const minifigBuilderSlice = createSlice({
       }
     },
 
-    // Remove Cetain Minifure Parts eg. HEAD or COCK
+    // Remove Certain Minifure Parts eg. HEAD, COCK and etc..
     removePart: (state, action: PayloadAction<MinifigPartType>) => {
       const character = state.characters.find((char) => char.id === state.activeCharacterId);
       if (!character) return;

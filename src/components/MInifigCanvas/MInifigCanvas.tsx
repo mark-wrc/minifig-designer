@@ -95,6 +95,8 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ bodyParts }) => {
           </div>
         }
 
+        {/* Modal section */}
+
         {showModal && (
           <CreateMinifigModal
             initialProjectName={modalMode === 'edit' ? activeCharacter?.name : ''}
