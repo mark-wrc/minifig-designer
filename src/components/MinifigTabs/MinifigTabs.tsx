@@ -10,9 +10,10 @@ import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const MinifigTabs = memo(() => {
-  const { characters, activeCharacterId } = useSelector(
-    (state: RootState) => state.minifigBuilder,
+  const { characters = [], activeCharacterId = null } = useSelector(
+    (state: RootState) => state.minifigBuilder || { characters: [], activeCharacterId: null },
   );
+
   const dispatch = useDispatch();
 
   const [showModal, setShowModal] = useState(false);
@@ -26,29 +27,29 @@ const MinifigTabs = memo(() => {
   );
 
   return (
-    <div className=" w-full flex py-4">
+    <div className=" w-full flex  py-4">
       <Tabs
         value={activeCharacterId || undefined}
         onValueChange={(value) => dispatch(setActiveMinifigure(value))}
         className="flex-1"
       >
-        <TabsList className="w-full h-full flex overflow-x-auto ">
+        <TabsList className="w-full h-full flex gap-2  justify-baseline px-2 overflow-x-auto ">
           {characters.map((character) => (
             <TabsTrigger
               className={cn(
-                'flex items-center justify-between px-4 py-2 relative group cursor-pointer',
+                'flex items-center gap-4 px-4 py-2 relative group cursor-pointer border-1',
                 activeCharacterId === character.id && 'bg-gray-300',
               )}
               key={character.id}
               value={character.id}
             >
-              <span className="mr-6">{character.name}</span>
+              <div className=" flex flex-row justify-center items-center">
+                <span className="mr-6">{character.name}</span>
 
-              <div className="">
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-5 w-5 text-destructive"
+                  className="h-5 w-5 cursor-pointer"
                   onClick={(e) => handleDeleteCharacter(character.id, e)}
                 >
                   <X className=" h-3 w-3" />

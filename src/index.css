@@ -45,6 +45,7 @@
   --color-sunny: oklch(0.88 0.1579 94.4);
   --color-minifig-lavander-blue: oklch(0.48 0.0618 252.37);
   --color-soft-gray: oklch(0.94 0 0);
+  --color-minifig-brand-end: oklch(0.3886 0.0498 254.4);
 
   /* Fonts */
   --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;

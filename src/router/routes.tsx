@@ -1,4 +1,4 @@
-import { PageLayout } from '@/components';
+import { PageLayout } from '@/layout';
 import Home from '@/pages/Home';
 import { RouteObject } from 'react-router-dom';
 

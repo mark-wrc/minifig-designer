@@ -49,15 +49,15 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
 
     return (
       <Dialog open={true} onOpenChange={() => onClose?.()}>
-        <DialogContent>
+        <DialogContent className="p-12">
           <form onSubmit={handleSubmit}>
             <DialogHeader className="flex justify-center items-center">
               <DialogTitle className=" font-black text-3xl">START YOUR BUILD</DialogTitle>
             </DialogHeader>
 
             <section className="flex flex-col justify-center items-center gap-4">
-              <sub className="my-4">
-                {mode === 'create' ? 'Name your Project' : 'Enter new name'}
+              <sub className="my-4 text-lg">
+                {mode === 'create' ? 'Name your Project' : 'Enter new name  '}
               </sub>
 
               <Input
@@ -66,16 +66,22 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
                 placeholder="Project name e.g. Willy ong"
                 onChange={handleInputChange}
                 autoFocus
-                className={cn(showError && 'border-red-500 focus:border-red-500', 'text-center')}
+                className={cn(
+                  showError && 'border-red-500 focus:border-red-500 ',
+                  'text-center py-6',
+                )}
               />
 
               {showError && <p className="text-red-500 text-sm">Please enter a project name</p>}
             </section>
 
             <DialogFooter className="mt-4">
-              <Button className="cursor-pointer" type="submit">
-                Save & Start Building
-              </Button>
+              <div className="relative inline-block">
+                <div className="absolute inset-0 bg-yellow-500" />
+                <Button className=" cursor-pointer text-lg relative bg-yellow-400 hover:bg-yellow-500 translate-x-1 translate-y-1 text-black font-bold  py-6 px-6 rounded-none transition-transform hover:translate-x-0 hover:translate-y-0">
+                  Save & Start Building
+                </Button>
+              </div>
             </DialogFooter>
           </form>
         </DialogContent>

@@ -8,14 +8,16 @@ import { setSelectedPart } from '@/store/minifigBuilder/minifigBuilderSlice';
 import { MinifigPartData } from '@/constants/DummyParts';
 import { CreateMinifigModal } from '../CreateMinifigModal';
 
-const MinifigCanvas = memo<IMinifigCanvasProps>(({ bodyParts }) => {
+const MinifigCanvas = memo<IMinifigCanvasProps>(({ bodyParts, wardrobeItems }) => {
   const dispatch = useDispatch();
   const wardrobeRef = useRef<HTMLDivElement>(null);
   const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
   const [showModal, setShowModal] = useState(false);
-  const { characters, activeCharacterId, wardrobeItems, selectedCategory } = useSelector(
-    (state: RootState) => state.minifigBuilder,
-  );
+  const {
+    characters = [],
+    activeCharacterId = null,
+    selectedCategory = null,
+  } = useSelector((state: RootState) => state.minifigBuilder || {});
 
   const activeCharacter = characters.find((char) => char.id === activeCharacterId);
 

@@ -1,3 +1,4 @@
+import { MinifigPartData } from '@/constants/DummyParts';
 import { MinifigPartType } from '@/types';
 
 export interface IMinifigCanvasProps {
@@ -11,4 +12,5 @@ export interface IMinifigCanvasProps {
   onPartClick?: (type: MinifigPartType) => void;
   onTitleEdit?: () => void;
   onSkinChange?: () => void;
+  wardrobeItems?: MinifigPartData[];
 }

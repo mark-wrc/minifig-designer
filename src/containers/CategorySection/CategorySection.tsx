@@ -2,48 +2,45 @@ import { CategorySelector } from '@/components';
 import { ICategoryItem, IFigureCategories } from '@/types/FigureCategories';
 import { useCallback, useMemo, useState } from 'react';
 import { DefaultHairAndHead, DefaultLegs, DefaultTorso } from '@/assets/images';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedCategory } from '@/store/minifigBuilder/minifigBuilderSlice';
 import { MinifigPartType } from '@/types';
+import { RootState } from '@/store';
 
 const CategorySection = () => {
   const [selectedMinifigCategory, setSelectedMinifigCategory] = useState<MinifigPartType | null>(
     null,
   );
+
+  const { activeCharacterId, characters = [] } = useSelector(
+    (state: RootState) => state.minifigBuilder,
+  );
   const dispatch = useDispatch();
+
+  const activeCharacter = characters.find((char) => char.id === activeCharacterId);
 
   const categories = useMemo<ICategoryItem[]>(
     () => [
       {
-        id: '1',
+        id: 1,
         title: IFigureCategories.Head,
-        image: DefaultHairAndHead,
+        image: activeCharacter?.head || DefaultHairAndHead,
         type: MinifigPartType.HEAD,
       },
       {
-        id: '2',
+        id: 2,
         title: IFigureCategories.Bodies,
-        image: DefaultLegs,
+        image: activeCharacter?.torso || DefaultTorso,
         type: MinifigPartType.TORSO,
       },
       {
-        id: '3',
+        id: 3,
         title: IFigureCategories.Legs,
-        image: DefaultTorso,
+        image: activeCharacter?.legs || DefaultLegs,
         type: MinifigPartType.LEGS,
       },
-      {
-        id: '4',
-        title: IFigureCategories.Display,
-        image: '/images/categories/display.png',
-      },
-      {
-        id: '5',
-        title: IFigureCategories.Extras,
-        image: '/images/categories/extras.png',
-      },
     ],
-    [],
+    [activeCharacter?.head, activeCharacter?.legs, activeCharacter?.torso],
   );
 
   const handleCategorySelect = useCallback(
@@ -57,8 +54,8 @@ const CategorySection = () => {
   return (
     <section className=" container mx-auto m-10">
       <header className="mb-5 text-center">
-        <h1 className="text-4xl text-white font-bold">CREATE YOUR OWN</h1>
-        <h3 className="font-bold text-white">START BUILDING</h3>
+        <h1 className="text-6xl text-white font-bold">CREATE YOUR OWN</h1>
+        <h3 className="font-bold text-white text-2xl">START BUILDING</h3>
       </header>
       <div className="flex gap-4 flex-wrap mx-auto justify-center rounded-3xl ">
         {categories.map((category) => (

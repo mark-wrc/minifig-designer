@@ -21,7 +21,7 @@ function App() {
       <PersistGate loading={<LoadingView />} persistor={persistor}>
         <HelmetProvider>
           <Helmet>
-            <title>My Vite App</title>
+            <title>Build Custom LEGO Minifigures | World of Minifigs</title>
             <meta name="description" content="World of Minifigs Builder." />
             <meta
               property="og:title"
