@@ -1,0 +1,47 @@
+export interface MinifigPart {
+  type: string;
+  image: string;
+  name: string;
+  stock: number;
+}
+
+// for creating a project
+export interface MinifigPartData {
+  id: string;
+  type: 'HEAD' | 'TORSO' | 'LEGS';
+  name: string;
+  description: string;
+  image: string;
+  price: number;
+}
+
+export interface IMinifigProject {
+  id: string;
+  name: string;
+  head: string;
+  torso: string;
+  legs: string;
+  selectedItems: {
+    head?: MinifigPartData;
+    torso?: MinifigPartData;
+    legs?: MinifigPartData;
+  };
+}
+
+export interface CustomPart extends MinifigPart {
+  price: number;
+}
+
+export interface MinfigProjectSummary {
+  project: IMinifigProject;
+  minifigPart: CustomPart[];
+  totalPrice: number;
+  hasCustomParts: boolean;
+}
+
+export interface CartSummary {
+  validProjects: number;
+  totalItems: number;
+  totalPrice: number;
+  projectSummaries: MinfigProjectSummary[];
+}

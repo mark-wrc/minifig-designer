@@ -19,6 +19,7 @@ const CategorySection = () => {
 
   const activeCharacter = characters.find((char) => char.id === activeCharacterId);
 
+  // TODO: needs to refactor this logic
   const categories = useMemo<ICategoryItem[]>(
     () => [
       {
@@ -29,7 +30,7 @@ const CategorySection = () => {
       },
       {
         id: 2,
-        title: IFigureCategories.Bodies,
+        title: IFigureCategories.Torso,
         image: activeCharacter?.torso || DefaultTorso,
         type: MinifigPartType.TORSO,
       },
@@ -63,7 +64,7 @@ const CategorySection = () => {
             <CategorySelector
               key={category.id}
               item={category}
-              className="rounded-sm  w-fit p-4  "
+              className="rounded-sm w-fit p-4"
               onClick={handleCategorySelect}
               isSelected={
                 selectedMinifigCategory === (category.title as unknown as MinifigPartType)

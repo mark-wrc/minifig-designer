@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start:dev": "vite",
+    "dev:sit": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint 'src/**/*.{js,ts,tsx}'",
     "prettier": "prettier --write '**/*.{js,ts,tsx}'",

@@ -129,6 +129,17 @@
   @apply bg-minifig-lavander-blue;
 }
 
+body,
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+body::-webkit-scrollbar,
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50 m-0 p-0;

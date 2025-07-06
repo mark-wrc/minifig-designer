@@ -1,14 +1,16 @@
 import React, { ChangeEvent, memo, useCallback, useEffect, useState } from 'react';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
+import { DialogContent, DialogFooter, DialogHeader } from '../ui/dialog';
 import { ICreateMinifigModalProps } from './CreateMinifigModal.types';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { useDispatch } from 'react-redux';
 import { createMinifigure, renameCharacter } from '@/store/minifigBuilder/minifigBuilderSlice';
 import { cn } from '@/lib/utils';
+import { GeneralDialog } from '../GeneralDialog';
+import { GeneralDialogTitle } from '../GeneralDialogTitle';
 
 const CreateMinifigModal = memo<ICreateMinifigModalProps>(
-  ({ onClose, initialProjectName, mode, characterId }) => {
+  ({ onClose, initialProjectName, mode, characterId, ...props }) => {
     const [projectName, setProjectName] = useState(initialProjectName);
     const [showError, setShowError] = useState(false);
     const dispatch = useDispatch();
@@ -48,11 +50,11 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
     );
 
     return (
-      <Dialog open={true} onOpenChange={() => onClose?.()}>
+      <GeneralDialog open={true} onOpenChange={() => onClose?.()} {...props}>
         <DialogContent className="p-12">
           <form onSubmit={handleSubmit}>
             <DialogHeader className="flex justify-center items-center">
-              <DialogTitle className=" font-black text-3xl">START YOUR BUILD</DialogTitle>
+              <GeneralDialogTitle className=" font-black text-3xl" title="START YOUR BUILD" />
             </DialogHeader>
 
             <section className="flex flex-col justify-center items-center gap-4">
@@ -85,7 +87,7 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
             </DialogFooter>
           </form>
         </DialogContent>
-      </Dialog>
+      </GeneralDialog>
     );
   },
 );

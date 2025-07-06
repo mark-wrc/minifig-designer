@@ -7,3 +7,5 @@ export * from './GeneralDialog';
 export * from './GeneralDialogTitle';
 export * from './GeneralDialogDescription';
 export * from './CreateMinifigModal';
+export * from './CartItem';
+export * from './Divider';

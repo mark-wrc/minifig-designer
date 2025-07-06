@@ -1,9 +1,9 @@
-import { MinifigPartData } from '@/constants/DummyParts';
-import { MinifigPartType } from '@/types';
+import type { MinifigPartType } from '@/types';
+import { MinifigPartData } from '@/types/Minifig';
 
 export interface IMinifigCanvasProps {
   projectTitle?: string;
-  bodyParts: {
+  minifigParts: {
     [key in MinifigPartType]?: {
       image: string;
       type: MinifigPartType;

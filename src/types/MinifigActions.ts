@@ -2,7 +2,6 @@ export enum MinifigPartType {
   HEAD = 'HEAD',
   TORSO = 'TORSO',
   LEGS = 'LEGS',
-  ACCESSORIES = 'ACCESSORIES',
 }
 
 export interface MinifigPart {

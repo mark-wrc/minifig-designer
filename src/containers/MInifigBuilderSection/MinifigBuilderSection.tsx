@@ -1,23 +1,40 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { MinifiCanvas } from '@/components';
 import { MinifigTabs } from '@/components/MinifigTabs';
+import { Button } from '@/components/ui/button';
 import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
-import { RootState } from '@/store';
+import type { RootState } from '@/store';
 import { MinifigPartType } from '@/types';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { MinifigBuilderCardPopupModal } from './components/MinifigBuilderCartPopupModal';
+import minifigPartsData from '@/api/dummyData.json';
 
 const MinifigBuilderSection = () => {
   const {
     characters = [],
     activeCharacterId,
-    wardrobeItems = [],
+    selectedCategory,
   } = useSelector(
-    (state: RootState) => state.minifigBuilder || { characters: [], activeCharacterId: null },
+    (state: RootState) =>
+      state.minifigBuilder || { characters: [], activeCharacterId: null, selectedCategory: null },
   );
 
   const activeCharacter = characters.find((char) => char.id === activeCharacterId);
+  const [openModal, setOpenModal] = useState(false);
 
-  const bodyParts = useMemo(
+  const wardrobeItems = useMemo(() => {
+    if (!selectedCategory) return [];
+    return (minifigPartsData[selectedCategory] || []).map((item: any) => ({
+      ...item,
+      type: item.type as MinifigPartType,
+    }));
+  }, [selectedCategory]);
+
+  // TODO: needs to refactor this logic
+
+  const minifigParts = useMemo(
     () => ({
       [MinifigPartType.HEAD]: {
         image: activeCharacter?.head || BaseMinifigParts[MinifigPartType.HEAD].image,
@@ -31,18 +48,27 @@ const MinifigBuilderSection = () => {
         image: activeCharacter?.legs || BaseMinifigParts[MinifigPartType.LEGS].image,
         type: MinifigPartType.LEGS,
       },
-      [MinifigPartType.ACCESSORIES]: {
-        image: activeCharacter?.accessories || BaseMinifigParts[MinifigPartType.ACCESSORIES].image,
-        type: MinifigPartType.ACCESSORIES,
-      },
     }),
     [activeCharacter],
   );
 
   return (
-    <section className=" bg-soft-gray container mx-auto rounded-2xl">
+    <section className="bg-soft-gray container mx-auto rounded-2xl p-4">
       <MinifigTabs />
-      <MinifiCanvas bodyParts={bodyParts} wardrobeItems={wardrobeItems} />
+
+      <MinifiCanvas minifigParts={minifigParts} wardrobeItems={wardrobeItems} />
+
+      <Button
+        className="flex justify-self-end cursor-pointer"
+        onClick={() => setOpenModal(true)}
+        disabled={!characters.length}
+      >
+        Add to cart ({characters.length} project{characters.length !== 1 ? 's' : ''})
+      </Button>
+
+      {openModal && characters && (
+        <MinifigBuilderCardPopupModal onclose={() => setOpenModal(false)} minifig={characters} />
+      )}
     </section>
   );
 };

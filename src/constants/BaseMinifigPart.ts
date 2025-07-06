@@ -20,10 +20,4 @@ export const BaseMinifigParts = {
     image: DefaultLegs,
     isPlaceholder: true,
   },
-  [MinifigPartType.ACCESSORIES]: {
-    id: 'placeholder',
-    type: MinifigPartType.ACCESSORIES,
-    image: '',
-    isPlaceholder: true,
-  },
 };

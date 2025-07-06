@@ -3,7 +3,7 @@ import { MinifigPartType } from './MinifigActions';
 export enum IFigureCategories {
   HatsAndHair = 'Hats and Hair',
   Head = 'Head',
-  Bodies = 'Bodies',
+  Torso = 'Torso',
   Legs = 'Legs',
   Display = 'Display',
   Extras = 'Extras',
