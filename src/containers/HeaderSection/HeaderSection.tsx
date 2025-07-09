@@ -1,0 +1,59 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { memo, useCallback, useState } from 'react';
+import { WOFLogo } from '@/assets/images';
+import { useAuth } from '@/hooks';
+import { ShoppingCart } from 'lucide-react';
+import { CartContainer } from './components/CartContainer';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { CircleUserRound } from 'lucide-react';
+
+const HeaderSection = memo(() => {
+  const { userName, logout } = useAuth();
+
+  const { projects } = useSelector((state: RootState) => state.MinifigBuilderCart);
+
+  const projectEntries = Object.entries(projects);
+
+  const [openCart, setOpenCart] = useState(false);
+
+  const handleToggleCart = useCallback(() => {
+    setOpenCart((prev) => !prev);
+  }, []);
+  return (
+    <section className="py-6">
+      <div className=" w-full flex justify-between align-middle px-4 fixed z-50 bg-minifig-brand-end top-0 py-4 ">
+        <img src={WOFLogo} className=" w-[100px] md:w-1/12 " alt="world of minifigs logo" />
+        <section className="flex items-center gap-4">
+          <div
+            className=" cursor-pointer relative  bg-transparent hover:bg-white/10"
+            onClick={handleToggleCart}
+          >
+            <div className=" bg-red-500 rounded-full w-5 h-5 text-center flex flex-col align-middle justify-center text-white font-semibold absolute -top-2 -right-2">
+              {projectEntries.length}
+            </div>
+            <ShoppingCart color="white" size={24} />
+          </div>
+          <div className=" cursor-pointer">
+            {userName ? (
+              <span className=" flex flex-col gap-4">
+                <span className=" text-white font-bold">{userName}</span>
+                {/* <Button className=" cursor-pointer" onClick={logout}>
+                    logout
+                  </Button> */}
+              </span>
+            ) : (
+              <CircleUserRound size={24} color="white" />
+            )}
+          </div>
+        </section>
+      </div>
+
+      {openCart && <CartContainer onclose={handleToggleCart} />}
+    </section>
+  );
+});
+
+HeaderSection.displayName = 'HeaderSection';
+
+export default HeaderSection;
