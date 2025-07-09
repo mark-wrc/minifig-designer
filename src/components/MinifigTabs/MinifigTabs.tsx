@@ -27,7 +27,7 @@ const MinifigTabs = memo(() => {
   );
 
   return (
-    <div className=" w-full flex  py-4">
+    <div className=" w-full flex  flex-wrap py-4  border-b-2 border-b-black">
       <Tabs
         value={activeCharacterId || undefined}
         onValueChange={(value) => dispatch(setActiveMinifigure(value))}
@@ -59,7 +59,10 @@ const MinifigTabs = memo(() => {
           ))}
         </TabsList>
       </Tabs>
-      <Button className=" cursor-pointer" onClick={() => setShowModal(true)}>
+      <Button
+        className="bg-yellow-500 cursor-pointer hover:bg-yellow-600 font-bold"
+        onClick={() => setShowModal(true)}
+      >
         Create New Project
       </Button>
 

@@ -18,7 +18,8 @@ const CartItem = memo<ICartItemProps>(({ projectName, data }) => {
     [dispatch],
   );
 
-  const updateQuantity = (id: string, change: number) => {
+  // https://www.shadcn-ui-blocks.com/blocks/shopping-cart
+  const updateQuantity = useCallback((id: string, change: number) => {
     setCartItems((prev) =>
       prev.map((item) => {
         if (item.id === id) {
@@ -28,7 +29,7 @@ const CartItem = memo<ICartItemProps>(({ projectName, data }) => {
         return item;
       }),
     );
-  };
+  }, []);
 
   return (
     <>
@@ -39,6 +40,7 @@ const CartItem = memo<ICartItemProps>(({ projectName, data }) => {
               <img src={item.partImage} className="w-32 rounded-sm" alt={item.partName} />
               <div className="flex flex-col">
                 <h3>{item.partName}</h3>
+                <p>{item.partType}</p>
                 <p>{item.price}</p>
               </div>
             </div>
@@ -51,11 +53,11 @@ const CartItem = memo<ICartItemProps>(({ projectName, data }) => {
                 <Trash2 />
               </span>
               <div className="flex items-center gap-4">
-                <Button onClick={() => updateQuantity(item.id, -1)}>
+                <Button className="cursor-pointer" onClick={() => updateQuantity(item.id, -1)}>
                   <Minus />
                 </Button>
                 {item.quantity}
-                <Button onClick={() => updateQuantity(item.id, 1)}>
+                <Button className="cursor-pointer" onClick={() => updateQuantity(item.id, 1)}>
                   <Plus />
                 </Button>
               </div>

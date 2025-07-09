@@ -44,7 +44,7 @@ const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
               if (!character) return null;
 
               const summary =
-                projectSummaries.find((s) => s.character.id === character.id) ||
+                projectSummaries.find((s) => s.project.id === character.id) ||
                 createProjectSummary(character);
 
               return (

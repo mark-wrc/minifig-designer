@@ -83,14 +83,14 @@ const CartContainer = memo<ICartContainerProps>(({ onclose }) => {
         </div>
 
         {projectEntries.length > 0 && (
-          <div className="border-t border-gray-600 pt-4">
+          <div className="pt-4">
             <div className="text-white mb-2">
               <p className="text-sm">
                 {projectEntries.length} project{projectEntries.length !== 1 ? 's' : ''} •{' '}
                 {totalItems} total items
               </p>
             </div>
-            <Button className="w-full bg-green-600 hover:bg-green-700 font-black uppercase">
+            <Button className="w-full cursor-pointer bg-green-600 hover:bg-green-700 font-black uppercase">
               Checkout (${totalPrice})
             </Button>
           </div>

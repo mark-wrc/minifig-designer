@@ -9,3 +9,5 @@ export * from './GeneralDialogDescription';
 export * from './CreateMinifigModal';
 export * from './CartItem';
 export * from './Divider';
+export * from './FooterLink';
+export * from './CTAButton';
