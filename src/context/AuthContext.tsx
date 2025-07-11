@@ -1,9 +1,9 @@
 import { clearAuthData } from '@/hooks';
+import { IUser } from '@/types';
 import { createContext, ReactNode, useCallback, useMemo } from 'react';
 
 interface IAuthData {
-  userName?: string;
-  userEmail?: string;
+  user: IUser;
 }
 
 interface IAuthProviderProps {
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children, authData }: IAuthProviderProps) => {
 
   const contextValue = useMemo(
     (): AuthContextValue => ({
-      ...authData,
+      user: authData.user,
       logout,
     }),
     [authData, logout],

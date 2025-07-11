@@ -1,4 +1,3 @@
- 
 import { memo, useCallback, useState } from 'react';
 import { WOFLogo } from '@/assets/images';
 import { useAuth } from '@/hooks';
@@ -9,7 +8,7 @@ import { RootState } from '@/store';
 import { CircleUserRound } from 'lucide-react';
 
 const HeaderSection = memo(() => {
-  const { userName } = useAuth();
+  const { user } = useAuth();
 
   const { projects } = useSelector((state: RootState) => state.MinifigBuilderCart);
 
@@ -35,9 +34,11 @@ const HeaderSection = memo(() => {
             <ShoppingCart color="white" size={24} />
           </div>
           <div className=" cursor-pointer">
-            {userName ? (
+            {user ? (
               <span className=" flex flex-col gap-4">
-                <span className=" text-white font-bold">{userName}</span>
+                <span className=" text-white font-bold">{user.userName}</span>
+
+                <img src={user.imageUrl} alt={user.userName} />
                 {/* <Button className=" cursor-pointer" onClick={logout}>
                     logout
                   </Button> */}

@@ -30,7 +30,6 @@ const cartSlice = createSlice({
       state.projects[action.payload.projectName] = action.payload;
     },
 
-    // NEW: Update specific item quantity
     updateItemQuantity: (
       state,
       action: PayloadAction<{ projectName: string; itemId: string; quantity: number }>,

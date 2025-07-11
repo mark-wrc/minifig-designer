@@ -16,13 +16,16 @@ export interface CartProject {
   createdAt: number;
 }
 
+export interface selectedMinifigParts {
+  type: string;
+  image: string;
+  name: string;
+  price?: number;
+  stock?: number;
+}
 export interface AddCharacterPayload {
   projectName: string;
-  selectedParts: Array<{
-    type: string;
-    image: string;
-    name: string;
-  }>;
+  selectedParts: selectedMinifigParts[];
   pricePerItem?: number;
   quantity?: number;
   stock?: number;

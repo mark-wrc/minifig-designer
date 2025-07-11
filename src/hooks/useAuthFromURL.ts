@@ -1,51 +1,115 @@
-import { useEffect, useState } from 'react';
+import { AuthConfig, AuthData, AuthHookResult, IUser } from '@/types';
+import { useEffect, useState, useCallback } from 'react';
 
-export interface AuthData {
-  userName?: string;
-  userEmail?: string;
-}
-
-export const clearAuthData = () => {
-  localStorage.removeItem('minifig_userName');
-  localStorage.removeItem('minifig_userEmail');
-  console.log('Auth data cleared from localStorage');
+const DEFAULT_CONFIG: Required<AuthConfig> = {
+  storagePrefix: 'auth_',
+  redirectUrl: '/login',
+  parameterMap: {
+    userName: 'userName',
+    userEmail: 'userEmail',
+    imageUrl: 'imageUrl',
+  },
+  requiredFields: ['userEmail'],
+  autoRedirect: false,
 };
 
-export const useAuthFromURL = () => {
-  const [authData, setAuthData] = useState<AuthData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+export const createAuthHook = (config: AuthConfig = {}) => {
+  const finalConfig = { ...DEFAULT_CONFIG, ...config };
 
-  useEffect(() => {
-    const getParam = (key: string) => {
-      const urlValue = new URLSearchParams(window.location.search).get(key)?.trim();
-      const storageValue = localStorage.getItem(`minifig_${key}`)?.trim();
-      return urlValue || storageValue || '';
-    };
+  const getStorageKey = (key: string) => `${finalConfig.storagePrefix}${key}`;
 
-    const userName = getParam('userName');
-    const userEmail = getParam('userEmail');
+  const getParameterValue = (key: string): string => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlValue = urlParams.get(key)?.trim();
+    const storageValue = localStorage.getItem(getStorageKey(key))?.trim();
+    return urlValue || storageValue || '';
+  };
 
-    console.log('Auth check:', { userName, userEmail });
+  const setStorageValue = (key: string, value: string) => {
+    if (value) {
+      localStorage.setItem(getStorageKey(key), value);
+    }
+  };
 
-    // if (!userEmail) {
-    //   console.log('No email found, redirecting...');
-    //   window.location.href = 'https://www.worldofminifigs.com/login';
-    //   return;
-    // }
-
-    if (userName) localStorage.setItem('minifig_userName', userName);
-    if (userEmail) localStorage.setItem('minifig_userEmail', userEmail);
-
-    // Clean URL
-    window.history.replaceState({}, '', window.location.pathname);
-
-    setAuthData({
-      ...(userName && { userName }),
-      ...(userEmail && { userEmail }),
+  const clearAuthData = () => {
+    Object.keys(finalConfig.parameterMap).forEach((key) => {
+      localStorage.removeItem(getStorageKey(key));
     });
+    console.log('Auth data cleared from localStorage');
+  };
 
-    setIsLoading(false);
-  }, []);
+  const validateRequiredFields = (data: AuthData): boolean => {
+    return finalConfig.requiredFields.every((field) => data[field] && data[field].trim() !== '');
+  };
 
-  return { authData, isLoading };
+  const useAuthFromURL = (): AuthHookResult => {
+    const [authData, setAuthData] = useState<{ user: IUser } | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const processAuthData = useCallback(() => {
+      const data: AuthData = {};
+      let hasUrlParams = false;
+
+      Object.entries(finalConfig.parameterMap).forEach(([key, paramName]) => {
+        const value = getParameterValue(paramName);
+        if (value) {
+          data[key] = value;
+
+          const urlValue = new URLSearchParams(window.location.search).get(paramName);
+          if (urlValue) {
+            hasUrlParams = true;
+            setStorageValue(key, value);
+          }
+        }
+      });
+
+      if (hasUrlParams) {
+        window.history.replaceState({}, '', window.location.pathname);
+      }
+
+      const isValid = validateRequiredFields(data);
+
+      if (!isValid && finalConfig.autoRedirect) {
+        console.log('Required fields missing, redirecting...');
+        window.location.href = finalConfig.redirectUrl;
+        return;
+      }
+
+      console.log('Auth data processed:', data);
+
+      const user: IUser = {
+        userName: data.userName || '',
+        userEmail: data.userEmail || '',
+        imageUrl: data.imageUrl || '',
+      };
+      setAuthData(Object.keys(data).length > 0 ? { user } : null);
+      setIsLoading(false);
+    }, []);
+
+    useEffect(() => {
+      processAuthData();
+    }, [processAuthData]);
+
+    const isAuthenticated =
+      authData !== null && validateRequiredFields(authData.user as unknown as AuthData);
+    return {
+      authData,
+      isLoading,
+      clearAuthData,
+      isAuthenticated,
+    };
+  };
+
+  return { useAuthFromURL, clearAuthData };
 };
+
+export const { useAuthFromURL, clearAuthData } = createAuthHook({
+  storagePrefix: 'minifig_',
+  parameterMap: {
+    userName: 'userName',
+    userEmail: 'userEmail',
+    imageUrl: 'imageUrl',
+  },
+  requiredFields: ['userEmail'],
+  autoRedirect: false,
+});

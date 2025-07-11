@@ -7,10 +7,9 @@ import { Button } from '../ui/button';
 import { useShoppingCart } from '@/hooks/useShoppingCart';
 
 const CartItem = memo<ICartItemProps>(({ projectName }) => {
-  const { getProject, removeItemFromCart, updateItemQuantity } = useShoppingCart();
+  const { getMinifigProject, removeItemFromCart, updateItemQuantity } = useShoppingCart();
 
-  // Get items from Redux store, not local state
-  const project = getProject(projectName);
+  const project = getMinifigProject(projectName);
   const cartItems = project?.items || [];
 
   const handleRemoveCartItem = useCallback(
