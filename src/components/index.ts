@@ -11,3 +11,4 @@ export * from './CartItem';
 export * from './Divider';
 export * from './FooterLink';
 export * from './CTAButton';
+export * from './MinifigTabs';

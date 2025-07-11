@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { MinifiCanvas } from '@/components';
-import { MinifigTabs } from '@/components/MinifigTabs';
+import { MinifigCanvas, MinifigTabs } from '@/components';
 import { Button } from '@/components/ui/button';
 import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
 import type { RootState } from '@/store';
@@ -56,7 +55,7 @@ const MinifigBuilderSection = () => {
     <section className="bg-soft-gray container mx-auto rounded-2xl p-4">
       <MinifigTabs />
 
-      <MinifiCanvas minifigParts={minifigParts} wardrobeItems={wardrobeItems} />
+      <MinifigCanvas minifigParts={minifigParts} wardrobeItems={wardrobeItems} />
 
       <Button
         className="flex justify-self-end cursor-pointer"

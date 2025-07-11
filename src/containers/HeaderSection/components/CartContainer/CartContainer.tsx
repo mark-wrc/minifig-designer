@@ -2,27 +2,29 @@ import { memo, useCallback, useEffect } from 'react';
 import type { ICartContainerProps } from './CartContainer.types';
 import { CartItem, Divider } from '@/components';
 import { X } from 'lucide-react';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeProjectFromCart, initializeCart } from '@/store/CartSlice/CartSlice';
+import { useSelector } from 'react-redux';
+
 import type { RootState } from '@/store';
 import { Button } from '@/components/ui/button';
+import { useShoppingCart } from '@/hooks/useShoppingCart';
 
 const CartContainer = memo<ICartContainerProps>(({ onclose }) => {
   const { projects, totalItems, totalPrice } = useSelector(
     (state: RootState) => state.MinifigBuilderCart,
   );
-  const dispatch = useDispatch();
+
+  const { removeProjectFromCart, initializeCart } = useShoppingCart();
 
   // Initialize cart from localStorage on mount
   useEffect(() => {
-    dispatch(initializeCart());
-  }, [dispatch]);
+    initializeCart();
+  }, [initializeCart]);
 
   const handleRemoveProject = useCallback(
     (projectName: string) => {
-      dispatch(removeProjectFromCart(projectName));
+      removeProjectFromCart(projectName);
     },
-    [dispatch],
+    [removeProjectFromCart],
   );
 
   const projectEntries = Object.entries(projects);

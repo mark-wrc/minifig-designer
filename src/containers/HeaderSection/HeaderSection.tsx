@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 import { memo, useCallback, useState } from 'react';
 import { WOFLogo } from '@/assets/images';
 import { useAuth } from '@/hooks';
@@ -9,7 +9,7 @@ import { RootState } from '@/store';
 import { CircleUserRound } from 'lucide-react';
 
 const HeaderSection = memo(() => {
-  const { userName, logout } = useAuth();
+  const { userName } = useAuth();
 
   const { projects } = useSelector((state: RootState) => state.MinifigBuilderCart);
 
