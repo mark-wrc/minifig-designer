@@ -6,6 +6,7 @@ import { CartContainer } from './components/CartContainer';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { CircleUserRound } from 'lucide-react';
+import { UserDisplay } from '@/components/UserDisplay';
 
 const HeaderSection = memo(() => {
   const { user } = useAuth();
@@ -34,18 +35,7 @@ const HeaderSection = memo(() => {
             <ShoppingCart color="white" size={24} />
           </div>
           <div className=" cursor-pointer">
-            {user ? (
-              <span className=" flex flex-col gap-4">
-                <span className=" text-white font-bold">{user.userName}</span>
-
-                <img src={user.imageUrl} alt={user.userName} />
-                {/* <Button className=" cursor-pointer" onClick={logout}>
-                    logout
-                  </Button> */}
-              </span>
-            ) : (
-              <CircleUserRound size={24} color="white" />
-            )}
+            {user ? <UserDisplay user={user} /> : <CircleUserRound size={24} color="white" />}
           </div>
         </section>
       </div>

@@ -12,3 +12,7 @@ export * from './Divider';
 export * from './FooterLink';
 export * from './CTAButton';
 export * from './MinifigTabs';
+export * from './UserDisplay';
+export * from './GeneralPopover';
+export * from './UserAvatar';
+export * from './UserMenu';

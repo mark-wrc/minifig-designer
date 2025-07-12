@@ -18,7 +18,7 @@ export interface AuthData {
 
 export interface AuthHookResult {
   authData: { user: IUser } | null;
-  isLoading: boolean;
+  isLoading?: boolean;
   clearAuthData: () => void;
   isAuthenticated: boolean;
 }

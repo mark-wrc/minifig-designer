@@ -3,12 +3,12 @@ import { IUser } from '@/types';
 import { createContext, ReactNode, useCallback, useMemo } from 'react';
 
 interface IAuthData {
-  user: IUser;
+  user: IUser | undefined; // temporarily undefined
 }
 
 interface IAuthProviderProps {
   children: ReactNode;
-  authData: IAuthData;
+  authData: IAuthData | null;
 }
 
 interface AuthContextValue extends IAuthData {
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children, authData }: IAuthProviderProps) => {
 
   const contextValue = useMemo(
     (): AuthContextValue => ({
-      user: authData.user,
+      user: authData?.user,
       logout,
     }),
     [authData, logout],

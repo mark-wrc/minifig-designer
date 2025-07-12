@@ -20,11 +20,8 @@ const LoadingView = () => (
 const router = createAppRouter();
 
 function App() {
-  const { authData, isLoading } = useAuthFromURL();
+  const { authData } = useAuthFromURL();
 
-  if (isLoading || !authData) {
-    return <LoadingView />;
-  }
   return (
     <HelmetProvider>
       <AuthProvider authData={authData}>

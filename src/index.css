@@ -42,6 +42,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   /* Color Palette */
+  --color-accent: oklch(0.9027 0.1869 98.67);
   --color-sunny: oklch(0.88 0.1579 94.4);
   --color-minifig-lavander-blue: oklch(0.48 0.0618 252.37);
   --color-soft-gray: oklch(0.94 0 0);
