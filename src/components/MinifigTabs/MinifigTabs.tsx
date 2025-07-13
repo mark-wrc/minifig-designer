@@ -8,23 +8,36 @@ import { deleteMinifigure, setActiveMinifigure } from '@/store/minifigBuilder/mi
 import { CreateMinifigModal } from '../CreateMinifigModal';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useDisclosureParam } from '@/hooks';
+import { ConfirmationDialog } from '../ConfirmationDialog';
 
 const MinifigTabs = memo(() => {
   const { characters = [], activeCharacterId = null } = useSelector(
     (state: RootState) => state.minifigBuilder || { characters: [], activeCharacterId: null },
   );
 
+  const removeProjectTab = useDisclosureParam();
+
   const dispatch = useDispatch();
 
   const [showModal, setShowModal] = useState(false);
+  const [tabToDelete, setTabToDelete] = useState<string | null>(null);
 
-  const handleDeleteCharacter = useCallback(
+  const handleDeleteClick = useCallback(
     (id: string, e: React.MouseEvent) => {
       e.stopPropagation();
-      dispatch(deleteMinifigure(id));
+      setTabToDelete(id);
+      removeProjectTab.onDisclosureOpen();
     },
-    [dispatch],
+    [removeProjectTab],
   );
+
+  const handleDeleteConfirm = useCallback(() => {
+    if (tabToDelete) {
+      dispatch(deleteMinifigure(tabToDelete));
+      setTabToDelete(null);
+    }
+  }, [dispatch, tabToDelete]);
 
   return (
     <div className=" w-full flex  flex-wrap py-4  border-b-2 border-b-black">
@@ -50,7 +63,7 @@ const MinifigTabs = memo(() => {
                   variant="ghost"
                   size="icon"
                   className="h-5 w-5 cursor-pointer"
-                  onClick={(e) => handleDeleteCharacter(character.id, e)}
+                  onClick={(e) => handleDeleteClick(character.id, e)}
                 >
                   <X className=" h-3 w-3" />
                 </Button>
@@ -60,13 +73,26 @@ const MinifigTabs = memo(() => {
         </TabsList>
       </Tabs>
       <Button
-        className="bg-yellow-500 cursor-pointer hover:bg-yellow-600 font-bold"
+        className="bg-yellow-500 cursor-pointer  hover:bg-yellow-600 font-bold"
         onClick={() => setShowModal(true)}
       >
         Create New Project
       </Button>
 
       {showModal && <CreateMinifigModal mode="create" onClose={() => setShowModal(false)} />}
+
+      {removeProjectTab.open && (
+        <ConfirmationDialog
+          open={removeProjectTab.open}
+          className="md:w-fit"
+          emoji={{ text: '⚠️', emojiStyles: 'text-[80px] text-center' }}
+          descriptionContainerStyle="max-w-[300px] mx-auto p-0 text-md text-black"
+          actionContainerStyles="self-center  justify-center"
+          description="Are your sure that you'd like to remove this project"
+          onConfirm={removeProjectTab.onDisclosureClose(handleDeleteConfirm)}
+          onClose={removeProjectTab.onDisclosureClose()}
+        />
+      )}
     </div>
   );
 });

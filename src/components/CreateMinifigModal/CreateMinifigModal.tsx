@@ -1,13 +1,18 @@
 import React, { ChangeEvent, memo, useCallback, useEffect, useState } from 'react';
-import { DialogContent, DialogFooter, DialogHeader } from '../ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '../ui/dialog';
 import { ICreateMinifigModalProps } from './CreateMinifigModal.types';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { useDispatch } from 'react-redux';
 import { createMinifigure, renameCharacter } from '@/store/minifigBuilder/minifigBuilderSlice';
 import { cn } from '@/lib/utils';
-import { GeneralDialog } from '../GeneralDialog';
-import { GeneralDialogTitle } from '../GeneralDialogTitle';
 
 const CreateMinifigModal = memo<ICreateMinifigModalProps>(
   ({ onClose, initialProjectName, mode, characterId, ...props }) => {
@@ -50,18 +55,18 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
     );
 
     return (
-      <GeneralDialog open={true} onOpenChange={() => onClose?.()} {...props}>
+      <Dialog open={true} onOpenChange={() => onClose?.()} {...props}>
         <DialogContent className="p-12">
           <form onSubmit={handleSubmit}>
             <DialogHeader className="flex justify-center items-center">
-              <GeneralDialogTitle className=" font-black text-3xl" title="START YOUR BUILD" />
+              <DialogTitle className=" font-black text-3xl">START YOUR BUILD</DialogTitle>
+
+              <DialogDescription className="my-4 text-lg">
+                {mode === 'create' ? 'Name your Project' : 'Enter new name  '}
+              </DialogDescription>
             </DialogHeader>
 
             <section className="flex flex-col justify-center items-center gap-4">
-              <sub className="my-4 text-lg">
-                {mode === 'create' ? 'Name your Project' : 'Enter new name  '}
-              </sub>
-
               <Input
                 id="username"
                 value={projectName}
@@ -87,7 +92,7 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
             </DialogFooter>
           </form>
         </DialogContent>
-      </GeneralDialog>
+      </Dialog>
     );
   },
 );
