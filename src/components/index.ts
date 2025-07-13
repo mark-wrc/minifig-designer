@@ -17,3 +17,4 @@ export * from './GeneralPopover';
 export * from './UserAvatar';
 export * from './UserMenu';
 export * from './ConfirmationDialog';
+export * from './MinifigRenderer';

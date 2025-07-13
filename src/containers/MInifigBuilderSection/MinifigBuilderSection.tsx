@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { MinifigCanvas, MinifigTabs } from '@/components';
-import { Button } from '@/components/ui/button';
 import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
 import type { RootState } from '@/store';
 import { MinifigPartType } from '@/types';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { MinifigBuilderCardPopupModal } from './components/MinifigBuilderCartPopupModal';
 import minifigPartsData from '@/api/dummyData.json';
+import { MinifigDesktopMode } from './components';
+import { useDisclosureParam } from '@/hooks';
 
 const MinifigBuilderSection = () => {
   const {
@@ -21,7 +20,7 @@ const MinifigBuilderSection = () => {
   );
 
   const activeCharacter = characters.find((char) => char.id === activeCharacterId);
-  const [openModal, setOpenModal] = useState(false);
+  const modalDisclosure = useDisclosureParam();
 
   const wardrobeItems = useMemo(() => {
     if (!selectedCategory) return [];
@@ -52,22 +51,13 @@ const MinifigBuilderSection = () => {
   );
 
   return (
-    <section className="bg-soft-gray container mx-auto rounded-2xl p-4">
-      <MinifigTabs />
-
-      <MinifigCanvas minifigParts={minifigParts} wardrobeItems={wardrobeItems} />
-
-      <Button
-        className="flex justify-self-end cursor-pointer"
-        onClick={() => setOpenModal(true)}
-        disabled={!characters.length}
-      >
-        Add to cart ({characters.length} project{characters.length !== 1 ? 's' : ''})
-      </Button>
-
-      {openModal && characters && (
-        <MinifigBuilderCardPopupModal onclose={() => setOpenModal(false)} minifig={characters} />
-      )}
+    <section>
+      <MinifigDesktopMode
+        minifigParts={minifigParts}
+        minifigData={wardrobeItems}
+        modalDisclosure={modalDisclosure}
+        minifigProjects={characters}
+      />
     </section>
   );
 };

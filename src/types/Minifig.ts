@@ -1,3 +1,5 @@
+import { MinifigPartType } from './MinifigActions';
+
 export interface MinifigPart {
   type: string;
   image: string;
@@ -37,6 +39,15 @@ export interface MinfigProjectSummary {
   minifigPart: CustomPart[];
   totalPrice: number;
   hasCustomParts: boolean;
+}
+
+export interface IMinifigData {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image?: string;
+  type: MinifigPartType;
 }
 
 export interface CartSummary {

@@ -4,54 +4,40 @@ import { cn } from '@/lib/utils';
 import { IConfirmationDialogProps } from './Snackbar.types';
 import { CTAButton } from '../CTAButton';
 
-const ConfirmationDialog = memo<IConfirmationDialogProps>(
-  ({
-    open,
-    onClose,
-    onConfirm,
-    title,
-    emoji,
-    description,
-    className,
-    showClosebtn,
-    descriptionContainerStyle,
-    actionContainerStyles,
-    icon: Icon,
-  }) => {
-    return (
-      <Dialog open={open} onOpenChange={() => onClose?.()}>
-        <DialogContent title="test" className={cn(className)}>
-          <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-            {Icon && <Icon />}
-            {emoji && <div className={emoji.emojiStyles}>{emoji.text}</div>}
-            <DialogDescription className={cn('text-center py-20', descriptionContainerStyle)}>
-              {description}
-            </DialogDescription>
-          </DialogHeader>
+const ConfirmationDialog = memo<IConfirmationDialogProps>(({ icon: Icon, ...props }) => {
+  return (
+    <Dialog open={props.open} onOpenChange={() => props.onClose?.()}>
+      <DialogContent title="test" className={cn(props.className)}>
+        <DialogHeader>
+          <DialogTitle>{props.title}</DialogTitle>
+          {Icon && <Icon />}
+          {props.emoji && <div className={props.emoji.emojiStyles}>{props.emoji.text}</div>}
+          <DialogDescription className={cn('text-center py-20', props.descriptionContainerStyle)}>
+            {props.description}
+          </DialogDescription>
+        </DialogHeader>
 
-          <section className={cn('flex justify-between', actionContainerStyles)}>
+        <section className={cn('flex justify-between', props.actionContainerStyles)}>
+          <CTAButton
+            className="text-white cursor-pointer"
+            variant="destructive"
+            onClick={() => props.onConfirm?.()}
+            title="Confirm"
+          />
+
+          {props.showClosebtn && (
             <CTAButton
-              className="text-white cursor-pointer"
-              variant="destructive"
-              onClick={() => onConfirm?.()}
-              title="Confirm"
+              className=" cursor-pointer"
+              variant="default"
+              title="Cancel"
+              onClick={() => props.onClose?.()}
             />
-
-            {showClosebtn && (
-              <CTAButton
-                className=" cursor-pointer"
-                variant="default"
-                title="Cancel"
-                onClick={() => onClose?.()}
-              />
-            )}
-          </section>
-        </DialogContent>
-      </Dialog>
-    );
-  },
-);
+          )}
+        </section>
+      </DialogContent>
+    </Dialog>
+  );
+});
 
 ConfirmationDialog.displayName = 'ConfirmationDialog';
 export default ConfirmationDialog;

@@ -1,19 +1,18 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import type { IMinifigCanvasProps } from './MinifigCanvas.types';
-import { MinifigPartType } from '@/types';
-import { MinifigPart } from '../MinifigPart';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '@/store';
 import { setSelectedPart } from '@/store/minifigBuilder/minifigBuilderSlice';
-
 import { CreateMinifigModal } from '../CreateMinifigModal';
 import { MinifigPartData } from '@/types/Minifig';
+import MinifigRenderer from '../MinifigRenderer/MinifigRenderer';
+import { useDisclosureParam } from '@/hooks';
 
 const MinifigCanvas = memo<IMinifigCanvasProps>(({ minifigParts, wardrobeItems = [] }) => {
   const dispatch = useDispatch();
   const wardrobeRef = useRef<HTMLDivElement>(null);
   const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
-  const [showModal, setShowModal] = useState(false);
+  const modalDisclosure = useDisclosureParam();
 
   const {
     characters = [],
@@ -32,73 +31,42 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ minifigParts, wardrobeItems =
       });
   }, [selectedCategory]);
 
-  const handleTitleEdit = useCallback(() => {
-    if (!activeCharacter) return;
-    setModalMode('edit');
-    setShowModal(true);
-  }, [activeCharacter]);
-
   const handleCategoryClick = useCallback(
     (item: MinifigPartData) => {
       if (characters.length === 0) {
-        setShowModal(true);
+        modalDisclosure.onDisclosureOpen();
         setModalMode('create');
         return;
       }
       dispatch(setSelectedPart(item));
     },
-    [characters.length, dispatch],
+    [characters.length, dispatch, modalDisclosure],
   );
 
   const handleCloseModal = useCallback(() => {
-    setShowModal(false);
+    const closeModal = modalDisclosure.onDisclosureClose();
+    closeModal();
     setModalMode('create');
-  }, []);
+  }, [modalDisclosure]);
 
   return (
-    <div className="flex h-full w-full p-6 gap-4 flex-col md:flex-row">
-      {/* Figure section */}
-      <section className="flex-1">
-        <header className="flex flex-col mb-10">
-          <h3 className="text-center font-black text-xl mb-2">
-            {activeCharacter?.name || 'No Character Selected'}
-          </h3>
-          {activeCharacter && (
-            <>
-              <button
-                className="underline text-blue-600 hover:text-blue-800"
-                onClick={handleTitleEdit}
-              >
-                <span>Edit Project Title</span>
-              </button>
-              <button className="text-gray-600 hover:text-gray-800">Change skin tone</button>
-            </>
-          )}
-        </header>
-
-        <figure className="flex flex-col items-center gap-4">
-          {Object.values(MinifigPartType).map((partType) => (
-            <div key={partType} className="text-center w-1/2">
-              <MinifigPart
-                totalImages={minifigParts?.[partType]?.image?.length || 0}
-                type={partType}
-                image={minifigParts?.[partType]?.image}
-              />
-              <p className="text-sm text-gray-600 mt-1">{partType}</p>
-            </div>
-          ))}
-        </figure>
-      </section>
+    <section className="flex h-full w-full p-6 gap-4 flex-col md:flex-row">
+      {/* Minifig renderer section */}
+      <MinifigRenderer
+        className="hidden md:block"
+        ActiveMinifigProject={activeCharacter}
+        setModalMode={setModalMode}
+        minifigParts={minifigParts}
+        modalDisclosure={modalDisclosure}
+      />
 
       {/* Wardrobe section */}
-
       <section ref={wardrobeRef}>
         <h3 className="text-lg font-bold mb-4">
           {selectedCategory ? `${selectedCategory} Parts` : 'Select a Category'}
         </h3>
 
         {/* TODO: add Tabs when its mobile view */}
-
         {wardrobeItems.length > 0 ? (
           <div className="grid grid-cols-2 gap-4">
             {wardrobeItems.map((item) => (
@@ -129,7 +97,7 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ minifigParts, wardrobeItems =
         )}
 
         {/* Modal section */}
-        {showModal && (
+        {modalDisclosure.open && (
           <CreateMinifigModal
             initialProjectName={modalMode === 'edit' ? activeCharacter?.name : ''}
             characterId={modalMode === 'edit' ? activeCharacter?.id : undefined}
@@ -138,7 +106,7 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ minifigParts, wardrobeItems =
           />
         )}
       </section>
-    </div>
+    </section>
   );
 });
 
