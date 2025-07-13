@@ -6,6 +6,8 @@ const CTAButton = memo<ICTAButtonProps>(({ icon: Icon, ...props }) => (
   <Button {...props}>
     {Icon ? <Icon /> : null}
 
+    {props.title && <h1>{props.title}</h1>}
+
     {props.children}
   </Button>
 ));

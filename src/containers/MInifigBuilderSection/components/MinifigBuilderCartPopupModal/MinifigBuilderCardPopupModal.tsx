@@ -14,7 +14,7 @@ const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
     const cartSummary = createCartSummary(minifig);
 
     const handleAddToCart = () => {
-      addMinifigToCart(minifig, onclose);
+      addMinifigToCart({ minifig, onSuccess: onclose });
     };
 
     const handleClose = () => onclose?.();

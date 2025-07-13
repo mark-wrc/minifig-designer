@@ -1,8 +1,9 @@
 import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
-import { Character } from '@/store/minifigBuilder/minifigBuilderSlice';
-import { MinifigPartType } from '@/types';
 
-export const createFallbackBuild = (): Character => ({
+import { MinifigPartType } from '@/types';
+import { IMinifigProject } from '@/types/Minifig';
+
+export const createFallbackBuild = (): IMinifigProject => ({
   id: 'fallback',
   name: 'Deleted Character',
   head: BaseMinifigParts[MinifigPartType.HEAD].image,

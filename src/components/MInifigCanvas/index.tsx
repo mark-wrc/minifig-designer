@@ -1,1 +1,1 @@
-export { default as MinifiCanvas } from './MInifigCanvas';
+export { default as MinifigCanvas } from './MinifigCanvas';

@@ -1,6 +1,6 @@
-import { CartItem } from '@/store/CartSlice/CartSlice';
+import { ICartItem } from '@/types';
 
 export interface ICartItemProps {
-  data: CartItem[];
+  data: ICartItem[];
   projectName: string;
 }

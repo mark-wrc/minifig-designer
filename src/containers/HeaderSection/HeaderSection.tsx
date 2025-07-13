@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { memo, useCallback, useState } from 'react';
 import { WOFLogo } from '@/assets/images';
 import { useAuth } from '@/hooks';
@@ -7,9 +6,10 @@ import { CartContainer } from './components/CartContainer';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { CircleUserRound } from 'lucide-react';
+import { UserDisplay } from '@/components/UserDisplay';
 
 const HeaderSection = memo(() => {
-  const { userName, logout } = useAuth();
+  const { user } = useAuth();
 
   const { projects } = useSelector((state: RootState) => state.MinifigBuilderCart);
 
@@ -35,16 +35,7 @@ const HeaderSection = memo(() => {
             <ShoppingCart color="white" size={24} />
           </div>
           <div className=" cursor-pointer">
-            {userName ? (
-              <span className=" flex flex-col gap-4">
-                <span className=" text-white font-bold">{userName}</span>
-                {/* <Button className=" cursor-pointer" onClick={logout}>
-                    logout
-                  </Button> */}
-              </span>
-            ) : (
-              <CircleUserRound size={24} color="white" />
-            )}
+            {user ? <UserDisplay user={user} /> : <CircleUserRound size={24} color="white" />}
           </div>
         </section>
       </div>
