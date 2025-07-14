@@ -13,4 +13,6 @@ export interface IMinifigCanvasProps {
   onTitleEdit?: () => void;
   onSkinChange?: () => void;
   wardrobeItems?: MinifigPartData[];
+  className?: string;
+  wardrobeContainerStyle?: string;
 }

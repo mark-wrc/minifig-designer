@@ -2,6 +2,8 @@ import { MinifigPartType } from '@/types';
 
 export interface IMinifigPartProps {
   type: MinifigPartType;
-  image?: string;
+  minifigPartsImages?: string;
   className?: string;
+  totalMinifigParts?: number;
+  title?: string;
 }
