@@ -8,6 +8,8 @@ import { useSelector } from 'react-redux';
 import minifigPartsData from '@/api/dummyData.json';
 import { MinifigDesktopMode } from './components';
 import { useDisclosureParam } from '@/hooks';
+import useWindowResize from '@/hooks/useWindowResize';
+import { MinifigMobileMode } from './components/MinifigMobileMode';
 
 const MinifigBuilderSection = () => {
   const {
@@ -19,8 +21,12 @@ const MinifigBuilderSection = () => {
       state.minifigBuilder || { characters: [], activeCharacterId: null, selectedCategory: null },
   );
 
+  const { screenSize } = useWindowResize();
+
   const activeCharacter = characters.find((char) => char.id === activeCharacterId);
   const modalDisclosure = useDisclosureParam();
+
+  const isMobile = screenSize.width <= 600;
 
   const wardrobeItems = useMemo(() => {
     if (!selectedCategory) return [];
@@ -52,12 +58,23 @@ const MinifigBuilderSection = () => {
 
   return (
     <section>
-      <MinifigDesktopMode
-        minifigParts={minifigParts}
-        minifigData={wardrobeItems}
-        modalDisclosure={modalDisclosure}
-        minifigProjects={characters}
-      />
+      {isMobile && (
+        <MinifigMobileMode
+          minifigParts={minifigParts}
+          minifigData={wardrobeItems}
+          modalDisclosure={modalDisclosure}
+          minifigProjects={characters}
+        />
+      )}
+
+      {!isMobile && (
+        <MinifigDesktopMode
+          minifigParts={minifigParts}
+          minifigData={wardrobeItems}
+          modalDisclosure={modalDisclosure}
+          minifigProjects={characters}
+        />
+      )}
     </section>
   );
 };
