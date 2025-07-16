@@ -15,4 +15,5 @@ export interface IMinifigCanvasProps {
   wardrobeItems?: MinifigPartData[];
   className?: string;
   wardrobeContainerStyle?: string;
+  selectorComponent?: React.ReactElement | null;
 }

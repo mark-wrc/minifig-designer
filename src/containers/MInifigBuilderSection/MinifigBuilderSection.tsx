@@ -26,7 +26,7 @@ const MinifigBuilderSection = () => {
   const activeCharacter = characters.find((char) => char.id === activeCharacterId);
   const modalDisclosure = useDisclosureParam();
 
-  const isMobile = screenSize.width <= 600;
+  const isMobile = screenSize.width <= 768;
 
   const wardrobeItems = useMemo(() => {
     if (!selectedCategory) return [];

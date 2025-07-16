@@ -45,23 +45,23 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
     return (
       <section className={cn('flex-1', className)}>
         <header className="flex flex-col mb-10">
-          <h3 className="text-center font-black text-xl mb-2">
+          <h3 className="text-center font-black mb-2 text-white text-4xl">
             {ActiveMinifigProject?.name || 'No Character Selected'}
           </h3>
           {ActiveMinifigProject && (
             <>
-              <CTAButton
-                className="self-center text-blue-600 bg-transparent cursor-pointer w-fit hover:text-blue-800"
+              <span
+                className="self-center text-lg text-white underline bg-transparent cursor-pointer w-fit hover:text-blue-800"
                 onClick={handleMinifigTitleEdit}
               >
-                <span>Edit Project Title</span>
-              </CTAButton>
+                Edit Project Title
+              </span>
             </>
           )}
         </header>
 
         {/* Minifig builder section */}
-        <section className="flex flex-col items-center relative ">
+        <section className="flex flex-col items-center relative mx-auto ">
           {Object.values(MinifigPartType).map((partType) => {
             const image = minifigParts?.[partType]?.image;
             const totalMinifigParts = minifigParts?.[partType]?.image?.length;
@@ -69,8 +69,12 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
               characters.length > 0 && image && image !== BaseMinifigParts[partType]?.image;
 
             return (
-              <div key={partType} className="text-center w-[180px]">
+              <div
+                key={partType}
+                className="text-center flex flex-col w-full justify-center items-center relative"
+              >
                 {/* Add Minifig Parts  */}
+
                 {(totalMinifigParts ?? 0) > 0 && (
                   <CTAButton
                     className="cursor-pointer left-0 absolute"
