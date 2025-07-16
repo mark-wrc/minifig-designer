@@ -7,4 +7,5 @@ export interface CategorySelectorProps {
   item: ICategoryItem;
   isSelected?: boolean;
   type?: MinifigPartType;
+  isCategoryTab?: boolean;
 }

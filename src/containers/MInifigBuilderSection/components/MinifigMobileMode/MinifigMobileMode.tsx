@@ -2,34 +2,56 @@ import { CTAButton, MinifigCanvas, MinifigTabs } from '@/components';
 import { memo } from 'react';
 import { MinifigBuilderCardPopupModal } from '../MinifigBuilderCartPopupModal';
 import { IMinifigMobileModeProps } from './MinifigModalMode.types';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import MinifigCategoryOptions from '@/containers/CategorySection/components/MinifigCategoryOptions';
 
 const MinifigMobileMode = memo<IMinifigMobileModeProps>(
-  ({ minifigParts, minifigData, modalDisclosure, minifigProjects }) => (
-    <section className="">
-      <MinifigTabs />
+  ({ minifigParts, minifigData, modalDisclosure, minifigProjects }) => {
+    const { activeCharacterId, characters = [] } = useSelector(
+      (state: RootState) => state.minifigBuilder,
+    );
 
-      <MinifigCanvas
-        wardrobeContainerStyle="bg-soft-gray rounded-2xl p-4"
-        minifigParts={minifigParts}
-        wardrobeItems={minifigData}
-      />
+    const activeMinifigProject = characters.find((char) => char.id === activeCharacterId);
+    return (
+      <section className="">
+        <header className="mb-10 text-center pt-12">
+          <h1 className="text-6xl text-white font-bold">CREATE YOUR OWN</h1>
+          <h3 className="font-bold text-white text-2xl">START BUILDING</h3>
+        </header>
+        <MinifigTabs />
 
-      <CTAButton
-        className="flex justify-self-end cursor-pointer"
-        onClick={() => modalDisclosure.onDisclosureOpen()}
-        disabled={!minifigProjects.length}
-      >
-        Add to cart ({minifigProjects.length} project{minifigProjects.length !== 1 ? 's' : ''})
-      </CTAButton>
-
-      {modalDisclosure.open && minifigProjects && (
-        <MinifigBuilderCardPopupModal
-          onclose={modalDisclosure.onDisclosureClose()}
-          minifig={minifigProjects}
+        <MinifigCanvas
+          wardrobeContainerStyle="rounded-2xl p-4 bg-white rounded-sm"
+          minifigParts={minifigParts}
+          wardrobeItems={minifigData}
+          selectorComponent={
+            <MinifigCategoryOptions
+              activeMinifigProject={activeMinifigProject}
+              className=" flex  flex-nowrap"
+              categoryContainerStyle=""
+              isMobileMode
+            />
+          }
         />
-      )}
-    </section>
-  ),
+
+        <CTAButton
+          className="flex justify-self-end cursor-pointer"
+          onClick={() => modalDisclosure.onDisclosureOpen()}
+          disabled={!minifigProjects.length}
+        >
+          Add to cart ({minifigProjects.length} project{minifigProjects.length !== 1 ? 's' : ''})
+        </CTAButton>
+
+        {modalDisclosure.open && minifigProjects && (
+          <MinifigBuilderCardPopupModal
+            onclose={modalDisclosure.onDisclosureClose()}
+            minifig={minifigProjects}
+          />
+        )}
+      </section>
+    );
+  },
 );
 
 MinifigMobileMode.displayName = 'MinifigMobileMode';
