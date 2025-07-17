@@ -8,4 +8,5 @@ export interface IMinifigWardrobeItems {
   className?: string;
   ref: HTMLDivElement;
   selectorComponent?: React.ReactElement | null;
+  onItemClick: (item: MinifigPartData) => void;
 }

@@ -1,34 +1,53 @@
 import { forwardRef, memo } from 'react';
 import { IMinifigWardrobeItems } from './MinifigWardrobe.types';
 import { cn } from '@/lib/utils';
+import { CTAButton } from '../CTAButton';
 
 const MinifigWardrobe = memo(
   forwardRef<HTMLDivElement, IMinifigWardrobeItems>(
-    ({ wardrobeItems, selectedCategory, onCategoryClick, className, selectorComponent }, ref) => (
+    (
+      {
+        wardrobeItems,
+        selectedCategory,
+        onCategoryClick,
+        className,
+        selectorComponent,
+        onItemClick,
+      },
+      ref,
+    ) => (
       <section className={cn(className)} ref={ref}>
         {selectorComponent && <>{selectorComponent}</>}
-        <h3 className="text-lg font-bold mb-4">
+        {/* <h3 className="text-lg font-bold mb-4">
           {selectedCategory ? `${selectedCategory} Parts` : 'Select a Category'}
-        </h3>
+        </h3> */}
 
         {/* TODO: add Tabs when its mobile view */}
         {wardrobeItems?.length > 0 ? (
-          <section className="grid grid-cols-2 gap-4">
+          <section className="grid grid-cols-2 gap-4 overflow-y-auto">
             {wardrobeItems.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white border rounded-lg p-3 cursor-pointer hover:shadow-md transition-shadow"
-                onClick={() => onCategoryClick(item)}
-              >
-                <img
-                  className="w-full object-cover rounded mb-2"
-                  src={item.image}
-                  alt={item.name}
-                />
-                <p className="font-medium text-sm">{item.name}</p>
-                <p className="text-xs text-gray-600 mb-2">{item.description}</p>
-                <p className="text-green-600 font-bold text-sm">${item.price}</p>
-              </div>
+              <section className="flex flex-col h-full">
+                <div
+                  key={item.id}
+                  className="bg-white rounded-lg p-3 h-full cursor-pointer"
+                  onClick={() => onItemClick(item)}
+                >
+                  <img
+                    className="w-full aspect-square rounded  border"
+                    src={item.image}
+                    alt={item.name}
+                  />
+                  {/* <p className="font-medium text-sm">{item.name}</p>
+                  <p className="text-xs text-gray-600 mb-2">{item.description}</p>
+                  <p className="text-green-600 font-bold text-sm">${item.price}</p> */}
+                </div>
+                <CTAButton
+                  className="bg-yellow-500 font-semibold text-md w-fit self-center px-10 -translate-y-6 rounded-sm"
+                  onClick={() => onCategoryClick(item)}
+                >
+                  Add
+                </CTAButton>
+              </section>
             ))}
           </section>
         ) : (

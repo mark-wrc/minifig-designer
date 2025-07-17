@@ -9,11 +9,13 @@ import MinifigRenderer from '../MinifigRenderer/MinifigRenderer';
 import { useDisclosureParam } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { MinifigWardrobe } from '../MinifigWardrobe';
+import { MinifigWardrobeItemDetails } from '../MinifigWardrobeItemDetails';
 
 const MinifigCanvas = memo<IMinifigCanvasProps>(
   ({ minifigParts, wardrobeItems = [], className, wardrobeContainerStyle, selectorComponent }) => {
     const dispatch = useDispatch();
     const wardrobeRef = useRef<HTMLDivElement>(null);
+    const [selectedItem, setSelectedItem] = useState<MinifigPartData | null>(null);
     const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
     const modalDisclosure = useDisclosureParam();
 
@@ -46,6 +48,12 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
       [characters.length, dispatch, modalDisclosure],
     );
 
+    const handleItemClick = (item: MinifigPartData) => {
+      setSelectedItem(item);
+    };
+
+    const handleBackClick = useCallback(() => setSelectedItem(null), []);
+
     const handleCloseModal = useCallback(() => {
       const closeModal = modalDisclosure.onDisclosureClose();
       closeModal();
@@ -53,7 +61,7 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
     }, [modalDisclosure]);
 
     return (
-      <section className={cn('flex h-full w-full p-4 gap-4 flex-col md:flex-row', className)}>
+      <section className={cn('flex h-full w-full  gap-4 flex-col md:flex-row', className)}>
         {/* Minifig renderer section */}
         <MinifigRenderer
           ActiveMinifigProject={ActiveMinifigProject}
@@ -63,14 +71,21 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
         />
 
         {/*Minifig Wardrobe section */}
-        <MinifigWardrobe
-          ref={wardrobeRef}
-          wardrobeItems={wardrobeItems}
-          selectedCategory={selectedCategory}
-          onCategoryClick={handleCategoryClick}
-          className={wardrobeContainerStyle}
-          selectorComponent={selectorComponent}
-        />
+        <section className="p-4 bg-white rounded-sm">
+          {selectedItem ? (
+            <MinifigWardrobeItemDetails wardrobeItems={selectedItem} onClick={handleBackClick} />
+          ) : (
+            <MinifigWardrobe
+              ref={wardrobeRef}
+              wardrobeItems={wardrobeItems}
+              selectedCategory={selectedCategory}
+              onCategoryClick={handleCategoryClick}
+              className={wardrobeContainerStyle}
+              selectorComponent={selectorComponent}
+              onItemClick={handleItemClick}
+            />
+          )}
+        </section>
 
         {/* Modal section */}
         {modalDisclosure.open && (

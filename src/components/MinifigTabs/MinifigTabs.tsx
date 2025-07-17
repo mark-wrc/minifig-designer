@@ -48,17 +48,17 @@ const MinifigTabs = memo(() => {
         onValueChange={(value) => dispatch(setActiveMinifigure(value))}
         className="flex-1"
       >
-        <TabsList className="w-full h-full flex gap-2 justify-baseline px-2 overflow-x-auto flex-wrap">
+        <TabsList className="w-full h-full flex px-2 overflow-x-auto gap-2 flex-wrap">
           {characters.map((character) => (
             <TabsTrigger
               className={cn(
-                'flex items-center gap- p-3 w-fit relative group cursor-pointer text-left rounded-sm font-semibold bg-white',
-                activeCharacterId === character.id && 'bg-yellow-500 border-1  border-black/30',
+                'flex items-center p-3 w-fit relative group cursor-pointer text-left rounded-sm font-semibold bg-white',
+                activeCharacterId === character.id && 'bg-yellow-500 border-1 border-black/30',
               )}
               key={character.id}
               value={character.id}
             >
-              <div className=" flex justify-between gap-6 w-full items-center">
+              <div className="flex justify-between gap-6 items-center">
                 <CTAButton
                   variant="ghost"
                   size="icon"

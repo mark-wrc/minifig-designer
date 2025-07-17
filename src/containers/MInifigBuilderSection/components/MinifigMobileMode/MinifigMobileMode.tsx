@@ -22,25 +22,25 @@ const MinifigMobileMode = memo<IMinifigMobileModeProps>(
         <MinifigTabs />
 
         <MinifigCanvas
-          wardrobeContainerStyle="rounded-2xl p-4 bg-white rounded-sm"
+          wardrobeContainerStyle=" "
           minifigParts={minifigParts}
           wardrobeItems={minifigData}
           selectorComponent={
             <MinifigCategoryOptions
               activeMinifigProject={activeMinifigProject}
-              className=" flex  flex-nowrap"
-              categoryContainerStyle=""
+              className=" flex flex-nowrap bg-frosted-white py-2"
               isMobileMode
             />
           }
         />
 
         <CTAButton
-          className="flex justify-self-end cursor-pointer"
+          className="flex justify-self-end cursor-pointer mt-4 bg-yellow-500 text-lg p-6"
           onClick={() => modalDisclosure.onDisclosureOpen()}
           disabled={!minifigProjects.length}
         >
-          Add to cart ({minifigProjects.length} project{minifigProjects.length !== 1 ? 's' : ''})
+          {/* Add to cart ({minifigProjects.length} project{minifigProjects.length !== 1 ? 's' : ''}) */}
+          Add to cart
         </CTAButton>
 
         {modalDisclosure.open && minifigProjects && (

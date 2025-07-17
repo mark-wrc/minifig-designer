@@ -42,7 +42,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose }) => {
         <div className="flex justify-between items-center mb-6">
           <div className="text-white">
             <h2 className="text-2xl font-black">Cart ({totalItems})</h2>
-            <p className="text-lg">Total: ${totalPrice}</p>
+            <p className="text-lg">Sub total: ${totalPrice}</p>
           </div>
           <X
             color="white"
@@ -88,7 +88,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose }) => {
           <div className="pt-4">
             <div className="text-white mb-2">
               <p className="text-sm">
-                {projectEntries.length} project{projectEntries.length !== 1 ? 's' : ''} •{' '}
+                {projectEntries.length} Minifig project{projectEntries.length !== 1 ? 's' : ''} •{' '}
                 {totalItems} total items
               </p>
             </div>

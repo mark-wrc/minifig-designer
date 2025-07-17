@@ -48,7 +48,7 @@ const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
     );
     return (
       <section
-        className={cn('flex gap-4 flex-wrap mx-auto justify-center rounded-3xl ', className)}
+        className={cn('flex gap-4 flex-wrap mx-auto justify-center rounded-3xl', className)}
       >
         {minifigCategories.map((category) => (
           <div
@@ -57,14 +57,11 @@ const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
             <CategorySelector
               key={category.id}
               item={category}
-              className="rounded-sm w-fit p-4"
+              className="rounded-sm w-full p-2"
               onClick={handleCategorySelect}
-              isSelected={
-                selectedMinifigCategory === (category.title as unknown as MinifigPartType)
-              }
+              isSelected={selectedMinifigCategory === category.type}
               isCategoryTab={isMobileMode}
             />
-            <span className="font-bold  text-white">{category.title}</span>
           </div>
         ))}
       </section>
