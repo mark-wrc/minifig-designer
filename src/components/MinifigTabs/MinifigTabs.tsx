@@ -52,8 +52,9 @@ const MinifigTabs = memo(() => {
           {characters.map((character) => (
             <TabsTrigger
               className={cn(
-                'flex items-center p-3 w-fit relative group cursor-pointer text-left rounded-sm font-semibold bg-white',
-                activeCharacterId === character.id && 'bg-yellow-500 border-1 border-black/30',
+                'flex items-center p-3 w-fit relative group cursor-pointer text-left md:text-sm rounded-sm font-semibold bg-yellow-500',
+                activeCharacterId === character.id &&
+                  ' bg-gray-950 transition-all duration-300 text-white border-1 border-black/30',
               )}
               key={character.id}
               value={character.id}
@@ -67,19 +68,20 @@ const MinifigTabs = memo(() => {
                 >
                   <X className="h-3 w-3 " />
                 </CTAButton>
-                <span className="">{character.name}</span>
+                <span className="font-light">{character.name}</span>
               </div>
             </TabsTrigger>
           ))}
         </TabsList>
 
-        <Divider className="mt-4 h-[2px]" />
+        <Divider className="mt-4 h-[2px] bg-gray-950" />
 
         <CTAButton
-          className="bg-yellow-500 border-1 border-black/30 cursor-pointer self-end  text-xl p-6 hover:bg-yellow-600 font-bold"
+          variant="ghost"
+          className="bg-yellow-500 border-1 border-black/30 cursor-pointer self-end text-black text-xl md:text-sm p-6"
           onClick={() => setShowModal(true)}
         >
-          Create New Project
+          Add New Project
         </CTAButton>
       </Tabs>
 

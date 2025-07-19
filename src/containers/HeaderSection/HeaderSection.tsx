@@ -29,7 +29,7 @@ const HeaderSection = memo(() => {
             className=" cursor-pointer relative  bg-transparent hover:bg-white/10"
             onClick={handleToggleCart}
           >
-            <div className=" bg-red-500 rounded-full w-5 h-5 text-center flex flex-col align-middle justify-center text-white font-semibold absolute -top-2 -right-2">
+            <div className=" bg-red-500 rounded-full w-5 h-5 text-center flex flex-col align-middle justify-center text-white absolute -top-2 -right-2">
               {projectEntries.length}
             </div>
             <ShoppingCart color="white" size={24} />

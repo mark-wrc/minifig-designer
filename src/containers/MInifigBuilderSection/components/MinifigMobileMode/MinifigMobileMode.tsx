@@ -1,4 +1,4 @@
-import { CTAButton, MinifigCanvas, MinifigTabs } from '@/components';
+import { MinifigCanvas, MinifigTabs } from '@/components';
 import { memo } from 'react';
 import { MinifigBuilderCardPopupModal } from '../MinifigBuilderCartPopupModal';
 import { IMinifigMobileModeProps } from './MinifigModalMode.types';
@@ -15,33 +15,25 @@ const MinifigMobileMode = memo<IMinifigMobileModeProps>(
     const activeMinifigProject = characters.find((char) => char.id === activeCharacterId);
     return (
       <section className="">
-        <header className="mb-10 text-center pt-12">
-          <h1 className="text-6xl text-white font-bold">CREATE YOUR OWN</h1>
-          <h3 className="font-bold text-white text-2xl">START BUILDING</h3>
+        <header className="mb-10 text-black text-center pt-12 md:hidden">
+          <h1 className=" text-4xl font-bold">CREATE YOUR OWN</h1>
+          <h3 className="font-bold text-2xl">START BUILDING</h3>
         </header>
-        <MinifigTabs />
 
-        <MinifigCanvas
-          wardrobeContainerStyle=" "
-          minifigParts={minifigParts}
-          wardrobeItems={minifigData}
-          selectorComponent={
-            <MinifigCategoryOptions
-              activeMinifigProject={activeMinifigProject}
-              className=" flex flex-nowrap bg-frosted-white py-2"
-              isMobileMode
-            />
-          }
-        />
+        <div className="p-4">
+          <MinifigTabs />
 
-        <CTAButton
-          className="flex justify-self-end cursor-pointer mt-4 bg-yellow-500 text-lg p-6"
-          onClick={() => modalDisclosure.onDisclosureOpen()}
-          disabled={!minifigProjects.length}
-        >
-          {/* Add to cart ({minifigProjects.length} project{minifigProjects.length !== 1 ? 's' : ''}) */}
-          Add to cart
-        </CTAButton>
+          <MinifigCanvas
+            wardrobeContainerStyle=" "
+            minifigParts={minifigParts}
+            wardrobeItems={minifigData}
+            minifigProjects={minifigProjects}
+            cartModalDisclosure={modalDisclosure}
+            selectorComponent={
+              <MinifigCategoryOptions activeMinifigProject={activeMinifigProject} isMobileMode />
+            }
+          />
+        </div>
 
         {modalDisclosure.open && minifigProjects && (
           <MinifigBuilderCardPopupModal

@@ -12,7 +12,7 @@ const MinifigPart = memo<IMinifigPartProps>(({ type, minifigPartsImages, classNa
   }, [modalDisclosure]);
 
   return (
-    <section className="flex justify-center w-[180px] transition-all duration-300 hover:scale-110 hover:shadow-sm">
+    <section className="flex justify-center w-[180px] md:w-[130px] transition-all duration-300 hover:scale-110 hover:shadow-sm">
       <div className={cn('flex items-center', className)}>
         <figure>
           {minifigPartsImages && (

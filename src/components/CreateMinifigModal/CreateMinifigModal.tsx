@@ -62,7 +62,7 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
               <DialogTitle className=" font-black text-3xl">START YOUR BUILD</DialogTitle>
 
               <DialogDescription className="my-4 text-lg">
-                {mode === 'create' ? 'Name your Project' : 'Enter new name  '}
+                {mode === 'create' ? 'Name your Project' : 'Enter new project name  '}
               </DialogDescription>
             </DialogHeader>
 

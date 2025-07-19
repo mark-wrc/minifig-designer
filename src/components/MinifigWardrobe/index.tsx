@@ -1,2 +1,2 @@
 export { default as MinifigWardrobe } from './MinifigWardrobe';
-export type { IMinifigWardrobeItems } from './MinifigWardrobe.types';
+export type { IMinifigWardrobeProps } from './MinifigWardrobe.types';

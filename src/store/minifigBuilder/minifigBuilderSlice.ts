@@ -90,6 +90,10 @@ const minifigBuilderSlice = createSlice({
       state.characters = [];
       state.activeCharacterId = null;
     },
+
+    clearSelectedCategory: (state) => {
+      state.selectedCategory = null;
+    },
   },
 });
 

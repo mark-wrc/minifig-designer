@@ -10,9 +10,17 @@ import { useDisclosureParam } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { MinifigWardrobe } from '../MinifigWardrobe';
 import { MinifigWardrobeItemDetails } from '../MinifigWardrobeItemDetails';
-
+import { CTAButton } from '../CTAButton';
 const MinifigCanvas = memo<IMinifigCanvasProps>(
-  ({ minifigParts, wardrobeItems = [], className, wardrobeContainerStyle, selectorComponent }) => {
+  ({
+    minifigParts,
+    wardrobeItems = [],
+    className,
+    wardrobeContainerStyle,
+    selectorComponent,
+    minifigProjects,
+    cartModalDisclosure,
+  }) => {
     const dispatch = useDispatch();
     const wardrobeRef = useRef<HTMLDivElement>(null);
     const [selectedItem, setSelectedItem] = useState<MinifigPartData | null>(null);
@@ -36,23 +44,25 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
         });
     }, [selectedCategory]);
 
-    const handleCategoryClick = useCallback(
+    // handle select minifig part
+    const handleSelectMinifigItem = useCallback(
       (item: MinifigPartData) => {
         if (characters.length === 0) {
           modalDisclosure.onDisclosureOpen();
           setModalMode('create');
           return;
         }
+
         dispatch(setSelectedPart(item));
       },
       [characters.length, dispatch, modalDisclosure],
     );
 
-    const handleItemClick = (item: MinifigPartData) => {
+    const handleMinifigItemDetailsClick = useCallback((item: MinifigPartData) => {
       setSelectedItem(item);
-    };
+    }, []);
 
-    const handleBackClick = useCallback(() => setSelectedItem(null), []);
+    const handleBackNavigation = useCallback(() => setSelectedItem(null), []);
 
     const handleCloseModal = useCallback(() => {
       const closeModal = modalDisclosure.onDisclosureClose();
@@ -61,30 +71,59 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
     }, [modalDisclosure]);
 
     return (
-      <section className={cn('flex h-full w-full  gap-4 flex-col md:flex-row', className)}>
+      <section
+        className={cn(
+          'flex h-full w-full flex-col md:flex-row md:border-3 md:rounded-t-md  md:border-black/50',
+          className,
+        )}
+      >
         {/* Minifig renderer section */}
-        <MinifigRenderer
-          ActiveMinifigProject={ActiveMinifigProject}
-          setModalMode={setModalMode}
-          minifigParts={minifigParts}
-          modalDisclosure={modalDisclosure}
-        />
+
+        <div className="md:border-r-3 border-r-black/50 p-0 mr-0 lg:py-8">
+          <MinifigRenderer
+            ActiveMinifigProject={ActiveMinifigProject}
+            setModalMode={setModalMode}
+            minifigParts={minifigParts}
+            modalDisclosure={modalDisclosure}
+          />
+        </div>
 
         {/*Minifig Wardrobe section */}
-        <section className="p-4 bg-white rounded-sm">
-          {selectedItem ? (
-            <MinifigWardrobeItemDetails wardrobeItems={selectedItem} onClick={handleBackClick} />
-          ) : (
-            <MinifigWardrobe
-              ref={wardrobeRef}
-              wardrobeItems={wardrobeItems}
-              selectedCategory={selectedCategory}
-              onCategoryClick={handleCategoryClick}
-              className={wardrobeContainerStyle}
-              selectorComponent={selectorComponent}
-              onItemClick={handleItemClick}
-            />
-          )}
+
+        <section className="bg-white flex flex-col rounded-sm mx-auto md:mx-0 mt-12 md:mt-0">
+          <div className=" mx-auto">
+            {selectedItem ? (
+              <MinifigWardrobeItemDetails
+                wardrobeItems={selectedItem}
+                onClick={handleBackNavigation}
+                onCategoryClick={handleSelectMinifigItem}
+              />
+            ) : (
+              <MinifigWardrobe
+                ref={wardrobeRef}
+                wardrobeItems={wardrobeItems}
+                selectedCategory={selectedCategory}
+                onCategoryClick={handleSelectMinifigItem}
+                className={wardrobeContainerStyle}
+                minifigProjects={minifigProjects ?? []}
+                cartModalDisclosure={cartModalDisclosure}
+                selectorComponent={selectorComponent}
+                onItemDetailsClick={handleMinifigItemDetailsClick}
+              />
+            )}
+          </div>
+
+          {/*Add to Cart button only appears when its mobile view  */}
+          <div className=" bg-gray-950 p-2 h-fit md:hidden">
+            <CTAButton
+              className="flex justify-self-end cursor-pointer bg-yellow-500 text-sm p-4 mt-10"
+              onClick={() => cartModalDisclosure?.onDisclosureOpen()}
+              disabled={!minifigProjects?.length}
+            >
+              {/* Add to cart ({minifigProjects.length} project{minifigProjects.length !== 1 ? 's' : ''}) */}
+              Add to cart
+            </CTAButton>
+          </div>
         </section>
 
         {/* Modal section */}
