@@ -1,4 +1,4 @@
-import { MinifigCanvas, MinifigTabs } from '@/components';
+import { CTAButton, MinifigCanvas, MinifigTabs } from '@/components';
 import { memo } from 'react';
 import { MinifigBuilderCardPopupModal } from '../MinifigBuilderCartPopupModal';
 import { IMinifigMobileModeProps } from './MinifigModalMode.types';
@@ -20,20 +20,30 @@ const MinifigMobileMode = memo<IMinifigMobileModeProps>(
           <h3 className="font-bold text-2xl">START BUILDING</h3>
         </header>
 
-        <div className="p-4">
+        <section className="p-4 py-24">
           <MinifigTabs />
 
-          <MinifigCanvas
-            wardrobeContainerStyle=" "
-            minifigParts={minifigParts}
-            wardrobeItems={minifigData}
-            minifigProjects={minifigProjects}
-            cartModalDisclosure={modalDisclosure}
-            selectorComponent={
-              <MinifigCategoryOptions activeMinifigProject={activeMinifigProject} isMobileMode />
-            }
-          />
-        </div>
+          <div className="">
+            <MinifigCanvas
+              minifigParts={minifigParts}
+              wardrobeItems={minifigData}
+              minifigProjects={minifigProjects}
+              cartModalDisclosure={modalDisclosure}
+              selectorComponent={
+                <MinifigCategoryOptions activeMinifigProject={activeMinifigProject} isMobileMode />
+              }
+            />
+            <CTAButton
+              variant="ghost"
+              className="flex justify-self-center text-xl cursor-pointer bg-yellow-500 py-6 border border-gray-950 mt-6"
+              onClick={() => modalDisclosure?.onDisclosureOpen()}
+              disabled={!minifigProjects?.length}
+            >
+              {/* Add to cart ({minifigProjects.length} project{minifigProjects.length !== 1 ? 's' : ''}) */}
+              Add to cart
+            </CTAButton>
+          </div>
+        </section>
 
         {modalDisclosure.open && minifigProjects && (
           <MinifigBuilderCardPopupModal

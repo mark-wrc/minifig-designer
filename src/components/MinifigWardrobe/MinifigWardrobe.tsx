@@ -18,8 +18,10 @@ const MinifigWardrobe = memo(
     ) => {
       if (wardrobeItems.length === 0 || !selectedCategory) {
         return (
-          <div className="border-2 w-[500px] max-h-full flex justify-center flex-col items-center">
-            please select a category
+          <div className="border-2 w-full p-4 flex h-[300px]  justify-center flex-col items-center">
+            <p className="text-xl text-center">
+              Start by exploring the different options e.g. Heads and Torso!
+            </p>
           </div>
         );
       }
@@ -27,7 +29,7 @@ const MinifigWardrobe = memo(
         <section
           className={cn(
             className,
-            'w-full h-full border-2 border-gray-950/50 rounded-t-2xl md:border-0',
+            'w-full h-full border-2 border-gray-950 rounded-md md:border-0 md:rounded-none',
           )}
           ref={ref}
         >
@@ -38,12 +40,12 @@ const MinifigWardrobe = memo(
 
           {/* TODO: add Tabs when its mobile view */}
           {wardrobeItems?.length > 0 && (
-            <section className="grid grid-cols-3 lg:grid-cols-4 gap-4 max-h-[300px] md:max-h-[480px] overflow-y-auto p-2 mt-10 md:mt-0">
+            <section className="grid grid-cols-3 lg:grid-cols-4 gap-4 max-h-[300px] md:max-h-[480px] overflow-y-auto p-2 mt-10 md:mt-0 minifig-scrollbar">
               {wardrobeItems.map((item) => (
                 <section className="flex flex-col h-full">
                   <div
-                    key={item.id}
-                    className="bg-gray-100 rounded-lg p-1 h-full cursor-pointer"
+                    key={item?.id}
+                    className="bg-gray-100 rounded-sm p-1 h-full cursor-pointer"
                     onClick={() => onItemDetailsClick(item)}
                   >
                     <img className="w-[100px] rounded-sm" src={item.image} alt={item.name} />
@@ -51,8 +53,10 @@ const MinifigWardrobe = memo(
                   <p className="text-xs text-gray-600 mb-2">{item.description}</p>
                   <p className="text-green-600 font-bold text-sm">${item.price}</p> */}
                   </div>
+
                   <CTAButton
-                    className="bg-yellow-500 text-md w-fit self-center px-3 -translate-y-2 rounded-sm"
+                    variant="ghost"
+                    className="bg-yellow-400 text-md w-fit self-center px-6 -translate-y-2 rounded-sm text-black border border-gray-950"
                     onClick={() => onCategoryClick(item)}
                   >
                     Add

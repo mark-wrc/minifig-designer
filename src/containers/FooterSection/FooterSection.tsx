@@ -18,7 +18,7 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
 
   return (
     <section className=" bg-minifig-brand-end py-6 p-6  ">
-      <div className=" w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className=" w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 container mx-auto ">
         {/* Accounts section  */}
         <section className=" grid grid-cols-2">
           <FooterSectionCard className="flex flex-col" title="Account">

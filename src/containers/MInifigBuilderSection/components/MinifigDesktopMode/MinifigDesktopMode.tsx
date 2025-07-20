@@ -11,10 +11,10 @@ const MinifigDesktopMode = memo<IMinifigDesktopModeProps>(
       <MinifigTabs />
 
       <MinifigCanvas minifigParts={minifigParts} wardrobeItems={minifigData} />
-      <div className="bg-gray-950 px-2 py-4 rounded-b-2xl ">
+      <div className="bg-minifig-brand-end px-2 py-3 rounded-b-2xl ">
         <CTAButton
           variant="ghost"
-          className="flex justify-self-end cursor-pointer bg-yellow-500 hover:"
+          className="flex justify-self-end cursor-pointer bg-yellow-500 border border-gray-950"
           onClick={() => modalDisclosure.onDisclosureOpen()}
           disabled={!minifigProjects.length}
         >

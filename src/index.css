@@ -47,7 +47,7 @@
   --color-minifig-lavander-blue: oklch(0.48 0.0618 252.37);
   --color-soft-gray: oklch(0.94 0 0);
   --color-minifig-brand-end: oklch(0.3886 0.0498 254.4);
-  --color-frosted-white:oklch(0.9683 0.0069 247.9);
+  --color-frosted-white: oklch(0.9683 0.0069 247.9);
 
   /* Fonts */
   --font-sans: 'Lilita One', ui-sans-serif, system-ui, sans-serif;
@@ -128,7 +128,18 @@
   padding: 0 !important;
 }
 #body {
-  @apply  bg-white;
+  @apply bg-white;
+}
+
+.minifig-scrollbar {
+  @apply [&::-webkit-scrollbar]:w-[12px]
+    [&::-webkit-scrollbar-track]:bg-gray-200
+    [&::-webkit-scrollbar-thumb]:bg-yellow-500
+    [&::-webkit-scrollbar-thumb]:rounded-xs
+    [&::-webkit-scrollbar-thumb]:border
+    [&::-webkit-scrollbar-thumb]:border-gray-950
+    [&::-webkit-scrollbar-thumb]:cursor-pointer
+    [&::-webkit-scrollbar-thumb]:hover:bg-yellow-600;
 }
 
 body,

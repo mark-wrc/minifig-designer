@@ -14,11 +14,11 @@ const CategorySelector = memo<CategorySelectorProps>(
       <section
         onClick={handleCategoryClick}
         className={cn(
-          ' bg-sunny cursor-pointer  hover:bg-gray-950 transition-all duration-200 shadow-black/20 text-center shadow-lg ',
+          ' bg-sunny cursor-pointer hover:bg-minifig-brand-end transition-all duration-200 shadow-lg text-center',
           className,
-          isCategoryTab && 'bg-transparent hover:bg-yellow-300  p-0 px-4 py-1',
+          isCategoryTab && 'bg-transparent hover:bg-yellow-300 p-0 px-4 py-1',
           isSelected ? 'bg-yellow-300' : 'bg-none',
-          isSelected && !isCategoryTab ? 'bg-gray-950 border-2 border-white/45' : '',
+          isSelected && !isCategoryTab ? 'bg-minifig-brand-end' : '',
         )}
       >
         {!isCategoryTab ? (
@@ -26,7 +26,9 @@ const CategorySelector = memo<CategorySelectorProps>(
             <img src={item.image} alt={item.title} className="w-28" />
           </div>
         ) : (
-          <span className="py-0">{item.title}</span>
+          <div className="py-0">
+            <span>{item.title}</span>
+          </div>
         )}
       </section>
     );

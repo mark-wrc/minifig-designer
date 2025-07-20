@@ -10,7 +10,7 @@ import { useDisclosureParam } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { MinifigWardrobe } from '../MinifigWardrobe';
 import { MinifigWardrobeItemDetails } from '../MinifigWardrobeItemDetails';
-import { CTAButton } from '../CTAButton';
+
 const MinifigCanvas = memo<IMinifigCanvasProps>(
   ({
     minifigParts,
@@ -73,7 +73,7 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
     return (
       <section
         className={cn(
-          'flex h-full w-full flex-col md:flex-row md:border-3 md:rounded-t-md  md:border-black/50',
+          'flex h-full w-full flex-col md:flex-row md:border-3 md:rounded-t-md md:border-black/50',
           className,
         )}
       >
@@ -114,16 +114,6 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
           </div>
 
           {/*Add to Cart button only appears when its mobile view  */}
-          <div className=" bg-gray-950 p-2 h-fit md:hidden">
-            <CTAButton
-              className="flex justify-self-end cursor-pointer bg-yellow-500 text-sm p-4 mt-10"
-              onClick={() => cartModalDisclosure?.onDisclosureOpen()}
-              disabled={!minifigProjects?.length}
-            >
-              {/* Add to cart ({minifigProjects.length} project{minifigProjects.length !== 1 ? 's' : ''}) */}
-              Add to cart
-            </CTAButton>
-          </div>
         </section>
 
         {/* Modal section */}

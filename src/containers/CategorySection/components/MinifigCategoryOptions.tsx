@@ -68,6 +68,8 @@ const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
               isSelected={selectedCategory === category.type}
               isCategoryTab={isMobileMode}
             />
+
+            {!isMobileMode && <p className=" text-lg">{category.title}</p>}
           </motion.div>
         ))}
       </section>
