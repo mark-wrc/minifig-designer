@@ -36,7 +36,13 @@ const HeaderSection = memo(() => {
               <ShoppingCart color="white" size={24} />
             </div>
             <div className=" cursor-pointer">
-              {user ? <UserDisplay user={user} /> : <CircleUserRound size={24} color="white" />}
+              {user ? (
+                <UserDisplay user={user} />
+              ) : (
+                <a href="https://www.worldofminifigs.com/login">
+                  <CircleUserRound size={24} color="white" />
+                </a>
+              )}
             </div>
           </section>
         </div>

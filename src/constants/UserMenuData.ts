@@ -5,16 +5,16 @@ export const UserMenuData: IUserItems[] = [
   {
     icon: Box,
     label: 'My Orders',
-    link: '/',
+    link: 'https://www.worldofminifigs.com/my-orders?status=all',
   },
   {
     icon: User,
     label: 'Profile',
-    link: '/',
+    link: 'https://www.worldofminifigs.com/profile',
   },
   {
     icon: Settings,
     label: 'Settings',
-    link: '/',
+    link: 'https://www.worldofminifigs.com/settings',
   },
 ];
