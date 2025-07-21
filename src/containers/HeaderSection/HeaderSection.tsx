@@ -11,16 +11,15 @@ import { AnimatePresence } from 'motion/react';
 
 const HeaderSection = memo(() => {
   const { user } = useAuth();
-
   const { projects } = useSelector((state: RootState) => state.MinifigBuilderCart);
 
   const projectEntries = Object.entries(projects);
-
   const [openCart, setOpenCart] = useState(false);
 
   const handleToggleCart = useCallback(() => {
     setOpenCart((prev) => !prev);
   }, []);
+
   return (
     <section className="py-6">
       <div className="w-full px-4 fixed z-50 bg-minifig-brand-end top-0 py-4">
@@ -42,7 +41,9 @@ const HeaderSection = memo(() => {
           </section>
         </div>
       </div>
-      <AnimatePresence>{openCart && <CartContainer onclose={handleToggleCart} />}</AnimatePresence>
+      <AnimatePresence>
+        {openCart && <CartContainer setOpenCart={setOpenCart} onclose={handleToggleCart} />}
+      </AnimatePresence>
     </section>
   );
 });

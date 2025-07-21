@@ -3,8 +3,8 @@ import { memo, useCallback } from 'react';
 import { GeneralCard } from '../GeneralCard';
 import type { ICartItemProps } from './CartItem.types';
 import { Trash2, Plus, Minus } from 'lucide-react';
-import { Button } from '../ui/button';
 import { useShoppingCart } from '@/hooks/useShoppingCart';
+import { CTAButton } from '../CTAButton';
 
 const CartItem = memo<ICartItemProps>(({ projectName }) => {
   const { getMinifigProject, removeItemFromCart, updateItemQuantity } = useShoppingCart();
@@ -48,29 +48,34 @@ const CartItem = memo<ICartItemProps>(({ projectName }) => {
                 <p>${item.price}</p>
               </div>
             </div>
+
+            {/* actions */}
             <section className="flex flex-col gap-4">
-              <span
-                className="hover:bg-black/50 w-fit h-fit p-2 rounded-sm cursor-pointer self-end"
+              <CTAButton
+                variant="ghost"
+                className="self-end hover:bg-red-500 hover:text-white"
                 onClick={() => handleRemoveCartItem(projectName, item.id)}
               >
                 <Trash2 />
-              </span>
+              </CTAButton>
               <div className="flex items-center gap-4">
-                <Button
-                  className="cursor-pointer"
+                <CTAButton
+                  variant="default"
+                  className="cursor-pointer hover:bg-red-600 hover:text-white"
                   onClick={() => updateQuantity(item.id, -1)}
                   disabled={item.quantity <= 1}
                 >
-                  <Minus />
-                </Button>
+                  <Minus strokeWidth={2.75} />
+                </CTAButton>
                 <span className="min-w-[2rem] text-center">{item.quantity}</span>
-                <Button
+                <CTAButton
+                  variant="default"
                   className="cursor-pointer"
                   onClick={() => updateQuantity(item.id, 1)}
                   disabled={item.quantity >= item.stock}
                 >
                   <Plus />
-                </Button>
+                </CTAButton>
               </div>
               <div className="text-xs text-gray-400">Stock: {item.stock}</div>
             </section>

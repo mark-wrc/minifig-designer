@@ -11,7 +11,9 @@ const ConfirmationDialog = memo<IConfirmationDialogProps>(({ icon: Icon, ...prop
         <DialogHeader>
           <DialogTitle>{props.title}</DialogTitle>
           {Icon && <Icon />}
-          {props.emoji && <div className={props.emoji.emojiStyles}>{props.emoji.text}</div>}
+          {props.emoji && (
+            <div className={cn('select-none', props.emoji.emojiStyles)}>{props.emoji.text}</div>
+          )}
           <DialogDescription className={cn('text-center py-20', props.descriptionContainerStyle)}>
             {props.description}
           </DialogDescription>
