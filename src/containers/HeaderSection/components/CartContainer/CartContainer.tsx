@@ -10,7 +10,7 @@ import { useShoppingCart } from '@/hooks/useShoppingCart';
 import { motion } from 'motion/react';
 import { CartContainerAnimation, CartOverlayAnimation } from '@/animations';
 
-const CartContainer = memo<ICartContainerProps>(({ onclose }) => {
+const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
   const { projects, totalItems, totalPrice } = useSelector(
     (state: RootState) => state.MinifigBuilderCart,
   );
@@ -40,7 +40,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose }) => {
         animate="enter"
         exit="exit"
         className="bg-black/90 fixed w-full top-0 left-0 z-50 bottom-0 h-full"
-        onClick={onclose}
+        onClick={() => setOpenCart(false)}
       />
 
       {/* Cart Container */}
@@ -53,7 +53,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose }) => {
       >
         <div className="flex justify-between items-center mb-6">
           <div className="text-white">
-            <h2 className="text-2xl font-black">Cart ({totalItems})</h2>
+            <h2 className="text-2xl">Cart ({totalItems})</h2>
             <p className="text-lg">Sub total: ${totalPrice}</p>
           </div>
           <X
@@ -67,7 +67,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose }) => {
         <div className="flex-1 overflow-y-auto">
           {projectEntries.length === 0 && (
             <div className="text-center text-white h-full flex flex-col align-middle justify-center">
-              <h1 className="text-3xl font-black mb-4">Your cart is empty</h1>
+              <h1 className="text-4xl mb-4">Your cart is empty</h1>
               <p>Add some minifigs to your cart to get started!</p>
             </div>
           )}
@@ -76,7 +76,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose }) => {
             <div key={projectName} className="mb-6">
               <div className="flex justify-between items-center mb-2">
                 <div className="text-white">
-                  <h3 className="font-bold text-lg">{projectName}</h3>
+                  <h3 className="text-lg">{projectName}</h3>
                   <p className="text-sm text-gray-300">${project.totalPrice}</p>
                 </div>
                 <Button
@@ -104,7 +104,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose }) => {
                 {totalItems} total items
               </p>
             </div>
-            <Button className="w-full cursor-pointer bg-green-600 hover:bg-green-700 font-black uppercase">
+            <Button className="w-full cursor-pointer bg-green-600 hover:bg-green-700 uppercase">
               Checkout (${totalPrice})
             </Button>
           </div>

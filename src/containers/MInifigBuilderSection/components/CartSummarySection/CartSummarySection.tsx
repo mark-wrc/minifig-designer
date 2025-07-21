@@ -10,7 +10,7 @@ const CartSummarySection = memo<ICartSummarySectionProps>(
       </div>
       <div className="text-sm text-gray-600">
         <p>
-          {validProjects} characters • {totalItems} total items
+          {validProjects} Projects • {totalItems} total items
         </p>
       </div>
     </div>
