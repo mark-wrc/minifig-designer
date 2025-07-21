@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { CircleUserRound } from 'lucide-react';
 import { UserDisplay } from '@/components/UserDisplay';
+import { AnimatePresence } from 'motion/react';
 
 const HeaderSection = memo(() => {
   const { user } = useAuth();
@@ -41,8 +42,7 @@ const HeaderSection = memo(() => {
           </section>
         </div>
       </div>
-
-      {openCart && <CartContainer onclose={handleToggleCart} />}
+      <AnimatePresence>{openCart && <CartContainer onclose={handleToggleCart} />}</AnimatePresence>
     </section>
   );
 });
