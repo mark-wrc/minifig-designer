@@ -8,7 +8,7 @@ import { UserAvatar } from '../UserAvatar';
 const UserDisplay = memo<IUserDisplayProps>(({ user }) => (
   <section>
     <GeneralPopover
-      className="bg-minifig-lavander-blue border-minifig-brand-end/55 w-fit mr-4"
+      className="bg-[#283858] border-minifig-brand-end/55 w-fit p-1"
       content={<UserMenu user={user} menuItems={UserMenuData} />}
     >
       <UserAvatar user={user} />

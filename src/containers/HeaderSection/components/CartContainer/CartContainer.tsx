@@ -40,7 +40,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
         animate="enter"
         exit="exit"
         className="bg-black/90 fixed w-full top-0 left-0 z-50 bottom-0 h-full"
-        onClick={() => setOpenCart(false)}
+        onClick={() => setOpenCart?.(false)}
       />
 
       {/* Cart Container */}
