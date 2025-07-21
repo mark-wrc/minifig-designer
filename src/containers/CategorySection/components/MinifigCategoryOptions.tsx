@@ -1,22 +1,23 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { IMinifigCategoryOptions } from './MinifigCategoryOptions.types';
 import { ICategoryItem, IFigureCategories, MinifigPartType } from '@/types';
 import { DefaultHairAndHead, DefaultLegs, DefaultTorso } from '@/assets/images';
 import { CategorySelector } from '@/components';
-import { setSelectedCategory } from '@/store/minifigBuilder/minifigBuilderSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { cn } from '@/lib/utils';
+import { motion } from 'motion/react';
+import { CategorySelectiorAnimation } from '@/animations/CategorySelectorAnimation';
+import { RootState } from '@/store';
+import { setSelectedCategory } from '@/store/minifigBuilder/minifigBuilderSlice';
 
 const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
   ({ activeMinifigProject, className, categoryContainerStyle, isMobileMode = false }) => {
     const dispatch = useDispatch();
-    const [selectedMinifigCategory, setSelectedMinifigCategory] = useState<MinifigPartType | null>(
-      null,
-    );
+    const { selectedCategory } = useSelector((state: RootState) => state.minifigBuilder);
 
     const handleCategorySelect = useCallback(
       (category: MinifigPartType) => {
-        setSelectedMinifigCategory(category);
+        setSelectedCategory(category);
         dispatch(setSelectedCategory(category));
       },
 
@@ -48,24 +49,28 @@ const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
     );
     return (
       <section
-        className={cn('flex gap-4 flex-wrap mx-auto justify-center rounded-3xl ', className)}
+        className={cn('flex gap-4 flex-wrap mx-auto justify-center rounded-3xl', className)}
       >
-        {minifigCategories.map((category) => (
-          <div
+        {minifigCategories.map((category, idx) => (
+          <motion.div
+            variants={CategorySelectiorAnimation}
+            initial="initial"
+            animate="enter"
+            custom={idx}
+            key={idx}
             className={cn(' flex flex-col items-center justify-center', categoryContainerStyle)}
           >
             <CategorySelector
               key={category.id}
               item={category}
-              className="rounded-sm w-fit p-4"
+              className="rounded-sm w-full p-2"
               onClick={handleCategorySelect}
-              isSelected={
-                selectedMinifigCategory === (category.title as unknown as MinifigPartType)
-              }
+              isSelected={selectedCategory === category.type}
               isCategoryTab={isMobileMode}
             />
-            <span className="font-bold  text-white">{category.title}</span>
-          </div>
+
+            {!isMobileMode && <p className=" text-lg">{category.title}</p>}
+          </motion.div>
         ))}
       </section>
     );

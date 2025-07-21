@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
 import { Button } from '@/components/ui/button';
 import { useShoppingCart } from '@/hooks/useShoppingCart';
+import { motion } from 'motion/react';
+import { CartContainerAnimation, CartOverlayAnimation } from '@/animations';
 
 const CartContainer = memo<ICartContainerProps>(({ onclose }) => {
   const { projects, totalItems, totalPrice } = useSelector(
@@ -32,17 +34,27 @@ const CartContainer = memo<ICartContainerProps>(({ onclose }) => {
   return (
     <>
       {/* Overlay */}
-      <div
+      <motion.div
+        variants={CartOverlayAnimation}
+        initial="initial"
+        animate="enter"
+        exit="exit"
         className="bg-black/90 fixed w-full top-0 left-0 z-50 bottom-0 h-full"
         onClick={onclose}
       />
 
       {/* Cart Container */}
-      <section className="w-full bg-minifig-brand-end sm:w-1/2 lg:w-1/3 fixed right-0 top-0 bottom-0 z-[99999] p-4 flex flex-col">
+      <motion.section
+        variants={CartContainerAnimation}
+        initial="initial"
+        animate="enter"
+        exit="exit"
+        className="w-full bg-minifig-brand-end sm:w-1/2 lg:w-1/3 fixed right-0 top-0 bottom-0 z-[99999] p-4 flex flex-col"
+      >
         <div className="flex justify-between items-center mb-6">
           <div className="text-white">
             <h2 className="text-2xl font-black">Cart ({totalItems})</h2>
-            <p className="text-lg">Total: ${totalPrice}</p>
+            <p className="text-lg">Sub total: ${totalPrice}</p>
           </div>
           <X
             color="white"
@@ -88,7 +100,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose }) => {
           <div className="pt-4">
             <div className="text-white mb-2">
               <p className="text-sm">
-                {projectEntries.length} project{projectEntries.length !== 1 ? 's' : ''} •{' '}
+                {projectEntries.length} Minifig project{projectEntries.length !== 1 ? 's' : ''} •{' '}
                 {totalItems} total items
               </p>
             </div>
@@ -97,7 +109,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose }) => {
             </Button>
           </div>
         )}
-      </section>
+      </motion.section>
     </>
   );
 });

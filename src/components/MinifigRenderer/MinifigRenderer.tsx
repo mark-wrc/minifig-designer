@@ -1,5 +1,4 @@
 import { memo, useCallback } from 'react';
-import { CTAButton } from '../CTAButton';
 import { MinifigPart } from '../MinifigPart';
 import { MinifigPartType } from '@/types';
 import { IMinifigRendererProps } from './MinifigRenderer.types';
@@ -44,14 +43,14 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
 
     return (
       <section className={cn('flex-1', className)}>
-        <header className="flex flex-col mb-10">
-          <h3 className="text-center font-black mb-2 text-white text-4xl">
-            {ActiveMinifigProject?.name || 'No Character Selected'}
+        <header className="flex flex-col mb-10 text-black">
+          <h3 className="text-center font-black mb-2  text-4xl md:text-3xl">
+            {ActiveMinifigProject?.name || 'No Project Selected'}
           </h3>
           {ActiveMinifigProject && (
             <>
               <span
-                className="self-center text-lg text-white underline bg-transparent cursor-pointer w-fit hover:text-blue-800"
+                className="self-center text-lg md:text-base  underline bg-transparent cursor-pointer w-fit hover:text-blue-800"
                 onClick={handleMinifigTitleEdit}
               >
                 Edit Project Title
@@ -61,7 +60,7 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
         </header>
 
         {/* Minifig builder section */}
-        <section className="flex flex-col items-center relative mx-auto ">
+        <section className="flex flex-col items-center relative mx-auto  sm:max-w-sm md:w-[350px]">
           {Object.values(MinifigPartType).map((partType) => {
             const image = minifigParts?.[partType]?.image;
             const totalMinifigParts = minifigParts?.[partType]?.image?.length;
@@ -76,24 +75,22 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
                 {/* Add Minifig Parts  */}
 
                 {(totalMinifigParts ?? 0) > 0 && (
-                  <CTAButton
-                    className="cursor-pointer left-0 absolute"
+                  <div
+                    className="cursor-pointer left-5 absolute bg-yellow-500 rounded-md p-2 hover:bg-gray-950"
                     onClick={() => handlePartClick(partType)}
                   >
-                    <Plus size={32} />
-                  </CTAButton>
+                    <Plus size={22} strokeWidth={2.75} color="white" />
+                  </div>
                 )}
 
                 {/* Remove minifig Parts  */}
                 {hasMinifigParts && (
-                  <CTAButton
-                    variant="destructive"
-                    size="icon"
+                  <div
                     onClick={(e) => handleRemoveMinifigPart(e, partType)}
-                    className="h-10 w-10 absolute right-0"
+                    className="absolute right-5 bg-red-700 rounded-md  hover:bg-red-600 cursor-pointer p-2"
                   >
-                    <Trash2 size={20} />
-                  </CTAButton>
+                    <Trash2 size={22} color="white" />
+                  </div>
                 )}
 
                 <MinifigPart

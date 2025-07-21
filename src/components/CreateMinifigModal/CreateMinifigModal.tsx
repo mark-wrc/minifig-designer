@@ -9,10 +9,10 @@ import {
 } from '../ui/dialog';
 import { ICreateMinifigModalProps } from './CreateMinifigModal.types';
 import { Input } from '../ui/input';
-import { Button } from '../ui/button';
 import { useDispatch } from 'react-redux';
 import { createMinifigure, renameCharacter } from '@/store/minifigBuilder/minifigBuilderSlice';
 import { cn } from '@/lib/utils';
+import { CTAButton } from '../CTAButton';
 
 const CreateMinifigModal = memo<ICreateMinifigModalProps>(
   ({ onClose, initialProjectName, mode, characterId, ...props }) => {
@@ -62,7 +62,7 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
               <DialogTitle className=" font-black text-3xl">START YOUR BUILD</DialogTitle>
 
               <DialogDescription className="my-4 text-lg">
-                {mode === 'create' ? 'Name your Project' : 'Enter new name  '}
+                {mode === 'create' ? 'Name your Project' : 'Enter new project name  '}
               </DialogDescription>
             </DialogHeader>
 
@@ -70,7 +70,7 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
               <Input
                 id="username"
                 value={projectName}
-                placeholder="Project name e.g. Willy ong"
+                placeholder="Project name e.g. My Minifig Project"
                 onChange={handleInputChange}
                 autoFocus
                 className={cn(
@@ -83,12 +83,12 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
             </section>
 
             <DialogFooter className="mt-4">
-              <div className="relative inline-block">
-                <div className="absolute inset-0 bg-yellow-500" />
-                <Button className=" cursor-pointer text-lg relative bg-yellow-400 hover:bg-yellow-500 translate-x-1 translate-y-1 text-black font-bold  py-6 px-6 rounded-none transition-transform hover:translate-x-0 hover:translate-y-0">
-                  Save & Start Building
-                </Button>
-              </div>
+              <CTAButton
+                variant="ghost"
+                className=" cursor-pointer text-lg bg-yellow-400 hover:bg-yellow-500 translate-x-1 translate-y-1 text-black font-bold py-6 px-6 "
+              >
+                Save & Start Building
+              </CTAButton>
             </DialogFooter>
           </form>
         </DialogContent>

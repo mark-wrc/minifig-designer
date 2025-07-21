@@ -1,19 +1,35 @@
+import { UseDisclosureReturn } from '@/hooks';
 import type { MinifigPartType } from '@/types';
-import { MinifigPartData } from '@/types/Minifig';
+import { IMinifigProject, MinifigPartData } from '@/types/Minifig';
 
-export interface IMinifigCanvasProps {
-  projectTitle?: string;
-  minifigParts: {
-    [key in MinifigPartType]?: {
-      image: string;
-      type: MinifigPartType;
-    };
+export type IMinifigPartImageMap = {
+  [key in MinifigPartType]?: {
+    image: string;
+    type: MinifigPartType;
   };
+};
+
+export interface IMinifigCanvasEventHandlers {
   onPartClick?: (type: MinifigPartType) => void;
   onTitleEdit?: () => void;
   onSkinChange?: () => void;
-  wardrobeItems?: MinifigPartData[];
+}
+
+export interface IMinifigCanvasUIProps {
   className?: string;
   wardrobeContainerStyle?: string;
   selectorComponent?: React.ReactElement | null;
 }
+
+export interface IMinifigCanvasDataProps {
+  projectTitle?: string;
+  minifigProjects?: IMinifigProject[];
+  wardrobeItems?: MinifigPartData[];
+  minifigParts: IMinifigPartImageMap;
+  cartModalDisclosure?: UseDisclosureReturn;
+}
+
+export interface IMinifigCanvasProps
+  extends IMinifigCanvasDataProps,
+    IMinifigCanvasEventHandlers,
+    IMinifigCanvasUIProps {}

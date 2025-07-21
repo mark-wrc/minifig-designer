@@ -1,10 +1,8 @@
-import { CategorySection, MinifigBuilderSection } from '@/containers';
+import { MinifigBuilderSection } from '@/containers';
 
 const Home = () => {
   return (
-    <section className="min-h-full w-full flex flex-col p-8">
-      {/*TODO: hide Category section when its mobile view*/}
-      <CategorySection />
+    <section className="min-h-full w-full flex flex-col">
       <MinifigBuilderSection />
     </section>
   );

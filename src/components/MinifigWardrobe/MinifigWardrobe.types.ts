@@ -1,11 +1,26 @@
+import { UseDisclosureReturn } from '@/hooks';
 import { MinifigPartType } from '@/types';
-import { MinifigPartData } from '@/types/Minifig';
+import { IMinifigProject, MinifigPartData } from '@/types/Minifig';
 
-export interface IMinifigWardrobeItems {
+export interface IMinifigWardrobeBaseProps {
   wardrobeItems: MinifigPartData[];
   selectedCategory: MinifigPartType | null;
   onCategoryClick: (item: MinifigPartData) => void;
-  className?: string;
+  onItemDetailsClick: (item: MinifigPartData) => void;
+}
+
+export interface IMinifigWardrobeUIProps {
   ref: HTMLDivElement;
+  className?: string;
   selectorComponent?: React.ReactElement | null;
 }
+
+export interface IMinifigWardrobeExtras {
+  cartModalDisclosure?: UseDisclosureReturn;
+  minifigProjects: IMinifigProject[];
+}
+
+export interface IMinifigWardrobeProps
+  extends IMinifigWardrobeBaseProps,
+    IMinifigWardrobeUIProps,
+    IMinifigWardrobeExtras {}
