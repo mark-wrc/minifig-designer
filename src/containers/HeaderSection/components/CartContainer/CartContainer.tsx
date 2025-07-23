@@ -49,7 +49,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
         initial="initial"
         animate="enter"
         exit="exit"
-        className="w-full bg-minifig-brand-end sm:w-1/2 lg:w-1/3 fixed right-0 top-0 bottom-0 z-[99999] p-4 flex flex-col"
+        className="w-full bg-minifig-brand-end sm:w-[55%] md:w-[60%] lg:w-[50%] xl:w-1/4 fixed right-0 top-0 bottom-0 z-[99999] p-4 flex flex-col"
       >
         <div className="flex justify-between items-center mb-6">
           <div className="text-white">

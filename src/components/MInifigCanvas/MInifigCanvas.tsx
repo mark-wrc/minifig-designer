@@ -10,6 +10,8 @@ import { useDisclosureParam } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { MinifigWardrobe } from '../MinifigWardrobe';
 import { MinifigWardrobeItemDetails } from '../MinifigWardrobeItemDetails';
+import { motion } from 'motion/react';
+import { CanvasContainerAnimation, RendererAnimation, WardrobeAnimation } from '@/animations';
 
 const MinifigCanvas = memo<IMinifigCanvasProps>(
   ({
@@ -71,7 +73,11 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
     }, [modalDisclosure]);
 
     return (
-      <section
+      <motion.section
+        variants={CanvasContainerAnimation}
+        initial="initial"
+        animate="enter"
+        exit="exit"
         className={cn(
           'flex h-full w-full flex-col md:flex-row md:border-3 md:rounded-t-md md:border-black/50',
           className,
@@ -79,19 +85,25 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
       >
         {/* Minifig renderer section */}
 
-        <div className="md:border-r-3 border-r-black/50 p-0 mr-0 lg:py-8">
+        <motion.div
+          variants={RendererAnimation}
+          className="md:border-r-3 border-r-black/50 p-0 mr-0 lg:py-8"
+        >
           <MinifigRenderer
             ActiveMinifigProject={ActiveMinifigProject}
             setModalMode={setModalMode}
             minifigParts={minifigParts}
             modalDisclosure={modalDisclosure}
           />
-        </div>
+        </motion.div>
 
         {/*Minifig Wardrobe section */}
 
-        <section className="bg-white flex flex-col rounded-sm mx-auto md:mx-0 mt-12 md:mt-0">
-          <div className=" mx-auto">
+        <motion.section
+          variants={WardrobeAnimation}
+          className="bg-white flex flex-col rounded-sm mx-auto md:mx-0 mt-12 md:mt-0"
+        >
+          <div className="mx-auto">
             {selectedItem ? (
               <MinifigWardrobeItemDetails
                 wardrobeItems={selectedItem}
@@ -112,9 +124,7 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
               />
             )}
           </div>
-
-          {/*Add to Cart button only appears when its mobile view  */}
-        </section>
+        </motion.section>
 
         {/* Modal section */}
         {modalDisclosure.open && (
@@ -125,7 +135,7 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
             onClose={handleCloseModal}
           />
         )}
-      </section>
+      </motion.section>
     );
   },
 );
