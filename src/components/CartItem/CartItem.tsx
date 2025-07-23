@@ -35,7 +35,7 @@ const CartItem = memo<ICartItemProps>(({ projectName }) => {
     <>
       {cartItems.map((item) => (
         <GeneralCard key={item.id} className="bg-transparent border-none mb-4 w-full">
-          <section className="flex gap-2 text-white justify-between">
+          <section className="flex flex-col md:flex-row gap-2 text-white justify-between">
             <div className="flex gap-2">
               <img
                 src={item.partImage || '/placeholder.svg'}
@@ -50,7 +50,7 @@ const CartItem = memo<ICartItemProps>(({ projectName }) => {
             </div>
 
             {/* actions */}
-            <section className="flex flex-col gap-4">
+            <section className="flex flex-col gap-0  md:gap-4">
               <CTAButton
                 variant="ghost"
                 className="self-end hover:bg-red-500 hover:text-white"
@@ -60,7 +60,6 @@ const CartItem = memo<ICartItemProps>(({ projectName }) => {
               </CTAButton>
               <div className="flex items-center gap-4">
                 <CTAButton
-                  variant="default"
                   className="cursor-pointer hover:bg-red-600 hover:text-white"
                   onClick={() => updateQuantity(item.id, -1)}
                   disabled={item.quantity <= 1}
@@ -69,7 +68,6 @@ const CartItem = memo<ICartItemProps>(({ projectName }) => {
                 </CTAButton>
                 <span className="min-w-[2rem] text-center">{item.quantity}</span>
                 <CTAButton
-                  variant="default"
                   className="cursor-pointer"
                   onClick={() => updateQuantity(item.id, 1)}
                   disabled={item.quantity >= item.stock}
@@ -77,7 +75,7 @@ const CartItem = memo<ICartItemProps>(({ projectName }) => {
                   <Plus />
                 </CTAButton>
               </div>
-              <div className="text-xs text-gray-400">Stock: {item.stock}</div>
+              <div className="text-sm text-gray-400 mt-4">Stock: {item.stock}</div>
             </section>
           </section>
         </GeneralCard>

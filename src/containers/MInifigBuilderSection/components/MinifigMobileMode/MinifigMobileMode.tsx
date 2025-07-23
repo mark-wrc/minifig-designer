@@ -20,7 +20,7 @@ const MinifigMobileMode = memo<IMinifigMobileModeProps>(
           <h3 className="font-bold text-2xl">START BUILDING</h3>
         </header>
 
-        <section className="p-4 py-24">
+        <section className="p-4">
           <MinifigTabs />
 
           <div className="">
