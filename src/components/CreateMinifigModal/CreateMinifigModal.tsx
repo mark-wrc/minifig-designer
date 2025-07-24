@@ -9,16 +9,19 @@ import {
 } from '../ui/dialog';
 import { ICreateMinifigModalProps } from './CreateMinifigModal.types';
 import { Input } from '../ui/input';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createMinifigure, renameCharacter } from '@/store/minifigBuilder/minifigBuilderSlice';
 import { cn } from '@/lib/utils';
 import { CTAButton } from '../CTAButton';
+import { RootState } from '@/store';
+import { validateMinifigProjectName } from '@/utils';
 
 const CreateMinifigModal = memo<ICreateMinifigModalProps>(
   ({ onClose, initialProjectName, mode, characterId, ...props }) => {
     const [projectName, setProjectName] = useState(initialProjectName);
-    const [showError, setShowError] = useState(false);
+    const [error, setError] = useState<string | undefined>();
     const dispatch = useDispatch();
+    const { characters } = useSelector((state: RootState) => state.minifigBuilder);
 
     // prefill input field
     useEffect(() => {
@@ -28,30 +31,39 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
     const handleSubmit = useCallback(
       (e: React.FormEvent) => {
         e.preventDefault();
-        if (projectName?.trim()) {
-          if (mode === 'create') {
-            dispatch(createMinifigure(projectName.trim()));
-          } else {
-            dispatch(renameCharacter({ id: characterId!, name: projectName.trim() }));
-          }
-          setProjectName('');
-          setShowError(false);
-          onClose?.();
-        } else {
-          setShowError(true);
+
+        const validation = validateMinifigProjectName({
+          newProjectName: projectName ?? '',
+          existingProjects:
+            mode === 'edit' ? characters.filter((c) => c.id !== characterId) : characters,
+        });
+
+        if (!validation.isValid) {
+          setError(validation.error);
+          return;
         }
+
+        if (mode === 'create') {
+          dispatch(createMinifigure(projectName!.trim()));
+        } else {
+          dispatch(renameCharacter({ id: characterId!, name: projectName!.trim() }));
+        }
+
+        setProjectName('');
+        setError(undefined);
+        onClose?.();
       },
-      [dispatch, projectName, mode, characterId, onClose],
+      [dispatch, projectName, mode, characterId, onClose, characters],
     );
 
     const handleInputChange = useCallback(
       (e: ChangeEvent<HTMLInputElement>) => {
         setProjectName(e.target.value);
-        if (showError && e.target.value) {
-          setShowError(false);
+        if (error && e.target.value) {
+          setError(undefined);
         }
       },
-      [showError],
+      [error],
     );
 
     return (
@@ -73,13 +85,10 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
                 placeholder="Project name e.g. My Minifig Project"
                 onChange={handleInputChange}
                 autoFocus
-                className={cn(
-                  showError && 'border-red-500 focus:border-red-500 ',
-                  'text-center py-6',
-                )}
+                className={cn(error && 'border-red-500 focus:border-red-500 ', 'text-center py-6')}
               />
 
-              {showError && <p className="text-red-500 text-sm">Please enter a project name</p>}
+              {error && <p className="text-red-500 text-sm">{error}</p>}
             </section>
 
             <DialogFooter className="mt-4">

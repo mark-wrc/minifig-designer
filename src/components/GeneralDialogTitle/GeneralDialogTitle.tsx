@@ -3,8 +3,6 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { cn } from '@/lib/utils';
 import { IGeneralDialogTitleProps } from './GeneralDialogTitle.types';
 
-// TODO -  pending default styles
-
 const GeneralDialogTitle = memo<IGeneralDialogTitleProps>(({ title, className }) => (
   <Dialog.Title className={cn('text-xl font-semibold mb-2 leading-tight', className)}>
     {title}

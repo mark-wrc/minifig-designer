@@ -1,13 +1,12 @@
-import { ConfirmationDialog, Divider, GeneralDialog, GeneralDialogTitle } from '@/components';
+import { ConfirmationDialog, GeneralDialog, GeneralDialogTitle } from '@/components';
 import { memo, useCallback } from 'react';
 import type { IMinifigBuilderCardPopupModalProps } from './MinifigBuilderCardPopupmodal.types';
 import { Button } from '@/components/ui/button';
 import { MinifigEmptyStateDialog } from '../MinifigEmptyStateDialog';
-import { MinifigProjectCard } from '../MinifigProjectCard';
-import { CartSummarySection } from '../CartSummarySection';
 import { useMinifigCart } from '../../hooks/useMinifigCart';
-import { createCartSummary, createProjectSummary } from '@/utils';
+import { createCartSummary } from '@/utils';
 import { useAuth, useDisclosureParam } from '@/hooks';
+import { MinifigCartItemDetails } from '../MinifigCartItemDetails';
 
 const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
   ({ onclose, minifig }) => {
@@ -26,7 +25,7 @@ const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
 
     const handleClose = () => onclose?.();
 
-    const { validProjects, totalItems, totalPrice, projectSummaries } = cartSummary;
+    const { validProjects, totalPrice } = cartSummary;
     const hasValidProjects = validProjects > 0;
 
     // for testing
@@ -45,45 +44,11 @@ const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
             title="ADD TO CART"
             className="text-4xl font-black text-center mb-24"
           />
-          <section className="flex flex-col max-h-[70vh] overflow-y-auto">
-            <div className="flex justify-between mb-2 sticky top-0 bg-white z-10 pb-2">
-              <h3 className="font-bold">Project Name</h3>
-              <h3 className="font-bold">Price</h3>
-            </div>
-            <Divider className="bg-black mb-4" />
+          <section className="flex flex-col max-h-[60vh]">
+            {/*Cart Items details  */}
+            <MinifigCartItemDetails minifig={minifig} />
 
-            <div className="space-y-4 mb-6">
-              {minifig.map((character, index) => {
-                if (!character) return null;
-
-                const summary =
-                  projectSummaries.find((s) => s.project.id === character.id) ||
-                  createProjectSummary(character);
-
-                return (
-                  <MinifigProjectCard
-                    key={character.id || index}
-                    summary={summary}
-                    index={index}
-                  />
-                );
-              })}
-            </div>
-
-            <CartSummarySection
-              validProjects={validProjects}
-              totalItems={totalItems}
-              totalPrice={totalPrice}
-            />
-
-            {!hasValidProjects && (
-              <div className="text-red-500 text-center mt-4 mb-4 p-3 bg-red-50 rounded">
-                <h1 className="text-base">
-                  Please customize at least one project before adding to cart
-                </h1>
-              </div>
-            )}
-
+            {/* Action Buttons */}
             <div className="flex justify-between mt-6">
               <Button
                 onClick={handleClose}

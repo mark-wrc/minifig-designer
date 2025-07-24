@@ -10,8 +10,6 @@ import { useDisclosureParam } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { MinifigWardrobe } from '../MinifigWardrobe';
 import { MinifigWardrobeItemDetails } from '../MinifigWardrobeItemDetails';
-import { motion } from 'motion/react';
-import { CanvasContainerAnimation, RendererAnimation, WardrobeAnimation } from '@/animations';
 
 const MinifigCanvas = memo<IMinifigCanvasProps>(
   ({
@@ -73,11 +71,7 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
     }, [modalDisclosure]);
 
     return (
-      <motion.section
-        variants={CanvasContainerAnimation}
-        initial="initial"
-        animate="enter"
-        exit="exit"
+      <section
         className={cn(
           'flex h-full w-full flex-col md:flex-row md:border-3 md:rounded-t-md md:border-black/50',
           className,
@@ -85,24 +79,18 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
       >
         {/* Minifig renderer section */}
 
-        <motion.div
-          variants={RendererAnimation}
-          className="md:border-r-3 border-r-black/50 p-0 mr-0 lg:py-8"
-        >
+        <div className="md:border-r-3 border-r-black/50 p-0 mr-0 lg:py-8">
           <MinifigRenderer
             ActiveMinifigProject={ActiveMinifigProject}
             setModalMode={setModalMode}
             minifigParts={minifigParts}
             modalDisclosure={modalDisclosure}
           />
-        </motion.div>
+        </div>
 
         {/*Minifig Wardrobe section */}
 
-        <motion.section
-          variants={WardrobeAnimation}
-          className="bg-white flex flex-col rounded-sm mx-auto md:mx-0 mt-12 md:mt-0"
-        >
+        <section className="bg-white flex flex-col rounded-sm mx-auto md:mx-0 mt-12 md:mt-0">
           <div className="mx-auto">
             {selectedItem ? (
               <MinifigWardrobeItemDetails
@@ -124,7 +112,7 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
               />
             )}
           </div>
-        </motion.section>
+        </section>
 
         {/* Modal section */}
         {modalDisclosure.open && (
@@ -135,7 +123,7 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
             onClose={handleCloseModal}
           />
         )}
-      </motion.section>
+      </section>
     );
   },
 );

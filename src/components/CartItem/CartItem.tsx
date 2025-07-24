@@ -5,6 +5,7 @@ import type { ICartItemProps } from './CartItem.types';
 import { Trash2, Plus, Minus } from 'lucide-react';
 import { useShoppingCart } from '@/hooks/useShoppingCart';
 import { CTAButton } from '../CTAButton';
+import { CartItemDetails } from '../CartItemDetails';
 
 const CartItem = memo<ICartItemProps>(({ projectName }) => {
   const { getMinifigProject, removeItemFromCart, updateItemQuantity } = useShoppingCart();
@@ -36,18 +37,8 @@ const CartItem = memo<ICartItemProps>(({ projectName }) => {
       {cartItems.map((item) => (
         <GeneralCard key={item.id} className="bg-transparent border-none mb-4 w-full">
           <section className="flex flex-col md:flex-row gap-2 text-white justify-between">
-            <div className="flex gap-2">
-              <img
-                src={item.partImage || '/placeholder.svg'}
-                className="w-32 rounded-sm"
-                alt={item.partName}
-              />
-              <div className="flex flex-col">
-                <h3>{item.partName}</h3>
-                <p>{item.partType}</p>
-                <p>${item.price}</p>
-              </div>
-            </div>
+            {/* details */}
+            <CartItemDetails item={item} />
 
             {/* actions */}
             <section className="flex flex-col gap-0  md:gap-4">

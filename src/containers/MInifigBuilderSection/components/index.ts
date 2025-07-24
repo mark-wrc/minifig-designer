@@ -3,3 +3,4 @@ export * from './MinifigBuilderCartPopupModal';
 export * from './MinifigProjectCard';
 export * from './MinifigEmptyStateDialog';
 export * from './MinifigDesktopMode';
+export * from './MinifigCartItemDetails';

@@ -8,15 +8,6 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import { AuthProvider } from './context/AuthContext';
 import { useAuthFromURL } from './hooks';
 
-// placeholder
-const LoadingView = () => (
-  <div
-    style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
-  >
-    Loading...
-  </div>
-);
-
 const router = createAppRouter();
 
 function App() {
@@ -26,7 +17,7 @@ function App() {
     <HelmetProvider>
       <AuthProvider authData={authData}>
         <Provider store={store}>
-          <PersistGate loading={<LoadingView />} persistor={persistor}>
+          <PersistGate loading={null} persistor={persistor}>
             <Helmet>
               <title>Build Custom LEGO Minifigures | World of Minifigs</title>
               <meta name="description" content="World of Minifigs Builder." />
@@ -35,7 +26,6 @@ function App() {
                 content="World of Minifigs Builder - Create Your Custom Minifigs"
               />
             </Helmet>
-
             <RouterProvider router={router} />
           </PersistGate>
         </Provider>
