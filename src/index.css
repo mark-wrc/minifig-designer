@@ -144,13 +144,14 @@
 
 body,
 html {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-}
-
-body::-webkit-scrollbar,
-html::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  @apply [&::-webkit-scrollbar]:w-[12px]
+    [&::-webkit-scrollbar-track]:bg-gray-200
+    [&::-webkit-scrollbar-thumb]:bg-yellow-500
+    [&::-webkit-scrollbar-thumb]:rounded-xs
+    [&::-webkit-scrollbar-thumb]:border
+    [&::-webkit-scrollbar-thumb]:border-gray-950
+    [&::-webkit-scrollbar-thumb]:cursor-pointer
+    [&::-webkit-scrollbar-thumb]:hover:bg-yellow-600;
 }
 
 @layer base {

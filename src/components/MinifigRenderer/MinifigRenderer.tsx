@@ -8,6 +8,7 @@ import { setSelectedCategory, removePart } from '@/store/minifigBuilder/minifigB
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
+import { CTAButton } from '../CTAButton';
 
 const MinifigRenderer = memo<IMinifigRendererProps>(
   ({ minifigParts, ActiveMinifigProject, modalDisclosure, setModalMode, className }) => {
@@ -75,22 +76,24 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
                 {/* Add Minifig Parts  */}
 
                 {(totalMinifigParts ?? 0) > 0 && (
-                  <div
-                    className="cursor-pointer left-5 absolute bg-yellow-500 rounded-md p-2 hover:bg-gray-950"
+                  <CTAButton
+                    variant="ghost"
+                    className="cursor-pointer left-5 absolute bg-yellow-500 rounded-md hover:bg-gray-950"
                     onClick={() => handlePartClick(partType)}
                   >
                     <Plus size={22} strokeWidth={2.75} color="white" />
-                  </div>
+                  </CTAButton>
                 )}
 
                 {/* Remove minifig Parts  */}
                 {hasMinifigParts && (
-                  <div
+                  <CTAButton
+                    variant="ghost"
                     onClick={(e) => handleRemoveMinifigPart(e, partType)}
                     className="absolute right-5 bg-red-700 rounded-md  hover:bg-red-600 cursor-pointer p-2"
                   >
                     <Trash2 size={22} color="white" />
-                  </div>
+                  </CTAButton>
                 )}
 
                 <MinifigPart
