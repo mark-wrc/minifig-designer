@@ -1,13 +1,16 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import MinifigCategoryOptions from './components/MinifigCategoryOptions';
+import { useMemo } from 'react';
 
 const CategorySection = () => {
   const { activeCharacterId, characters = [] } = useSelector(
     (state: RootState) => state.minifigBuilder,
   );
 
-  const activeMinifigProject = characters.find((char) => char.id === activeCharacterId);
+  const activeMinifigProject = useMemo(() => {
+    return characters.find((char) => char.id === activeCharacterId);
+  }, [characters, activeCharacterId]);
 
   return (
     <section className=" hidden md:block container mx-auto m-10 lg:py-12">
