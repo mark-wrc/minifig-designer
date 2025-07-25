@@ -1,12 +1,11 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import type { IMinifigCanvasProps } from './MinifigCanvas.types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
-import { setSelectedPart } from '@/store/minifigBuilder/minifigBuilderSlice';
 import { CreateMinifigModal } from '../CreateMinifigModal';
 import { MinifigPartData } from '@/types/Minifig';
 import MinifigRenderer from '../MinifigRenderer/MinifigRenderer';
-import { useDisclosureParam } from '@/hooks';
+import { useMinifigCreation } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { MinifigWardrobe } from '../MinifigWardrobe';
 import { MinifigWardrobeItemDetails } from '../MinifigWardrobeItemDetails';
@@ -21,21 +20,22 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
     minifigProjects,
     cartModalDisclosure,
   }) => {
-    const dispatch = useDispatch();
+    const {
+      modalMode,
+      setModalMode,
+      modalDisclosure,
+      ActiveMinifigProject,
+      handleSelectMinifigItem,
+      handleCloseModal,
+    } = useMinifigCreation();
+
     const wardrobeRef = useRef<HTMLDivElement>(null);
     const [selectedItem, setSelectedItem] = useState<MinifigPartData | null>(null);
-    const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
-    const modalDisclosure = useDisclosureParam();
 
-    const {
-      characters = [],
-      activeCharacterId = null,
-      selectedCategory = null,
-    } = useSelector((state: RootState) => state.minifigBuilder || {});
+    const { selectedCategory = null } = useSelector(
+      (state: RootState) => state.minifigBuilder || {},
+    );
 
-    const ActiveMinifigProject = characters.find((char) => char.id === activeCharacterId);
-
-    // Scroll to wardrobe when category changes
     useEffect(() => {
       if (selectedCategory && wardrobeRef.current)
         wardrobeRef.current.scrollIntoView({
@@ -44,31 +44,11 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
         });
     }, [selectedCategory]);
 
-    // handle select minifig part
-    const handleSelectMinifigItem = useCallback(
-      (item: MinifigPartData) => {
-        if (characters.length === 0) {
-          modalDisclosure.onDisclosureOpen();
-          setModalMode('create');
-          return;
-        }
-
-        dispatch(setSelectedPart(item));
-      },
-      [characters.length, dispatch, modalDisclosure],
-    );
-
     const handleMinifigItemDetailsClick = useCallback((item: MinifigPartData) => {
       setSelectedItem(item);
     }, []);
 
     const handleBackNavigation = useCallback(() => setSelectedItem(null), []);
-
-    const handleCloseModal = useCallback(() => {
-      const closeModal = modalDisclosure.onDisclosureClose();
-      closeModal();
-      setModalMode('create');
-    }, [modalDisclosure]);
 
     return (
       <section

@@ -43,7 +43,7 @@ const MinifigTabs = memo(() => {
   }, [dispatch, tabToDelete]);
 
   return (
-    <section className=" w-full py-4">
+    <section className="w-full py-4">
       <div className="flex items-center justify-end"></div>
       <Tabs
         value={activeCharacterId || undefined}
@@ -87,7 +87,7 @@ const MinifigTabs = memo(() => {
           </AnimatePresence>
         </TabsList>
 
-        <Divider className="mt-4 h-[2px] bg-gray-950" />
+        <Divider className="mt-2 mb-2 h-[5px] bg-gray-950 rounded-full" />
 
         <motion.div
           variants={TabButtonAnimation}
