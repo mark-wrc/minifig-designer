@@ -59,16 +59,14 @@ const MinifigBuilderSection = () => {
 
   return (
     <section>
-      {isMobile && (
+      {isMobile ? (
         <MinifigMobileMode
           minifigParts={minifigParts}
           minifigData={wardrobeItems}
           modalDisclosure={modalDisclosure}
           minifigProjects={characters}
         />
-      )}
-
-      {!isMobile && (
+      ) : (
         <MinifigDesktopMode
           minifigParts={minifigParts}
           minifigData={wardrobeItems}

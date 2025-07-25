@@ -18,11 +18,11 @@ const MinifigWardrobe = memo(
     ) => {
       if (wardrobeItems.length === 0 || !selectedCategory) {
         return (
-          <div className="border-2 w-full p-4 flex h-[300px]  justify-center flex-col items-center">
+          <section className="border-2 w-full p-4 flex h-full   justify-center flex-col items-center">
             <p className="text-xl text-center">
               Start by exploring the different options e.g. Heads and Torso!
             </p>
-          </div>
+          </section>
         );
       }
       return (
