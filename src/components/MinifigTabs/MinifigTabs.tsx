@@ -5,7 +5,6 @@ import { Tabs, TabsList } from '../ui/tabs';
 import { TabsTrigger } from '@radix-ui/react-tabs';
 import { deleteMinifigure, setActiveMinifigure } from '@/store/minifigBuilder/minifigBuilderSlice';
 import { CreateMinifigModal } from '../CreateMinifigModal';
-import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useDisclosureParam } from '@/hooks';
 import { ConfirmationDialog } from '../ConfirmationDialog';
@@ -13,6 +12,7 @@ import { CTAButton } from '../CTAButton';
 import { Divider } from '../Divider';
 import { AnimatePresence, motion } from 'motion/react';
 import { TabButtonAnimation, TabItemAnimation } from '@/animations';
+import { MinifigTabContent } from '../MinifigTabContent';
 
 const MinifigTabs = memo(() => {
   const { characters = [], activeCharacterId = null } = useSelector(
@@ -70,17 +70,8 @@ const MinifigTabs = memo(() => {
                   key={character.id}
                   value={character.id}
                 >
-                  <div className="flex justify-between gap-6 items-center overflow-y-hidden">
-                    <CTAButton
-                      variant="ghost"
-                      size="icon"
-                      className="h-5 w-5 cursor-pointer  hover:bg-red-500 rounded-full hover:text-white font-bold"
-                      onClick={(e) => handleDeleteClick(character.id, e)}
-                    >
-                      <X className="h-3 w-3 " />
-                    </CTAButton>
-                    <span className="font-normal text-lg">{character.name}</span>
-                  </div>
+                  {/* Tab Content  */}
+                  <MinifigTabContent character={character} onDelete={handleDeleteClick} />
                 </TabsTrigger>
               </motion.div>
             ))}

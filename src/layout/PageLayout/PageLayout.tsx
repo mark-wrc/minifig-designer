@@ -1,14 +1,20 @@
 import { FooterSection, HeaderSection } from '@/containers';
 import { CartContainer } from '@/containers/HeaderSection/components/CartContainer';
+import CustomErrorPage from '@/pages/CustomErrorPage';
 import { useCallback, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useRouteError } from 'react-router-dom';
 
 const PageLayout = () => {
   const [openShoppingCart, setOpenShoppingCart] = useState(false);
+  const error = useRouteError();
 
   const handleToggleCart = useCallback(() => {
     setOpenShoppingCart((prev) => !prev);
   }, []);
+
+  if (error) {
+    return <CustomErrorPage />;
+  }
 
   return (
     <>

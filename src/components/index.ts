@@ -21,3 +21,4 @@ export * from './MinifigRenderer';
 export * from './MinifigWardrobe';
 export * from './MinifigWardrobeItemDetails';
 export * from './CartItemDetails';
+export * from './MinifigTabContent';
