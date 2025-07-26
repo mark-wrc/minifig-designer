@@ -6,14 +6,12 @@ import { UserMenuData } from '@/constants/UserMenuData';
 import { UserAvatar } from '../UserAvatar';
 
 const UserDisplay = memo<IUserDisplayProps>(({ user }) => (
-  <section>
-    <GeneralPopover
-      className="bg-[#283858] border-minifig-brand-end/55 w-fit p-1"
-      content={<UserMenu user={user} menuItems={UserMenuData} />}
-    >
-      <UserAvatar user={user} />
-    </GeneralPopover>
-  </section>
+  <GeneralPopover
+    className="bg-[#283858] border-minifig-brand-end/55 w-fit p-1 "
+    content={<UserMenu user={user} menuItems={UserMenuData} />}
+  >
+    <UserAvatar user={user} />
+  </GeneralPopover>
 ));
 
 UserDisplay.displayName = 'UserDisplay';

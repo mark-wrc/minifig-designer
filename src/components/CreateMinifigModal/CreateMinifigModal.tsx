@@ -88,7 +88,7 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
                 className={cn(error && 'border-red-500 focus:border-red-500 ', 'text-center py-6')}
               />
 
-              {error && <p className="text-red-500 text-sm">{error}</p>}
+              {error && <p className="text-red-500 text-sm text-center">{error}</p>}
             </section>
 
             <DialogFooter className="mt-4">
