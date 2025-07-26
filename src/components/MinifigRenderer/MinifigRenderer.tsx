@@ -51,7 +51,7 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
           {ActiveMinifigProject && (
             <>
               <span
-                className="self-center text-lg md:text-base  underline bg-transparent cursor-pointer w-fit hover:text-blue-800"
+                className="self-center text-lg md:text-base  underline bg-transparent cursor-pointer w-fit hover:text-yellow-500"
                 onClick={handleMinifigTitleEdit}
               >
                 Edit Project Title

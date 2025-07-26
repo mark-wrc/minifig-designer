@@ -5,9 +5,9 @@ import { ShoppingCart } from 'lucide-react';
 import { CartContainer } from './components/CartContainer';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { CircleUserRound } from 'lucide-react';
 import { UserDisplay } from '@/components/UserDisplay';
 import { AnimatePresence } from 'motion/react';
+import { UserLoginDisplay } from '@/components';
 
 const HeaderSection = memo(() => {
   const { user } = useAuth();
@@ -23,8 +23,8 @@ const HeaderSection = memo(() => {
   return (
     <section className="py-6">
       <div className="w-full px-4 fixed z-50 bg-minifig-brand-end top-0 py-4">
-        <div className="lg:container  mx-auto flex justify-between  align-middle">
-          <img src={WOFLogo} className=" w-[100px] md:w-1/12 " alt="world of minifigs logo" />
+        <div className="lg:container mx-auto flex justify-between  align-middle">
+          <img src={WOFLogo} className="w-[100px] md:w-1/12" alt="world of minifigs logo" />
           <section className="flex items-center gap-4">
             <div
               className=" cursor-pointer relative  bg-transparent hover:bg-white/10"
@@ -35,15 +35,9 @@ const HeaderSection = memo(() => {
               </div>
               <ShoppingCart color="white" size={24} />
             </div>
-            <div className=" cursor-pointer">
-              {user ? (
-                <UserDisplay user={user} />
-              ) : (
-                <a href="https://www.worldofminifigs.com/login">
-                  <CircleUserRound size={24} color="white" />
-                </a>
-              )}
-            </div>
+
+            {/* User Menu  */}
+            <>{user ? <UserDisplay user={user} /> : <UserLoginDisplay />}</>
           </section>
         </div>
       </div>

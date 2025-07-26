@@ -7,7 +7,7 @@ const GeneralPopover = memo<IGeneralPopoverProps>(({ children, content, classNam
   <Popover {...props}>
     <PopoverTrigger>{children}</PopoverTrigger>
 
-    <PopoverContent className={cn('bg-white', className)}>{content}</PopoverContent>
+    <PopoverContent className={cn('bg-white mr-4', className)}>{content}</PopoverContent>
   </Popover>
 ));
 

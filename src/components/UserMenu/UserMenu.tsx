@@ -22,7 +22,7 @@ const UserMenu = memo<IUserMenuProps>(({ menuItems, user }) => {
       {/*menu items section  */}
       {menuItems.map((item) => (
         <a
-          className="flex gap-4 w-full cursor-pointer mb-2 text-sm hover:bg-yellow-400 text-white transition-all duration-150 hover:text-black  p-1 rounded-sm"
+          className="flex gap-4 w-full cursor-pointer mb-2 text-sm hover:bg-yellow-400 text-white hover:text-black  p-1 rounded-sm"
           key={item.label}
           href={item.link}
         >
