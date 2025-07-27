@@ -67,6 +67,11 @@ const minifigBuilderSlice = createSlice({
       state.characters = state.characters.filter((char) => char.id !== action.payload);
       if (state.activeCharacterId === action.payload) {
         state.activeCharacterId = state.characters.length > 0 ? state.characters[0].id : null;
+
+        // clear selected category if theres no project left
+        if (state.characters.length === 0) {
+          state.selectedCategory = null;
+        }
       }
     },
 

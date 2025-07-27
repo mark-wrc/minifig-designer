@@ -24,3 +24,5 @@ export * from './CartItemDetails';
 export * from './MinifigTabContent';
 export * from './LoginMenu';
 export * from './UserLoginDisplay';
+export * from './MinifigWardrobeItem';
+export * from './EmptyStateComponent';
