@@ -70,7 +70,7 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
 
         {/*Minifig Wardrobe section */}
 
-        <section className="bg-white flex flex-col rounded-sm mx-auto md:mx-0 mt-12 md:mt-0">
+        <section className="bg-white flex flex-col justify-center mx-auto md:mx-0 mt-12 md:mt-0">
           <div className="mx-auto">
             {selectedItem ? (
               <MinifigWardrobeItemDetails
