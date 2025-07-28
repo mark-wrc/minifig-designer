@@ -18,8 +18,8 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
       </div>
 
       <CTAButton
-        variant="ghost"
-        className="bg-yellow-400 text-md w-fit self-center px-6 -translate-y-2 rounded-sm text-black border border-gray-950"
+        variant="default"
+        className="bg-yellow-300 text-md w-fit self-center px-6 -translate-y-2 hover:bg-minifig-brand-end hover:text-white rounded-sm text-black"
         onClick={() => onCategoryClick(minifigItem as MinifigPartData)}
       >
         Add
