@@ -29,7 +29,10 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
                   className="flex cursor-pointer mb-4 text-sm font-light text-gray-300"
                   onClick={onHandleCartClick}
                 >
-                  <p className="translate-all duration-150 hover:translate-x-1.5"> {item.title}</p>
+                  <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline">
+                    {' '}
+                    {item.title}
+                  </p>
                 </div>
               ) : (
                 <FooterLink
@@ -37,7 +40,9 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
                   className="flex cursor-pointer mb-4 text-sm font-light text-gray-300"
                   href={item.link}
                 >
-                  <p className="translate-all duration-150 hover:translate-x-1.5">{item.title}</p>
+                  <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline">
+                    {item.title}
+                  </p>
                 </FooterLink>
               ),
             )}
@@ -48,7 +53,9 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
                 className="cursor-pointer mb-4 text-sm font-light text-gray-300 w-fit"
                 key={item.title}
               >
-                <p className="translate-all duration-150 hover:translate-x-1.5">{item.title}</p>
+                <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline">
+                  {item.title}
+                </p>
               </div>
             ))}
           </FooterSectionCard>
@@ -58,7 +65,9 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
         <FooterSectionCard title="Support" className="flex flex-col">
           {Support.map((item) => (
             <FooterLink className="flex mb-4 text-gray-300 " href={item.link} key={item.title}>
-              <p className="translate-all duration-150 hover:translate-x-1.5">{item.title}</p>
+              <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline">
+                {item.title}
+              </p>
             </FooterLink>
           ))}
         </FooterSectionCard>

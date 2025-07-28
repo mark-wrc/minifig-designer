@@ -87,8 +87,8 @@ const MinifigTabs = memo(() => {
           className="self-end"
         >
           <CTAButton
-            variant="ghost"
-            className="bg-yellow-500 cursor-pointer text-black text-xl md:text-md p-6 borderborder-gray-950"
+            variant="default"
+            className="bg-yellow-300 cursor-pointer text-black hover:text-white hover:bg-minifig-brand-end text-md p-6 borderborder-gray-950"
             onClick={() => setShowModal(true)}
           >
             Add New Project
