@@ -3,3 +3,4 @@ export * from './useAuthFromURL';
 export * from './useDisclosureParam';
 export * from './useWindowResize';
 export * from './useMinifigCreation';
+export * from './useScrollIntoView';

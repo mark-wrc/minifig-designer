@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useRef } from 'react';
 import { MinifigPart } from '../MinifigPart';
 import { MinifigPartType } from '@/types';
 import { IMinifigRendererProps } from './MinifigRenderer.types';
@@ -9,11 +9,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
 import { CTAButton } from '../CTAButton';
+import { useScrollIntoView } from '@/hooks';
+import useWindowResize from '@/hooks/useWindowResize';
 
 const MinifigRenderer = memo<IMinifigRendererProps>(
   ({ minifigParts, ActiveMinifigProject, modalDisclosure, setModalMode, className }) => {
     const { characters } = useSelector((state: RootState) => state.minifigBuilder);
     const dispatch = useDispatch();
+    const { screenSize } = useWindowResize();
+    const isMobile = screenSize.width <= 767;
+    const minifigPartRef = useRef<HTMLDivElement>(null);
+
+    useScrollIntoView({
+      ref: minifigPartRef,
+      dependencies: [minifigParts],
+      options: {
+        behavior: 'smooth',
+        block: 'center',
+        shouldScroll: !!minifigParts && isMobile,
+      },
+    });
 
     const handleMinifigTitleEdit = useCallback(() => {
       if (!ActiveMinifigProject) return;
@@ -96,10 +111,12 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
                   </CTAButton>
                 )}
 
-                <MinifigPart
-                  type={partType}
-                  minifigPartsImages={minifigParts?.[partType]?.image}
-                />
+                <div ref={minifigPartRef}>
+                  <MinifigPart
+                    type={partType}
+                    minifigPartsImages={minifigParts?.[partType]?.image}
+                  />
+                </div>
               </div>
             );
           })}
