@@ -1,6 +1,7 @@
 import { FooterSection, HeaderSection } from '@/containers';
 import { CartContainer } from '@/containers/HeaderSection/components/CartContainer';
 import CustomErrorPage from '@/pages/CustomErrorPage';
+import { AnimatePresence } from 'motion/react';
 import { useCallback, useState } from 'react';
 import { Outlet, useRouteError } from 'react-router-dom';
 
@@ -23,8 +24,11 @@ const PageLayout = () => {
         <Outlet />
       </main>
       <FooterSection onClick={handleToggleCart} />
-
-      {openShoppingCart && <CartContainer onclose={handleToggleCart} />}
+      <AnimatePresence>
+        {openShoppingCart && (
+          <CartContainer setOpenCart={setOpenShoppingCart} onclose={handleToggleCart} />
+        )}
+      </AnimatePresence>
     </>
   );
 };

@@ -1,14 +1,15 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useRef, useState } from 'react';
 import type { IMinifigCanvasProps } from './MinifigCanvas.types';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
 import { CreateMinifigModal } from '../CreateMinifigModal';
 import { MinifigPartData } from '@/types/Minifig';
 import MinifigRenderer from '../MinifigRenderer/MinifigRenderer';
-import { useMinifigCreation } from '@/hooks';
+import { useMinifigCreation, useScrollIntoView } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { MinifigWardrobe } from '../MinifigWardrobe';
 import { MinifigWardrobeItemDetails } from '../MinifigWardrobeItemDetails';
+import useWindowResize from '@/hooks/useWindowResize';
 
 const MinifigCanvas = memo<IMinifigCanvasProps>(
   ({
@@ -31,18 +32,21 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
 
     const wardrobeRef = useRef<HTMLDivElement>(null);
     const [selectedItem, setSelectedItem] = useState<MinifigPartData | null>(null);
-
+    const { screenSize } = useWindowResize();
+    const isMobile = screenSize.width <= 767;
     const { selectedCategory = null } = useSelector(
       (state: RootState) => state.minifigBuilder || {},
     );
 
-    useEffect(() => {
-      if (selectedCategory && wardrobeRef.current)
-        wardrobeRef.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
-    }, [selectedCategory]);
+    useScrollIntoView({
+      ref: wardrobeRef,
+      dependencies: [selectedCategory],
+      options: {
+        behavior: 'smooth',
+        block: 'start',
+        shouldScroll: !!selectedCategory && !isMobile,
+      },
+    });
 
     const handleMinifigItemDetailsClick = useCallback((item: MinifigPartData) => {
       setSelectedItem(item);
@@ -70,7 +74,12 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
 
         {/*Minifig Wardrobe section */}
 
-        <section className="bg-white flex flex-col justify-center mx-auto md:mx-0 mt-12 md:mt-0">
+        <section
+          className={cn(
+            'bg-white flex flex-col mx-auto md:mx-0 mt-12 md:mt-0',
+            wardrobeItems.length === 0 && 'justify-center',
+          )}
+        >
           <div className="mx-auto">
             {selectedItem ? (
               <MinifigWardrobeItemDetails
