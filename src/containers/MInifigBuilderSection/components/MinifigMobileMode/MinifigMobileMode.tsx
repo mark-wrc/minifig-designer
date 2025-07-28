@@ -1,5 +1,5 @@
 import { CTAButton, MinifigCanvas, MinifigTabs } from '@/components';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { MinifigBuilderCardPopupModal } from '../MinifigBuilderCartPopupModal';
 import { IMinifigMobileModeProps } from './MinifigModalMode.types';
 import { useSelector } from 'react-redux';
@@ -12,7 +12,11 @@ const MinifigMobileMode = memo<IMinifigMobileModeProps>(
       (state: RootState) => state.minifigBuilder,
     );
 
-    const activeMinifigProject = characters.find((char) => char.id === activeCharacterId);
+    const activeMinifigProject = useMemo(
+      () => characters.find((char) => char.id === activeCharacterId),
+      [activeCharacterId, characters],
+    );
+
     return (
       <section className="">
         <header className="mb-10 text-black text-center pt-12 md:hidden">
