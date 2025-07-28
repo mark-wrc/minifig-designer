@@ -23,13 +23,13 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
         <section className=" grid grid-cols-2">
           <FooterSectionCard className="flex flex-col" title="Account">
             {Accounts.map((item) =>
-              item.title === 'cart' ? (
+              item.title === 'Cart' ? (
                 <div
                   key={item.title}
                   className="flex cursor-pointer mb-4 text-sm font-light text-gray-300"
                   onClick={onHandleCartClick}
                 >
-                  <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline">
+                  <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline hover:text-yellow-300">
                     {' '}
                     {item.title}
                   </p>
@@ -40,7 +40,7 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
                   className="flex cursor-pointer mb-4 text-sm font-light text-gray-300"
                   href={item.link}
                 >
-                  <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline">
+                  <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline hover:text-yellow-300">
                     {item.title}
                   </p>
                 </FooterLink>
@@ -49,14 +49,15 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
           </FooterSectionCard>
           <FooterSectionCard className="flex flex-col" title="Quick links">
             {QuickLinks.map((item) => (
-              <div
+              <FooterLink
+                href={item.link}
                 className="cursor-pointer mb-4 text-sm font-light text-gray-300 w-fit"
                 key={item.title}
               >
-                <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline">
+                <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline hover:text-yellow-300">
                   {item.title}
                 </p>
-              </div>
+              </FooterLink>
             ))}
           </FooterSectionCard>
         </section>
@@ -65,7 +66,7 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
         <FooterSectionCard title="Support" className="flex flex-col">
           {Support.map((item) => (
             <FooterLink className="flex mb-4 text-gray-300 " href={item.link} key={item.title}>
-              <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline">
+              <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline hover:text-yellow-300">
                 {item.title}
               </p>
             </FooterLink>
