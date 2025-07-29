@@ -27,7 +27,7 @@ const MinifigMobileMode = memo<IMinifigMobileModeProps>(
         <section className="p-4">
           <MinifigTabs />
 
-          <div className="">
+          <>
             <MinifigCanvas
               minifigParts={minifigParts}
               wardrobeItems={minifigData}
@@ -46,7 +46,7 @@ const MinifigMobileMode = memo<IMinifigMobileModeProps>(
               {/* Add to cart ({minifigProjects.length} project{minifigProjects.length !== 1 ? 's' : ''}) */}
               Add to cart
             </CTAButton>
-          </div>
+          </>
         </section>
 
         {modalDisclosure.open && minifigProjects && (
