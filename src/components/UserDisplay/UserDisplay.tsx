@@ -10,7 +10,9 @@ const UserDisplay = memo<IUserDisplayProps>(({ user }) => (
     className="bg-[#283858] border-minifig-brand-end/55 w-fit p-1 "
     content={<UserMenu user={user} menuItems={UserMenuData} />}
   >
-    <UserAvatar user={user} />
+    <div className="hover:bg-white/10 rounded-sm p-1">
+      <UserAvatar user={user} />
+    </div>
   </GeneralPopover>
 ));
 

@@ -11,5 +11,6 @@ export interface IUserItems {
 export interface IUserMenuProps {
   menuItems: IUserItems[];
   onClick?: () => void;
+  className?: string;
   user: IUser;
 }

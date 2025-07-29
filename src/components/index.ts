@@ -26,3 +26,4 @@ export * from './LoginMenu';
 export * from './UserLoginDisplay';
 export * from './MinifigWardrobeItem';
 export * from './EmptyStateComponent';
+export * from './MenuItemNavigation';
