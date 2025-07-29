@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect } from 'react';
 import type { ICartContainerProps } from './CartContainer.types';
-import { CartItem, Divider } from '@/components';
+import { CartItem, Divider, Overlay } from '@/components';
 import { X } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
@@ -33,14 +33,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
   return (
     <>
       {/* Overlay */}
-      <motion.div
-        variants={CartOverlayAnimation}
-        initial="initial"
-        animate="enter"
-        exit="exit"
-        className="bg-black/90 fixed w-full top-0 left-0 z-50 bottom-0 h-full"
-        onClick={() => setOpenCart?.(false)}
-      />
+      <Overlay variants={CartOverlayAnimation} onClick={() => setOpenCart?.(false)} />
 
       {/* Cart Container */}
       <motion.section

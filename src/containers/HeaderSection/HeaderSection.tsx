@@ -15,11 +15,13 @@ import useWindowResize from '@/hooks/useWindowResize';
 const HeaderSection = memo(() => {
   const { user } = useAuth();
   const { projects } = useSelector((state: RootState) => state.MinifigBuilderCart);
-  const { screenSize } = useWindowResize();
-  const isMobile = screenSize.width <= 767;
   const projectEntries = Object.entries(projects);
+
   const [openCart, setOpenCart] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+
+  const { screenSize } = useWindowResize();
+  const isMobile = screenSize.width <= 767;
 
   const handleToggleCart = useCallback(() => {
     setOpenCart((prev) => !prev);

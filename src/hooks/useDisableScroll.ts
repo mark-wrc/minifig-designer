@@ -5,7 +5,6 @@ export const useDisableScroll = (isDisabled: boolean): void => {
     if (isDisabled) {
       const scrollY = window.scrollY;
 
-      // Apply styles to disable scrolling
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
       document.body.style.width = '100%';
