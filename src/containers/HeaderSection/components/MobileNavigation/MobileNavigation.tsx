@@ -1,11 +1,12 @@
 import { memo } from 'react';
 import { IMobileNavigation } from './MobileNavigation.types';
 import { cn } from '@/lib/utils';
-import { Divider, MenuItemNavigation, UserAvatar } from '@/components';
+import { Divider, MenuItemNavigation, Overlay, UserAvatar } from '@/components';
 import { motion } from 'motion/react';
-import { X, User as UserIcon, ArrowRight } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useAuth, useDisableScroll } from '@/hooks';
 import { MobileMenuAnimation, MobileMenuOverlayAnimation } from '@/animations';
+import { SignInButton } from '../SignInButton';
 
 const MobileNavigation = memo<IMobileNavigation>(
   ({ className, user, menuItems, userItems, onclose, isOpen, setOpenMenu }) => {
@@ -16,14 +17,7 @@ const MobileNavigation = memo<IMobileNavigation>(
     return (
       <>
         {/* mobile menu overlay */}
-        <motion.div
-          variants={MobileMenuOverlayAnimation}
-          initial="initial"
-          animate="enter"
-          exit="exit"
-          className="bg-black/90 fixed w-full top-0 left-0 z-50 bottom-0 h-full"
-          onClick={() => setOpenMenu?.(false)}
-        />
+        <Overlay variants={MobileMenuOverlayAnimation} onClick={() => setOpenMenu?.(false)} />
 
         <motion.section
           variants={MobileMenuAnimation}
@@ -35,7 +29,7 @@ const MobileNavigation = memo<IMobileNavigation>(
             className,
           )}
         >
-          <div className=" flex w-full justify-end">
+          <div className="flex w-full justify-end">
             <X
               color="white"
               size={32}
@@ -49,16 +43,7 @@ const MobileNavigation = memo<IMobileNavigation>(
             {user ? (
               <UserAvatar user={user} />
             ) : (
-              <div className="text-white p-4 bg-[#28385880] mb-4 rounded-md flex items-center justify-between cursor-pointer hover:text-yellow-300">
-                <div className="flex items-center gap-2">
-                  <span className="bg-[#283858] rounded-full p-2">
-                    <UserIcon color="yellow" />
-                  </span>
-                  <a href="https://www.worldofminifigs.com/login">Sign in </a>
-                </div>
-
-                <ArrowRight />
-              </div>
+              <SignInButton url="https://www.worldofminifigs.com/login" />
             )}
           </section>
 
