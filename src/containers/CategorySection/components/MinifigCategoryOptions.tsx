@@ -63,7 +63,7 @@ const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
             <CategorySelector
               key={category.id}
               item={category}
-              className="rounded-sm w-full p-2"
+              className="text-xl md:text-base rounded-sm mt-4 md:mt-0 w-full p-2"
               onClick={handleCategorySelect}
               isSelected={selectedCategory === category.type}
               isCategoryTab={isMobileMode}

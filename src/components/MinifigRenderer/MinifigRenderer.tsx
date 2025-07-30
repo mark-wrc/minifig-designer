@@ -25,7 +25,7 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
       dependencies: [minifigParts],
       options: {
         behavior: 'smooth',
-        block: 'center',
+        block: 'end',
         shouldScroll: !!minifigParts && isMobile,
       },
     });

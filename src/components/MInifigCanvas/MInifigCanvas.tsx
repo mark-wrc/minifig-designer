@@ -9,7 +9,6 @@ import { useMinifigCreation, useScrollIntoView } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { MinifigWardrobe } from '../MinifigWardrobe';
 import { MinifigWardrobeItemDetails } from '../MinifigWardrobeItemDetails';
-import useWindowResize from '@/hooks/useWindowResize';
 
 const MinifigCanvas = memo<IMinifigCanvasProps>(
   ({
@@ -32,8 +31,8 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
 
     const wardrobeRef = useRef<HTMLDivElement>(null);
     const [selectedItem, setSelectedItem] = useState<MinifigPartData | null>(null);
-    const { screenSize } = useWindowResize();
-    const isMobile = screenSize.width <= 767;
+    // const { screenSize } = useWindowResize();
+    // const isMobile = screenSize.width <= 767;
     const { selectedCategory = null } = useSelector(
       (state: RootState) => state.minifigBuilder || {},
     );
@@ -44,7 +43,7 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(
       options: {
         behavior: 'smooth',
         block: 'start',
-        shouldScroll: !!selectedCategory && !isMobile,
+        shouldScroll: !!selectedCategory,
       },
     });
 

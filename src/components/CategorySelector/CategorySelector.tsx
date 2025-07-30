@@ -34,10 +34,10 @@ const CategorySelector = memo<CategorySelectorProps>(
         >
           {!isCategoryTab ? (
             <div>
-              <img src={item.image} alt={item.title} className="w-28" />
+              <img src={item.image} alt={item.title} className="w-20 md:w-28" />
             </div>
           ) : (
-            <div className="py-0">
+            <div className="py-0 px-3">
               <span>{item.title}</span>
             </div>
           )}

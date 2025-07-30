@@ -11,7 +11,11 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
         className="bg-gray-100 rounded-sm p-1 h-full cursor-pointer"
         onClick={() => onItemDetailsClick(minifigItem as MinifigPartData)}
       >
-        <img className="w-[100px] rounded-sm" src={minifigItem.image} alt={minifigItem.name} />
+        <img
+          className="w-[100px] aspect-auto rounded-sm"
+          src={minifigItem.image}
+          alt={minifigItem.name}
+        />
         {/* <p className="font-medium text-sm">{item.name}</p>
                   <p className="text-xs text-gray-600 mb-2">{item.description}</p>
                   <p className="text-green-600 font-bold text-sm">${item.price}</p> */}
