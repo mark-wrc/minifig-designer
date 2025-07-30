@@ -11,9 +11,18 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
           <CTAButton onClick={onClick} icon={ArrowLeft} className="bg-yellow-500 text-lg mb-8">
             Back
           </CTAButton>
+
           <p className="font-bold text-2xl md:text-4xl">{wardrobeItems.name}</p>
           <p className="text-xl text-gray-800 mb-2">{wardrobeItems.description}</p>
-          <img className="w-[50%] mx-auto " src={wardrobeItems.image} alt={wardrobeItems.name} />
+
+          <figure className="max-w-md">
+            <img
+              className="w-1/2 aspect-square mx-auto "
+              src={wardrobeItems.image}
+              alt={wardrobeItems.name}
+            />
+          </figure>
+
           <p className="text-green-600 text-center font-bold text-xl">${wardrobeItems.price}</p>
 
           <div className="w-full flex justify-center mt-10">

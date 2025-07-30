@@ -24,6 +24,8 @@ const MinifigMobileMode = memo<IMinifigMobileModeProps>(
           <h3 className="font-bold text-md">START BUILDING</h3>
         </header>
 
+        <MinifigCategoryOptions activeMinifigProject={activeMinifigProject} />
+
         <section className="p-4">
           <MinifigTabs />
 
