@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 
 const Overlay = memo<IOverlayProps>(({ className, onClick, ...props }) => (
   <motion.div
-    variants={props.variants}
+    {...props}
     initial="initial"
     animate="enter"
     exit="exit"
