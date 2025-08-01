@@ -1,5 +1,6 @@
 const CustomErrorPage = () => {
   return (
+    // trigger deployment error
     <main className="min-h-screen grid place-items-center bg-gray-50 p-6">
       <div className="max-w-md w-full text-center space-y-8">
         <div className="space-y-3">
