@@ -13,11 +13,14 @@ import { Divider } from '../Divider';
 import { AnimatePresence, motion } from 'motion/react';
 import { TabButtonAnimation, TabItemAnimation } from '@/animations';
 import { MinifigTabContent } from '../MinifigTabContent';
+import useFetchMinifigProjects from '@/api/hooks/useFetchMinifigProjects';
 
 const MinifigTabs = memo(() => {
-  const { characters = [], activeCharacterId = null } = useSelector(
+  const { activeCharacterId = null } = useSelector(
     (state: RootState) => state.minifigBuilder || { characters: [], activeCharacterId: null },
   );
+
+  const { data: projects = [] } = useFetchMinifigProjects();
 
   const removeProjectTab = useDisclosureParam();
 
@@ -52,7 +55,7 @@ const MinifigTabs = memo(() => {
       >
         <TabsList className="w-full h-full flex px-2 overflow-x-auto gap-2 flex-wrap">
           <AnimatePresence>
-            {characters.map((character, idx) => (
+            {projects.map((character, idx) => (
               <motion.div
                 key={character.id}
                 variants={TabItemAnimation}

@@ -1,15 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
 import type { RootState } from '@/store';
 import { MinifigPartType } from '@/types';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import minifigPartsData from '@/api/dummyData.json';
 import { MinifigDesktopMode } from './components';
 import { useDisclosureParam } from '@/hooks';
 import useWindowResize from '@/hooks/useWindowResize';
 import { MinifigMobileMode } from './components/MinifigMobileMode';
+import { useFetchMinifigProducts } from '@/api/hooks';
+import useFetchMinifigProjects from '@/api/hooks/useFetchMinifigProjects';
 
 const MinifigBuilderSection = () => {
   const {
@@ -28,14 +27,21 @@ const MinifigBuilderSection = () => {
 
   const isMobile = screenSize.width <= 767;
 
-  // will replace with actual minifig data
-  const wardrobeItems = useMemo(() => {
-    if (!selectedCategory) return [];
-    return (minifigPartsData[selectedCategory] || []).map((item: any) => ({
-      ...item,
-      type: item.type as MinifigPartType,
-    }));
-  }, [selectedCategory]);
+  // fetch hook for minifig products
+  const { data: wardrobeItems } = useFetchMinifigProducts({
+    minifig_part_type: selectedCategory || undefined,
+  });
+
+  // needs to refactor later
+  const { data: project } = useFetchMinifigProjects();
+
+  // const wardrobeItems = useMemo(() => {
+  //   if (!selectedCategory) return [];
+  //   return (minifigPartsData[selectedCategory] || []).map((item: any) => ({
+  //     ...item,
+  //     type: item.type as MinifigPartType,
+  //   }));
+  // }, [selectedCategory]);
 
   // TODO: needs to refactor this logic
 
@@ -62,16 +68,16 @@ const MinifigBuilderSection = () => {
       {isMobile ? (
         <MinifigMobileMode
           minifigParts={minifigParts}
-          minifigData={wardrobeItems}
+          minifigData={wardrobeItems ?? []}
           modalDisclosure={modalDisclosure}
-          minifigProjects={characters}
+          minifigProjects={project ?? []}
         />
       ) : (
         <MinifigDesktopMode
           minifigParts={minifigParts}
-          minifigData={wardrobeItems}
+          minifigData={wardrobeItems ?? []}
           modalDisclosure={modalDisclosure}
-          minifigProjects={characters}
+          minifigProjects={project ?? []}
         />
       )}
     </section>

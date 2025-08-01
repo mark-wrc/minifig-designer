@@ -56,3 +56,22 @@ export interface CartSummary {
   totalPrice: number;
   projectSummaries: MinfigProjectSummary[];
 }
+
+export type IMinifigPayload = MinifigPartData;
+
+export interface IMinifigPayloadResponse {
+  data: IMinifigPayload[];
+  message: string;
+}
+
+export interface IMinifigProjectPayloadResponse {
+  data: IMinifigProject[];
+  message: string;
+}
+
+export interface IMinifigProjectByIdResponse {
+  data: IMinifigProject;
+  message: string;
+}
+
+export type IMinifigProjectPayload = IMinifigProject;

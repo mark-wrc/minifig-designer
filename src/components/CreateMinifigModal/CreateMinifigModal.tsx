@@ -9,51 +9,84 @@ import {
 } from '../ui/dialog';
 import { ICreateMinifigModalProps } from './CreateMinifigModal.types';
 import { Input } from '../ui/input';
-import { useDispatch, useSelector } from 'react-redux';
-import { createMinifigure, renameCharacter } from '@/store/minifigBuilder/minifigBuilderSlice';
 import { cn } from '@/lib/utils';
 import { CTAButton } from '../CTAButton';
-import { RootState } from '@/store';
-import { validateMinifigProjectName } from '@/utils';
+import useFetchMinifigProjects from '@/api/hooks/useFetchMinifigProjects';
+import { usePostMinifigProject, usePutMinifigProject } from '@/api/hooks';
+import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
+import { MinifigPartType } from '@/types';
+import { useMutationHandlers, useProjectValidation } from '@/hooks';
 
 const CreateMinifigModal = memo<ICreateMinifigModalProps>(
   ({ onClose, initialProjectName, mode, characterId, ...props }) => {
     const [projectName, setProjectName] = useState(initialProjectName);
     const [error, setError] = useState<string | undefined>();
-    const dispatch = useDispatch();
-    const { characters } = useSelector((state: RootState) => state.minifigBuilder);
+    // const dispatch = useDispatch();
+
+    // const { characters } = useSelector((state: RootState) => state.minifigBuilder);
+    const { data: characters } = useFetchMinifigProjects();
+    const { mutate: createProject } = usePostMinifigProject();
+    const { mutate: updateProject } = usePutMinifigProject();
+
+    const { handleSuccess, handleError } = useMutationHandlers({
+      setProjectName,
+      setError,
+      onClose,
+    });
+
+    const { validateProject } = useProjectValidation({
+      characters,
+      characterId,
+      setError,
+    });
 
     // prefill input field
     useEffect(() => {
       setProjectName(initialProjectName);
     }, [initialProjectName]);
 
+    const createNewProject = useCallback(() => {
+      createProject(
+        {
+          name: projectName!.trim(),
+          head: BaseMinifigParts[MinifigPartType.HEAD].image,
+          torso: BaseMinifigParts[MinifigPartType.TORSO].image,
+          legs: BaseMinifigParts[MinifigPartType.LEGS].image,
+          id: '',
+          selectedItems: { head: undefined, torso: undefined, legs: undefined },
+        },
+        {
+          onSuccess: handleSuccess,
+          onError: () => handleError('Failed to create project'),
+        },
+      );
+    }, [createProject, projectName, handleSuccess, handleError]);
+
+    // update project name
+    const updateExistingProject = useCallback(() => {
+      updateProject(
+        {
+          id: characterId!,
+          payload: { name: projectName!.trim() },
+        },
+        {
+          onSuccess: handleSuccess,
+          onError: () => handleError('Failed to update project name'),
+        },
+      );
+    }, [characterId, projectName, updateProject, handleSuccess, handleError]);
+
     const handleSubmit = useCallback(
       (e: React.FormEvent) => {
         e.preventDefault();
 
-        const validation = validateMinifigProjectName({
-          newProjectName: projectName ?? '',
-          existingProjects:
-            mode === 'edit' ? characters.filter((c) => c.id !== characterId) : characters,
-        });
-
-        if (!validation.isValid) {
-          setError(validation.error);
+        if (!validateProject(projectName ?? '', mode === 'edit')) {
           return;
         }
 
-        if (mode === 'create') {
-          dispatch(createMinifigure(projectName!.trim()));
-        } else {
-          dispatch(renameCharacter({ id: characterId!, name: projectName!.trim() }));
-        }
-
-        setProjectName('');
-        setError(undefined);
-        onClose?.();
+        return mode === 'create' ? createNewProject() : updateExistingProject();
       },
-      [dispatch, projectName, mode, characterId, onClose, characters],
+      [mode, projectName, validateProject, createNewProject, updateExistingProject],
     );
 
     const handleInputChange = useCallback(

@@ -11,6 +11,7 @@ import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
 import { CTAButton } from '../CTAButton';
 import { useScrollIntoView } from '@/hooks';
 import useWindowResize from '@/hooks/useWindowResize';
+import { usePutMinifigProject } from '@/api/hooks';
 
 const MinifigRenderer = memo<IMinifigRendererProps>(
   ({ minifigParts, ActiveMinifigProject, modalDisclosure, setModalMode, className }) => {
@@ -19,6 +20,8 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
     const { screenSize } = useWindowResize();
     const isMobile = screenSize.width <= 767;
     const minifigPartRef = useRef<HTMLDivElement>(null);
+
+    const { mutate: updateProject } = usePutMinifigProject();
 
     useScrollIntoView({
       ref: minifigPartRef,
@@ -52,9 +55,15 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
     const handleRemoveMinifigPart = useCallback(
       (e: React.MouseEvent, type: MinifigPartType) => {
         e.stopPropagation();
+        if (!ActiveMinifigProject) return;
+
         dispatch(removePart(type));
+        updateProject({
+          id: ActiveMinifigProject.id,
+          payload: { [type.toLowerCase()]: BaseMinifigParts[type].image },
+        });
       },
-      [dispatch],
+      [ActiveMinifigProject, dispatch, updateProject],
     );
 
     return (

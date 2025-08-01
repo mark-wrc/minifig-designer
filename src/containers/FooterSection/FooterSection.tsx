@@ -10,6 +10,7 @@ import {
 import { IFooterSectionProps } from './FooterSection.types';
 import { Facebook, Instagram } from 'lucide-react';
 import { FooterLink } from '@/components';
+import CopyRightSection from './components/CopyrightSection/CopyrightSection';
 
 const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
   const onHandleCartClick = useCallback(() => {
@@ -100,6 +101,9 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
           </section>
         </FooterSectionCard>
       </div>
+
+      {/*copyright section */}
+      <CopyRightSection className="text-center text-white" />
     </section>
   );
 });

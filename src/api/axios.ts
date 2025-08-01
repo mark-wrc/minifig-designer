@@ -5,7 +5,7 @@ interface ErrorResponse {
   message?: string;
 }
 
-export const axiosInstance = axios.create({
+const axiosInstance = axios.create({
   baseURL: '/api/v1',
   headers: {
     'Content-Type': 'application/json',
@@ -40,3 +40,5 @@ axiosInstance.interceptors.response.use(
     });
   },
 );
+
+export default axiosInstance;
