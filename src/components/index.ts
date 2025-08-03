@@ -27,3 +27,4 @@ export * from './MinifigWardrobeItem';
 export * from './EmptyStateComponent';
 export * from './MenuItemNavigation';
 export * from './Overlay';
+export * from './UserContent';

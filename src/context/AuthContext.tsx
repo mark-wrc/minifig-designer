@@ -13,6 +13,7 @@ interface IAuthProviderProps {
 
 interface AuthContextValue extends IAuthData {
   logout: () => void;
+  getToken: () => string | null;
 }
 
 // this intended to get user's data to be able to redirect to the minifig Builder Page
@@ -25,12 +26,17 @@ export const AuthProvider = ({ children, authData }: IAuthProviderProps) => {
     window.location.href = 'https://www.worldofminifigs.com/login';
   }, []);
 
+  const getToken = useCallback(() => {
+    return authData?.user?.token || null;
+  }, [authData]);
+
   const contextValue = useMemo(
     (): AuthContextValue => ({
       user: authData?.user,
       logout,
+      getToken,
     }),
-    [authData, logout],
+    [authData?.user, getToken, logout],
   );
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;

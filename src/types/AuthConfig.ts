@@ -10,10 +10,12 @@ export interface IUser {
   userName: string;
   userEmail: string;
   imageUrl?: string;
+  token: string;
 }
 
 export interface AuthData {
   [key: string]: string | undefined;
+  token?: string;
 }
 
 export interface AuthHookResult {
