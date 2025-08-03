@@ -8,8 +8,9 @@ const DEFAULT_CONFIG: Required<AuthConfig> = {
     userName: 'userName',
     userEmail: 'userEmail',
     imageUrl: 'imageUrl',
+    token: 'token',
   },
-  requiredFields: ['userEmail'],
+  requiredFields: ['userEmail, token'],
   autoRedirect: false,
 };
 
@@ -63,6 +64,9 @@ export const createAuthHook = (config: AuthConfig = {}) => {
         }
       });
 
+      console.log('🔍 Final auth data:', data);
+      console.log('🔍 Token specifically:', data.token);
+
       if (hasUrlParams) {
         window.history.replaceState({}, '', window.location.pathname);
       }
@@ -81,6 +85,7 @@ export const createAuthHook = (config: AuthConfig = {}) => {
         userName: data.userName || '',
         userEmail: data.userEmail || '',
         imageUrl: data.imageUrl || '',
+        token: data.token || '',
       };
       setAuthData(Object.keys(data).length > 0 ? { user } : null);
       setIsLoading(false);
@@ -109,7 +114,8 @@ export const { useAuthFromURL, clearAuthData } = createAuthHook({
     userName: 'userName',
     userEmail: 'userEmail',
     imageUrl: 'imageUrl',
+    token: 'token',
   },
-  requiredFields: ['userEmail'],
+  requiredFields: ['userEmail', 'token'],
   autoRedirect: false,
 });
