@@ -1,6 +1,6 @@
-import { IMinifigProjectPayload } from '@/types/Minifig';
-import { postMinifigProjects } from '../minifigProducts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { postMinifigProjects } from '../minifigProject';
+import { IMinifigProjectPayload } from '@/types';
 
 export const usePostMinifigProject = () => {
   const queryClient = useQueryClient();

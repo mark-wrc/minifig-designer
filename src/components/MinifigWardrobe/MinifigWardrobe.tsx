@@ -14,6 +14,7 @@ const MinifigWardrobe = memo(
         className,
         selectorComponent,
         onItemDetailsClick,
+        onPartSelect,
       },
       ref,
     ) => {
@@ -38,6 +39,7 @@ const MinifigWardrobe = memo(
             <section className="grid grid-cols-3 lg:grid-cols-4 gap-4 max-h-[300px] md:max-h-[480px] overflow-y-auto p-2 mt-10 md:mt-0 minifig-scrollbar">
               {wardrobeItems.map((item) => (
                 <MinifigWardrobeItem
+                  onPartSelect={onPartSelect}
                   minifigItem={item}
                   onCategoryClick={onCategoryClick}
                   onItemDetailsClick={onItemDetailsClick}

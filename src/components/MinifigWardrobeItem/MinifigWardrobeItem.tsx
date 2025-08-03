@@ -4,7 +4,7 @@ import { MinifigPartData } from '@/types/Minifig';
 import { CTAButton } from '../CTAButton';
 
 const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
-  ({ onItemDetailsClick, minifigItem, onCategoryClick }) => (
+  ({ onItemDetailsClick, minifigItem, onPartSelect }) => (
     <section className="flex flex-col h-full">
       <div
         key={minifigItem?.id}
@@ -24,7 +24,7 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
       <CTAButton
         variant="default"
         className="bg-yellow-300 text-md w-fit self-center px-6 -translate-y-2 hover:bg-minifig-brand-end hover:text-white rounded-sm text-black"
-        onClick={() => onCategoryClick(minifigItem as MinifigPartData)}
+        onClick={() => onPartSelect(minifigItem)}
       >
         Add
       </CTAButton>

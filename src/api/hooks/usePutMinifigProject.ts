@@ -1,6 +1,6 @@
 import { IMinifigProject } from '@/types/Minifig';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateMinifigProject } from '../minifigProducts';
+import { updateMinifigProject } from '../minifigProject';
 
 export const usePutMinifigProject = () => {
   const queryClient = useQueryClient();

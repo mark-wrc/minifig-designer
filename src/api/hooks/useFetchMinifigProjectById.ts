@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchMinifigProjectById } from '../minifigProducts';
-import { IMinifigProjectByIdResponse } from '@/types/Minifig';
+import { fetchMinifigProjectById } from '../minifigProject';
+import { IMinifigProjectByIdResponse } from '@/types';
 
 export const useMinifigProjectById = (id: string) => {
   return useQuery<IMinifigProjectByIdResponse>({

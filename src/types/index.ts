@@ -2,3 +2,5 @@ export * from './FigureCategories';
 export * from './MinifigActions';
 export * from './CartDetails';
 export * from './AuthConfig';
+export * from './MinifigBodyResponse';
+export * from './MinifigProject';

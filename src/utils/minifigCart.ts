@@ -63,7 +63,7 @@ export const getCustomPartsForMinifigProject = (project: IMinifigProject): Custo
 
   MINIFIG_CONFIG.PART_TYPES.forEach((partType) => {
     const config = PART_CONFIG[partType];
-    const partImage = project[config.key];
+    const partImage = project.selectedItems?.[config.key]?.image;
 
     if (isMinifigPart(partImage, config.baseImage)) {
       const minifigPart = createMinifigPart(partType, project, partImage!);
