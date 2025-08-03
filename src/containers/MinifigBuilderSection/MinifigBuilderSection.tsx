@@ -1,10 +1,7 @@
-import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
 import type { RootState } from '@/store';
-import { MinifigPartType } from '@/types';
-import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { MinifigDesktopMode } from './components';
-import { useDisclosureParam } from '@/hooks';
+import { useDisclosureParam, useMinifigParts } from '@/hooks';
 import useWindowResize from '@/hooks/useWindowResize';
 import { MinifigMobileMode } from './components/MinifigMobileMode';
 import { useFetchMinifigProducts } from '@/api/hooks';
@@ -44,24 +41,7 @@ const MinifigBuilderSection = () => {
   // }, [selectedCategory]);
 
   // TODO: needs to refactor this logic
-
-  const minifigParts = useMemo(
-    () => ({
-      [MinifigPartType.HEAD]: {
-        image: activeCharacter?.head || BaseMinifigParts[MinifigPartType.HEAD].image,
-        type: MinifigPartType.HEAD,
-      },
-      [MinifigPartType.TORSO]: {
-        image: activeCharacter?.torso || BaseMinifigParts[MinifigPartType.TORSO].image,
-        type: MinifigPartType.TORSO,
-      },
-      [MinifigPartType.LEGS]: {
-        image: activeCharacter?.legs || BaseMinifigParts[MinifigPartType.LEGS].image,
-        type: MinifigPartType.LEGS,
-      },
-    }),
-    [activeCharacter],
-  );
+  const minifigParts = useMinifigParts(activeCharacter);
 
   return (
     <section>

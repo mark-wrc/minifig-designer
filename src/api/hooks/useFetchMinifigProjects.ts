@@ -1,6 +1,6 @@
 import { IMinifigProject } from '@/types/Minifig';
 import { useQuery } from '@tanstack/react-query';
-import { fetchMinifigProjects } from '../minifigProducts';
+import { fetchMinifigProjects } from '../minifigProject';
 
 const useFetchMinifigProjects = () => {
   return useQuery<IMinifigProject[]>({

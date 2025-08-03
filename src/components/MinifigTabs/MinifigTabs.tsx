@@ -3,7 +3,7 @@ import { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tabs, TabsList } from '../ui/tabs';
 import { TabsTrigger } from '@radix-ui/react-tabs';
-import { deleteMinifigure, setActiveMinifigure } from '@/store/minifigBuilder/minifigBuilderSlice';
+import { setActiveMinifigure } from '@/store/minifigBuilder/minifigBuilderSlice';
 import { CreateMinifigModal } from '../CreateMinifigModal';
 import { cn } from '@/lib/utils';
 import { useDisclosureParam } from '@/hooks';
@@ -14,6 +14,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { TabButtonAnimation, TabItemAnimation } from '@/animations';
 import { MinifigTabContent } from '../MinifigTabContent';
 import useFetchMinifigProjects from '@/api/hooks/useFetchMinifigProjects';
+import { useDeleteMinifigProject } from '@/api/hooks';
 
 const MinifigTabs = memo(() => {
   const { activeCharacterId = null } = useSelector(
@@ -21,7 +22,7 @@ const MinifigTabs = memo(() => {
   );
 
   const { data: projects = [] } = useFetchMinifigProjects();
-
+  const { mutate: deleteProject } = useDeleteMinifigProject();
   const removeProjectTab = useDisclosureParam();
 
   const dispatch = useDispatch();
@@ -40,10 +41,20 @@ const MinifigTabs = memo(() => {
 
   const handleDeleteConfirm = useCallback(() => {
     if (tabToDelete) {
-      dispatch(deleteMinifigure(tabToDelete));
-      setTabToDelete(null);
+      deleteProject(tabToDelete, {
+        onSuccess: (res) => {
+          if (res.success) {
+            setTabToDelete(null);
+            removeProjectTab.onDisclosureClose();
+
+            if (activeCharacterId === res.project.id) {
+              dispatch(setActiveMinifigure(''));
+            }
+          }
+        },
+      });
     }
-  }, [dispatch, tabToDelete]);
+  }, [activeCharacterId, deleteProject, dispatch, removeProjectTab, tabToDelete]);
 
   return (
     <section className="w-full py-4">

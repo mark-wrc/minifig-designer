@@ -10,14 +10,14 @@ interface MinifigBuilderState {
   selectedCategory: MinifigPartType | null;
 }
 
-const createEmptyCharacter = (name: string): IMinifigProject => ({
-  id: crypto.randomUUID(),
-  name,
-  head: BaseMinifigParts[MinifigPartType.HEAD].image,
-  torso: BaseMinifigParts[MinifigPartType.TORSO].image,
-  legs: BaseMinifigParts[MinifigPartType.LEGS].image,
-  selectedItems: {},
-});
+// const createEmptyCharacter = (name: string): IMinifigProject => ({
+//   id: crypto.randomUUID(),
+//   name,
+//   head: BaseMinifigParts[MinifigPartType.HEAD].image,
+//   torso: BaseMinifigParts[MinifigPartType.TORSO].image,
+//   legs: BaseMinifigParts[MinifigPartType.LEGS].image,
+//   selectedItems: {},
+// });
 
 const initialState: MinifigBuilderState = {
   characters: [],
@@ -29,11 +29,11 @@ const minifigBuilderSlice = createSlice({
   name: 'minifigBuilder',
   initialState,
   reducers: {
-    createMinifigure: (state, action: PayloadAction<string>) => {
-      const newMinifigure = createEmptyCharacter(action.payload);
-      state.characters.push(newMinifigure);
-      state.activeCharacterId = newMinifigure.id;
-    },
+    // createMinifigure: (state, action: PayloadAction<string>) => {
+    //   const newMinifigure = createEmptyCharacter(action.payload);
+    //   state.characters.push(newMinifigure);
+    //   state.activeCharacterId = newMinifigure.id;
+    // },
 
     setSelectedCategory: (state, action: PayloadAction<MinifigPartType>) => {
       state.selectedCategory = action.payload;
@@ -103,7 +103,6 @@ const minifigBuilderSlice = createSlice({
 });
 
 export const {
-  createMinifigure,
   setActiveMinifigure,
   deleteMinifigure,
   renameCharacter,

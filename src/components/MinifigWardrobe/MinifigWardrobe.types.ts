@@ -5,7 +5,8 @@ import { IMinifigProject, MinifigPartData } from '@/types/Minifig';
 export interface IMinifigWardrobeBaseProps {
   wardrobeItems: MinifigPartData[];
   selectedCategory: MinifigPartType | null;
-  onCategoryClick: (item: MinifigPartData) => void;
+  onPartSelect: (part: MinifigPartData) => void;
+  onCategoryClick?: (item: MinifigPartData) => void;
   onItemDetailsClick: (item: MinifigPartData) => void;
 }
 

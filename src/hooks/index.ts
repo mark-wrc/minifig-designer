@@ -7,3 +7,4 @@ export * from './useScrollIntoView';
 export * from './useDisableScroll';
 export * from './useMutationHandlers';
 export * from './useProjectValidation';
+export * from './useMinifigParts';

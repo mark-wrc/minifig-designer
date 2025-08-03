@@ -6,11 +6,11 @@ import { CreateMinifigModal } from '../CreateMinifigModal';
 
 const CategorySelector = memo<CategorySelectorProps>(
   ({ className, item, onClick, isCategoryTab = false, isSelected }) => {
-    const { characters, modalDisclosure, modalMode, ActiveMinifigProject, handleCloseModal } =
+    const { projects, modalDisclosure, modalMode, ActiveMinifigProject, handleCloseModal } =
       useMinifigCreation();
 
     const handleCategoryClick = useCallback(() => {
-      if (characters.length === 0) {
+      if (projects.length === 0) {
         modalDisclosure.onDisclosureOpen();
         return;
       }
@@ -18,7 +18,7 @@ const CategorySelector = memo<CategorySelectorProps>(
       if (item.type) {
         onClick(item.type);
       }
-    }, [characters.length, item.type, modalDisclosure, onClick]);
+    }, [item.type, modalDisclosure, onClick, projects.length]);
 
     return (
       <>

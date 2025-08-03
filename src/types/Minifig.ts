@@ -1,3 +1,4 @@
+import { IMinifigBodyResponse } from './MinifigBodyResponse';
 import { MinifigPartType } from './MinifigActions';
 
 export interface MinifigPart {
@@ -17,17 +18,19 @@ export interface MinifigPartData {
   price: number;
 }
 
+export interface SelectedMinifigItems {
+  head?: MinifigPartData;
+  torso?: MinifigPartData;
+  legs?: MinifigPartData;
+}
+
 export interface IMinifigProject {
   id: string;
   name: string;
   head: string;
   torso: string;
   legs: string;
-  selectedItems: {
-    head?: MinifigPartData;
-    torso?: MinifigPartData;
-    legs?: MinifigPartData;
-  };
+  selectedItems: SelectedMinifigItems;
 }
 
 export interface CustomPart extends MinifigPart {
@@ -59,19 +62,6 @@ export interface CartSummary {
 
 export type IMinifigPayload = MinifigPartData;
 
-export interface IMinifigPayloadResponse {
+export type IMinifigPayloadResponse = {
   data: IMinifigPayload[];
-  message: string;
-}
-
-export interface IMinifigProjectPayloadResponse {
-  data: IMinifigProject[];
-  message: string;
-}
-
-export interface IMinifigProjectByIdResponse {
-  data: IMinifigProject;
-  message: string;
-}
-
-export type IMinifigProjectPayload = IMinifigProject;
+} & IMinifigBodyResponse;
