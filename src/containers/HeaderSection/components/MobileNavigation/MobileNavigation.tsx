@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { IMobileNavigation } from './MobileNavigation.types';
 import { cn } from '@/lib/utils';
-import { Divider, MenuItemNavigation, Overlay, UserAvatar } from '@/components';
+import { Divider, MenuItemNavigation, Overlay, UserContent } from '@/components';
 import { motion } from 'motion/react';
 import { X } from 'lucide-react';
 import { useAuth, useDisableScroll } from '@/hooks';
@@ -39,9 +39,13 @@ const MobileNavigation = memo<IMobileNavigation>(
           </div>
 
           {/*user avatar */}
-          <section>
+          <section className="mb-2">
             {user ? (
-              <UserAvatar user={user} />
+              <UserContent
+                user={user}
+                className="w-full flex text-base bg-[#28385880] rounded-md p-4 gap-4"
+                userAvatarStyles="w-12 h-12 text-md"
+              />
             ) : (
               <SignInButton url="https://www.worldofminifigs.com/login" />
             )}
