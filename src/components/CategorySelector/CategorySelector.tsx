@@ -46,7 +46,7 @@ const CategorySelector = memo<CategorySelectorProps>(
         {modalDisclosure.open && (
           <CreateMinifigModal
             initialProjectName={modalMode === 'edit' ? ActiveMinifigProject?.name : ''}
-            characterId={modalMode === 'edit' ? ActiveMinifigProject?.id : undefined}
+            characterId={modalMode === 'edit' ? ActiveMinifigProject?._id : undefined}
             mode={modalMode}
             onClose={handleCloseModal}
           />

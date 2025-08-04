@@ -16,7 +16,7 @@ export const useMinifigCreation = () => {
   const { activeCharacterId } = useSelector((state: RootState) => state.minifigBuilder);
   const { mutate: updateProject } = usePutMinifigProject();
 
-  const ActiveMinifigProject = projects.find((proj) => proj.id === activeCharacterId);
+  const ActiveMinifigProject = projects.find((proj) => proj._id === activeCharacterId);
 
   const updateProjectWithDebounce = useCallback(
     (id: string, selectedItems: Record<string, MinifigPartData>) => {
@@ -48,7 +48,7 @@ export const useMinifigCreation = () => {
           [item.type.toLowerCase()]: item,
         };
 
-        updateProjectWithDebounce(ActiveMinifigProject.id, updatedItems);
+        updateProjectWithDebounce(ActiveMinifigProject._id, updatedItems);
       }
     },
     [projects.length, modalDisclosure, ActiveMinifigProject, updateProjectWithDebounce],

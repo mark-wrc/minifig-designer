@@ -4,7 +4,7 @@ import { IMinifigProjectByIdResponse } from '@/types';
 
 export const useMinifigProjectById = (id: string) => {
   return useQuery<IMinifigProjectByIdResponse>({
-    queryKey: ['useMinifigProjectById', id],
+    queryKey: ['useFetchMinifigProjects', id],
     queryFn: () => fetchMinifigProjectById(id),
     enabled: !!id,
   });

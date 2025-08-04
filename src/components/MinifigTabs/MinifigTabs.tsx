@@ -1,5 +1,5 @@
 import { RootState } from '@/store';
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tabs, TabsList } from '../ui/tabs';
 import { TabsTrigger } from '@radix-ui/react-tabs';
@@ -17,9 +17,7 @@ import useFetchMinifigProjects from '@/api/hooks/useFetchMinifigProjects';
 import { useDeleteMinifigProject } from '@/api/hooks';
 
 const MinifigTabs = memo(() => {
-  const { activeCharacterId = null } = useSelector(
-    (state: RootState) => state.minifigBuilder || { characters: [], activeCharacterId: null },
-  );
+  const { activeCharacterId = null } = useSelector((state: RootState) => state.minifigBuilder);
 
   const { data: projects = [] } = useFetchMinifigProjects();
   const { mutate: deleteProject } = useDeleteMinifigProject();
@@ -29,6 +27,13 @@ const MinifigTabs = memo(() => {
 
   const [showModal, setShowModal] = useState(false);
   const [tabToDelete, setTabToDelete] = useState<string | null>(null);
+
+  const activeTabValue = useMemo(() => {
+    if (activeCharacterId && projects.find((p) => p._id === activeCharacterId)) {
+      return activeCharacterId;
+    }
+    return projects[0]?._id || null;
+  }, [activeCharacterId, projects]);
 
   const handleDeleteClick = useCallback(
     (id: string, e: React.MouseEvent) => {
@@ -47,7 +52,7 @@ const MinifigTabs = memo(() => {
             setTabToDelete(null);
             removeProjectTab.onDisclosureClose();
 
-            if (activeCharacterId === res.project.id) {
+            if (activeCharacterId === res.project._id) {
               dispatch(setActiveMinifigure(''));
             }
           }
@@ -56,19 +61,26 @@ const MinifigTabs = memo(() => {
     }
   }, [activeCharacterId, deleteProject, dispatch, removeProjectTab, tabToDelete]);
 
+  const handleTabSelect = useCallback(
+    (id: string) => {
+      dispatch(setActiveMinifigure(id));
+    },
+    [dispatch],
+  );
+
   return (
     <section className="w-full py-4">
       <div className="flex items-center justify-end"></div>
       <Tabs
-        value={activeCharacterId || undefined}
-        onValueChange={(value) => dispatch(setActiveMinifigure(value))}
+        value={activeTabValue || projects[0]?._id}
+        onValueChange={handleTabSelect}
         className="flex-1"
       >
         <TabsList className="w-full h-full flex px-2 overflow-x-auto gap-2 flex-wrap">
           <AnimatePresence>
             {projects.map((character, idx) => (
               <motion.div
-                key={character.id}
+                key={character._id}
                 variants={TabItemAnimation}
                 initial="initial"
                 animate="enter"
@@ -78,11 +90,11 @@ const MinifigTabs = memo(() => {
                 <TabsTrigger
                   className={cn(
                     'flex items-center p-3 w-fit relative group cursor-pointer text-left md:text-sm rounded-sm font-semibold bg-yellow-500 overflow-y-hidden',
-                    activeCharacterId === character.id &&
+                    activeCharacterId === character._id &&
                       ' bg-minifig-brand-end  transition-all duration-300 text-white',
                   )}
-                  key={character.id}
-                  value={character.id}
+                  key={character._id}
+                  value={character._id}
                 >
                   {/* Tab Content  */}
                   <MinifigTabContent character={character} onDelete={handleDeleteClick} />

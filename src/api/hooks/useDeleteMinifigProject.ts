@@ -6,10 +6,13 @@ export const useDeleteMinifigProject = () => {
   const queryClient = useQueryClient();
 
   return useMutation<IDeleteMinifigProjectResponse, Error, string>({
-    mutationFn: deleteMinifigProject,
+    mutationFn: async (projectId: string) => {
+      const response = await deleteMinifigProject(projectId);
+      return response;
+    },
     onSuccess: (data) => {
       if (data.success) {
-        queryClient.invalidateQueries({ queryKey: ['useFetchMinifigProducts'] });
+        queryClient.invalidateQueries({ queryKey: ['useFetchMinifigProjects'] });
       }
     },
   });

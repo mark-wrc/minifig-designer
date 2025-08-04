@@ -12,4 +12,5 @@ export interface IMinifigMobileModeProps {
     };
   };
   minifigData: MinifigPartData[];
+  activeProjectId?: IMinifigProject;
 }

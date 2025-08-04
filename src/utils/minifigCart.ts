@@ -19,7 +19,7 @@ const PART_CONFIG = {
     fallbackName: 'Torso',
   },
   LEGS: {
-    key: 'legs' as const,
+    key: 'leg' as const,
     baseImage: BaseMinifigParts[MinifigPartType.LEGS]?.image,
     dataSource: minifigDummyData.LEGS,
     fallbackName: 'Legs',

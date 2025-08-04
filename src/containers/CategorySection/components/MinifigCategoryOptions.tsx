@@ -41,11 +41,11 @@ const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
         {
           id: 3,
           title: IFigureCategories.Legs,
-          image: activeMinifigProject?.legs || DefaultLegs,
+          image: activeMinifigProject?.leg || DefaultLegs,
           type: MinifigPartType.LEGS,
         },
       ],
-      [activeMinifigProject?.head, activeMinifigProject?.legs, activeMinifigProject?.torso],
+      [activeMinifigProject?.head, activeMinifigProject?.leg, activeMinifigProject?.torso],
     );
     return (
       <section

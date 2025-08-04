@@ -13,17 +13,17 @@ import { cn } from '@/lib/utils';
 import { CTAButton } from '../CTAButton';
 import useFetchMinifigProjects from '@/api/hooks/useFetchMinifigProjects';
 import { usePostMinifigProject, usePutMinifigProject } from '@/api/hooks';
-import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
-import { MinifigPartType } from '@/types';
 import { useMutationHandlers, useProjectValidation } from '@/hooks';
+import { useDispatch } from 'react-redux';
+import { setActiveMinifigure } from '@/store/minifigBuilder/minifigBuilderSlice';
+import { ICreateMinifigProjectPayload } from '@/types';
 
 const CreateMinifigModal = memo<ICreateMinifigModalProps>(
   ({ onClose, initialProjectName, mode, characterId, ...props }) => {
     const [projectName, setProjectName] = useState(initialProjectName);
     const [error, setError] = useState<string | undefined>();
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-    // const { characters } = useSelector((state: RootState) => state.minifigBuilder);
     const { data: characters } = useFetchMinifigProjects();
     const { mutate: createProject } = usePostMinifigProject();
     const { mutate: updateProject } = usePutMinifigProject();
@@ -46,21 +46,27 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
     }, [initialProjectName]);
 
     const createNewProject = useCallback(() => {
-      createProject(
-        {
-          name: projectName!.trim(),
-          head: BaseMinifigParts[MinifigPartType.HEAD].image,
-          torso: BaseMinifigParts[MinifigPartType.TORSO].image,
-          legs: BaseMinifigParts[MinifigPartType.LEGS].image,
-          id: '',
-          selectedItems: { head: undefined, torso: undefined, legs: undefined },
+      const payload: ICreateMinifigProjectPayload = {
+        name: projectName!.trim(),
+        selectedItems: {
+          head: undefined,
+          torso: undefined,
+          leg: undefined,
         },
-        {
-          onSuccess: handleSuccess,
-          onError: () => handleError('Failed to create project'),
+      };
+
+      createProject(payload, {
+        onSuccess: (response) => {
+          if (response.success && response.project) {
+            dispatch(setActiveMinifigure(response.project._id));
+
+            handleSuccess();
+          }
+          onClose?.();
         },
-      );
-    }, [createProject, projectName, handleSuccess, handleError]);
+        onError: () => handleError('Failed to create project'),
+      });
+    }, [projectName, createProject, dispatch, handleSuccess, onClose, handleError]);
 
     // update project name
     const updateExistingProject = useCallback(() => {

@@ -8,8 +8,8 @@ export const usePutMinifigProject = () => {
     mutationFn: ({ id, payload }: { id: string; payload: Partial<IMinifigProject> }) =>
       updateMinifigProject(id, payload),
     onSuccess: (variables) => {
-      queryClient.invalidateQueries({ queryKey: ['useFetchMinifigProducts'] });
-      queryClient.invalidateQueries({ queryKey: ['useFetchMinifigProducts', variables.id] });
+      queryClient.invalidateQueries({ queryKey: ['useFetchMinifigProjects'] });
+      queryClient.invalidateQueries({ queryKey: ['useFetchMinifigProjects', variables.id] });
     },
   });
 };

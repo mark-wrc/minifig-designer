@@ -40,7 +40,7 @@ const minifigBuilderSlice = createSlice({
     },
 
     setSelectedPart: (state, action: PayloadAction<MinifigPartData>) => {
-      const character = state.characters.find((char) => char.id === state.activeCharacterId);
+      const character = state.characters.find((char) => char._id === state.activeCharacterId);
       if (!character) return;
 
       const { type, image } = action.payload;
@@ -64,9 +64,9 @@ const minifigBuilderSlice = createSlice({
     },
 
     deleteMinifigure: (state, action: PayloadAction<string>) => {
-      state.characters = state.characters.filter((char) => char.id !== action.payload);
+      state.characters = state.characters.filter((char) => char._id !== action.payload);
       if (state.activeCharacterId === action.payload) {
-        state.activeCharacterId = state.characters.length > 0 ? state.characters[0].id : null;
+        state.activeCharacterId = state.characters.length > 0 ? state.characters[0]._id : null;
 
         // clear selected category if theres no project left
         if (state.characters.length === 0) {
@@ -76,7 +76,7 @@ const minifigBuilderSlice = createSlice({
     },
 
     removePart: (state, action: PayloadAction<MinifigPartType>) => {
-      const character = state.characters.find((char) => char.id === state.activeCharacterId);
+      const character = state.characters.find((char) => char._id === state.activeCharacterId);
       if (!character) return;
 
       const partType = action.payload.toLowerCase() as keyof IMinifigProject;
@@ -85,7 +85,7 @@ const minifigBuilderSlice = createSlice({
     },
 
     renameCharacter: (state, action: PayloadAction<{ id: string; name: string }>) => {
-      const character = state.characters.find((char) => char.id === action.payload.id);
+      const character = state.characters.find((char) => char._id === action.payload.id);
       if (character) {
         character.name = action.payload.name;
       }

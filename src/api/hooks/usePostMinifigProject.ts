@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postMinifigProjects } from '../minifigProject';
-import { IMinifigProjectPayload } from '@/types';
+import { ICreateMinifigProjectPayload } from '@/types';
 
 export const usePostMinifigProject = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: IMinifigProjectPayload) => postMinifigProjects(payload),
+    mutationFn: (payload: ICreateMinifigProjectPayload) => postMinifigProjects(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['useFetchMinifigProjects'] });
     },
