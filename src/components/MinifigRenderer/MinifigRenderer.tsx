@@ -5,22 +5,22 @@ import { IMinifigRendererProps } from './MinifigRenderer.types';
 import { cn } from '@/lib/utils';
 import { Trash2, Plus } from 'lucide-react';
 import { setSelectedCategory, removePart } from '@/store/minifigBuilder/minifigBuilderSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { useDispatch } from 'react-redux';
 import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
 import { CTAButton } from '../CTAButton';
 import { useScrollIntoView } from '@/hooks';
 import useWindowResize from '@/hooks/useWindowResize';
 import { usePutMinifigProject } from '@/api/hooks';
+import useFetchMinifigProjects from '@/api/hooks/useFetchMinifigProjects';
 
 const MinifigRenderer = memo<IMinifigRendererProps>(
   ({ minifigParts, ActiveMinifigProject, modalDisclosure, setModalMode, className }) => {
-    const { characters } = useSelector((state: RootState) => state.minifigBuilder);
     const dispatch = useDispatch();
     const { screenSize } = useWindowResize();
     const isMobile = screenSize.width <= 767;
     const minifigPartRef = useRef<HTMLDivElement>(null);
 
+    const { data: projects = [] } = useFetchMinifigProjects();
     const { mutate: updateProject } = usePutMinifigProject();
 
     useScrollIntoView({
@@ -41,7 +41,7 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
 
     const handlePartClick = useCallback(
       (type: MinifigPartType) => {
-        if (characters.length === 0) {
+        if (projects.length === 0) {
           modalDisclosure.onDisclosureOpen();
 
           return;
@@ -49,7 +49,7 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
 
         dispatch(setSelectedCategory(type));
       },
-      [characters.length, dispatch, modalDisclosure],
+      [dispatch, modalDisclosure, projects.length],
     );
 
     const handleRemoveMinifigPart = useCallback(
@@ -59,7 +59,7 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
 
         dispatch(removePart(type));
         updateProject({
-          id: ActiveMinifigProject.id,
+          id: ActiveMinifigProject._id,
           payload: { [type.toLowerCase()]: BaseMinifigParts[type].image },
         });
       },
@@ -90,7 +90,7 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
             const image = minifigParts?.[partType]?.image;
             const totalMinifigParts = minifigParts?.[partType]?.image?.length;
             const hasMinifigParts =
-              characters.length > 0 && image && image !== BaseMinifigParts[partType]?.image;
+              projects.length > 0 && image && image !== BaseMinifigParts[partType]?.image;
 
             return (
               <div

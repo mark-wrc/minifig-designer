@@ -14,7 +14,7 @@ interface MinifigProductsParams {
 export const fetchMinifigProducts = async (
   params: MinifigProductsParams,
 ): Promise<MinifigProductsResponse> => {
-  const { data } = await axios.get('api/v1/products', {
+  const { data } = await axios.get('/products', {
     params,
     paramsSerializer: (params) => qs.stringify(params),
   });

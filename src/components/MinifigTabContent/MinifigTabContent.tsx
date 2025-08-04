@@ -9,7 +9,7 @@ const MinifigTabContent = memo<IMinifigTabContentProps>(({ character, onDelete }
       variant="ghost"
       size="icon"
       className="h-5 w-5 cursor-pointer  hover:bg-red-500 rounded-full hover:text-white font-bold"
-      onClick={(e) => onDelete(character.id, e)}
+      onClick={(e) => onDelete(character._id, e)}
     >
       <X className="h-3 w-3 " />
     </CTAButton>

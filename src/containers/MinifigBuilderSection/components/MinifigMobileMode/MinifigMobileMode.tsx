@@ -13,7 +13,7 @@ const MinifigMobileMode = memo<IMinifigMobileModeProps>(
     );
 
     const activeMinifigProject = useMemo(
-      () => characters.find((char) => char.id === activeCharacterId),
+      () => characters.find((char) => char._id === activeCharacterId),
       [activeCharacterId, characters],
     );
 

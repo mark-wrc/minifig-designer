@@ -18,7 +18,7 @@ export const useProjectValidation = ({
       const validation = validateMinifigProjectName({
         newProjectName: projectName,
         existingProjects: isEdit
-          ? (characters?.filter((c) => c.id !== characterId) ?? [])
+          ? (characters?.filter((c) => c._id !== characterId) ?? [])
           : (characters ?? []),
       });
 

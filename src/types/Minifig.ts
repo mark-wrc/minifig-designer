@@ -21,15 +21,15 @@ export interface MinifigPartData {
 export interface SelectedMinifigItems {
   head?: MinifigPartData;
   torso?: MinifigPartData;
-  legs?: MinifigPartData;
+  leg?: MinifigPartData;
 }
 
 export interface IMinifigProject {
-  id: string;
+  _id: string;
   name: string;
   head: string;
   torso: string;
-  legs: string;
+  leg: string;
   selectedItems: SelectedMinifigItems;
 }
 

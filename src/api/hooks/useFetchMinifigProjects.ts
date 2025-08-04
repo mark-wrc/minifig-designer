@@ -4,10 +4,10 @@ import { fetchMinifigProjects } from '../minifigProject';
 
 const useFetchMinifigProjects = () => {
   return useQuery<IMinifigProject[]>({
-    queryKey: ['minifig-projects'],
+    queryKey: ['useFetchMinifigProjects'],
     queryFn: async () => {
       const response = await fetchMinifigProjects();
-      return response.data;
+      return response.projects;
     },
   });
 };

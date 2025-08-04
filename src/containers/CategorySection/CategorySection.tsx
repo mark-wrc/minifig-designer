@@ -9,7 +9,7 @@ const CategorySection = () => {
   );
 
   const activeMinifigProject = useMemo(() => {
-    return characters.find((char) => char.id === activeCharacterId);
+    return characters.find((char) => char._id === activeCharacterId);
   }, [characters, activeCharacterId]);
 
   return (

@@ -5,7 +5,7 @@ const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
   const { project, minifigPart, totalPrice, hasCustomParts } = summary;
 
   return (
-    <Fragment key={project.id || index}>
+    <Fragment key={project._id || index}>
       <div className="border rounded-lg p-4 bg-gray-50">
         <div className="flex justify-between items-center mb-3">
           <h4 className="font-semibold text-lg">{project.name}</h4>
@@ -47,22 +47,22 @@ const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
           <p className="text-xs font-medium text-gray-600 mb-2">Character Preview:</p>
           <div className="flex gap-2">
             <img
-              src={project.head}
+              src={project.selectedItems.head?.image || ''}
               alt="Head"
               className="w-12 h-12 rounded border"
               title={project.selectedItems?.head?.name || 'Default Head'}
             />
             <img
-              src={project.torso}
+              src={project.selectedItems.torso?.image || ''}
               alt="Torso"
               className="w-12 h-12 rounded border"
               title={project.selectedItems?.torso?.name || 'Default Torso'}
             />
             <img
-              src={project.legs}
+              src={project.selectedItems.leg?.image || ''}
               alt="Legs"
               className="w-12 h-12 rounded border"
-              title={project.selectedItems?.legs?.name || 'Default Legs'}
+              title={project.selectedItems?.leg?.name || 'Default Legs'}
             />
           </div>
         </div>

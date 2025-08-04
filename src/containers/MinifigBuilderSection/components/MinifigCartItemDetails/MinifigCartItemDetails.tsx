@@ -21,10 +21,10 @@ const MinifigCartItemDetails = memo<IMinifigCartItemDetailsProps>(({ minifig }) 
         {minifig.map((character, index) => {
           if (!character) return null;
           const summary =
-            projectSummaries.find((s) => s.project.id === character.id) ||
+            projectSummaries.find((s) => s.project._id === character._id) ||
             createProjectSummary(character);
           return (
-            <MinifigProjectCard key={character.id || index} summary={summary} index={index} />
+            <MinifigProjectCard key={character._id || index} summary={summary} index={index} />
           );
         })}
       </div>

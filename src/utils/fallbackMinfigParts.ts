@@ -4,14 +4,14 @@ import { MinifigPartType } from '@/types';
 import { IMinifigProject } from '@/types/Minifig';
 
 export const createFallbackBuild = (): IMinifigProject => ({
-  id: 'fallback',
+  _id: 'fallback',
   name: 'Deleted Character',
   head: BaseMinifigParts[MinifigPartType.HEAD].image,
   torso: BaseMinifigParts[MinifigPartType.TORSO].image,
-  legs: BaseMinifigParts[MinifigPartType.LEGS].image,
+  leg: BaseMinifigParts[MinifigPartType.LEGS].image,
   selectedItems: {
     head: undefined,
     torso: undefined,
-    legs: undefined,
+    leg: undefined,
   },
 });
