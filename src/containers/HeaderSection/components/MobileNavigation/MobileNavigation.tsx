@@ -1,16 +1,16 @@
 import { memo } from 'react';
 import { IMobileNavigation } from './MobileNavigation.types';
 import { cn } from '@/lib/utils';
-import { Divider, MenuItemNavigation, Overlay, UserContent } from '@/components';
+import { CTAButton, Divider, MenuItemNavigation, Overlay, UserContent } from '@/components';
 import { motion } from 'motion/react';
-import { X } from 'lucide-react';
+import { X, LogOut } from 'lucide-react';
 import { useAuth, useDisableScroll } from '@/hooks';
 import { MobileMenuAnimation, MobileMenuOverlayAnimation } from '@/animations';
 import { SignInButton } from '../SignInButton';
 
 const MobileNavigation = memo<IMobileNavigation>(
   ({ className, user, menuItems, userItems, onclose, isOpen, setOpenMenu }) => {
-    const { user: auth } = useAuth();
+    const { user: auth, logout } = useAuth();
 
     useDisableScroll(isOpen === true);
 
@@ -25,7 +25,7 @@ const MobileNavigation = memo<IMobileNavigation>(
           animate="enter"
           exit="exit"
           className={cn(
-            ' bg-minifig-brand-end w-full sm:w-[75%] h-full fixed right-0 top-0 bottom-0  z-[999999]  p-4 py-7',
+            ' bg-minifig-brand-end w-full sm:w-[75%] h-full fixed right-0 top-0 bottom-0 z-[999999] p-4 py-7',
             className,
           )}
         >
@@ -53,18 +53,31 @@ const MobileNavigation = memo<IMobileNavigation>(
 
           {/* Menu items */}
           <div className="pb-2">
-            <MenuItemNavigation className="px-4 text-lg" menuItems={menuItems} />
+            <MenuItemNavigation className="px-4 py-2 text-lg" menuItems={menuItems} />
           </div>
 
           {auth && (
             <>
-              <Divider />
+              <Divider className="bg-[#44608080]" />
 
               <div className="mt-4">
-                <MenuItemNavigation className="px-4 text-lg" menuItems={userItems} />
+                <MenuItemNavigation className="px-4 py-2 text-lg" menuItems={userItems} />
               </div>
             </>
           )}
+
+          <section className="p-3 w-full flex absolute left-0 bottom-1 border-t-2 border-t-[#44608080]">
+            <CTAButton
+              variant="default"
+              className="w-full bg-red-500 text-lg hover:bg-red-700"
+              onClick={logout}
+            >
+              <span className="flex items-center gap-2">
+                Logout
+                <LogOut strokeWidth={3} />
+              </span>
+            </CTAButton>
+          </section>
         </motion.section>
       </>
     );

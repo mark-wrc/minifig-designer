@@ -69,7 +69,7 @@ const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
               isCategoryTab={isMobileMode}
             />
 
-            {!isMobileMode && <p className=" text-lg">{category.title}</p>}
+            {!isMobileMode && <p className="text-lg font-bold">{category.title}</p>}
           </motion.div>
         ))}
       </section>
