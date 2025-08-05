@@ -2,8 +2,9 @@ import { memo, useCallback } from 'react';
 import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
 import { MinifigPartType } from '@/types';
 import { IMinifigPreviewProps } from './MinifigPreview.types';
+import { cn } from '@/lib/utils';
 
-const MinifigPreview = memo<IMinifigPreviewProps>(({ selectedItems, className = '' }) => {
+const MinifigPreview = memo<IMinifigPreviewProps>(({ selectedItems, className }) => {
   const partTypes = [MinifigPartType.HEAD, MinifigPartType.TORSO, MinifigPartType.LEGS];
 
   const getPartImage = useCallback(
@@ -39,7 +40,7 @@ const MinifigPreview = memo<IMinifigPreviewProps>(({ selectedItems, className = 
   );
 
   return (
-    <div className={`flex gap-2 ${className}`}>
+    <div className={cn('flex gap-2', className)}>
       {partTypes.map((partType) => (
         <img
           key={partType}
