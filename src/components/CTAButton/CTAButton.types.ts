@@ -6,4 +6,5 @@ export interface ICTAButtonProps
   extends React.ComponentProps<'button'>,
     VariantProps<typeof buttonVariants> {
   icon?: React.ElementType;
+  isLoading?: boolean;
 }

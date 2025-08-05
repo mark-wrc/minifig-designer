@@ -8,3 +8,4 @@ export * from './useDisableScroll';
 export * from './useMutationHandlers';
 export * from './useProjectValidation';
 export * from './useMinifigParts';
+export * from './useSendCartToCheckout';

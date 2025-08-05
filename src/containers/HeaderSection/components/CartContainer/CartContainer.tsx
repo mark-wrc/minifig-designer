@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { useShoppingCart } from '@/hooks/useShoppingCart';
 import { motion } from 'motion/react';
 import { CartContainerAnimation, CartOverlayAnimation } from '@/animations';
+import { CheckoutButton } from '../CheckoutButton';
 
 const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
   const { projects, totalItems, totalPrice } = useSelector(
@@ -96,9 +97,10 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
                 {totalItems} total items
               </p>
             </div>
-            <Button className="w-full cursor-pointer bg-green-600 hover:bg-green-700 uppercase">
-              Checkout (${totalPrice})
-            </Button>
+            <CheckoutButton
+              totalPrice={totalPrice}
+              className="w-full cursor-pointer bg-green-600 hover:bg-green-700 uppercase"
+            />
           </section>
         )}
       </motion.section>

@@ -28,6 +28,7 @@ const ConfirmationDialog = memo<IConfirmationDialogProps>(({ icon: Icon, ...prop
 
         {props.showClosebtn && (
           <CTAButton
+            isLoading={props.isLoading}
             className=" cursor-pointer"
             variant="default"
             title="Cancel"

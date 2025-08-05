@@ -1,5 +1,5 @@
 import { RootState } from '@/store';
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tabs, TabsList } from '../ui/tabs';
 import { TabsTrigger } from '@radix-ui/react-tabs';
@@ -19,21 +19,14 @@ import { useDeleteMinifigProject } from '@/api/hooks';
 const MinifigTabs = memo(() => {
   const { activeCharacterId = null } = useSelector((state: RootState) => state.minifigBuilder);
 
-  const { data: projects = [] } = useFetchMinifigProjects();
+  const { data: projects = [], refetch: refetechMinifigProjects } = useFetchMinifigProjects();
   const { mutate: deleteProject } = useDeleteMinifigProject();
   const removeProjectTab = useDisclosureParam();
+  const openModal = useDisclosureParam();
 
   const dispatch = useDispatch();
 
-  const [showModal, setShowModal] = useState(false);
   const [tabToDelete, setTabToDelete] = useState<string | null>(null);
-
-  const activeTabValue = useMemo(() => {
-    if (activeCharacterId && projects.find((p) => p._id === activeCharacterId)) {
-      return activeCharacterId;
-    }
-    return projects[0]?._id || null;
-  }, [activeCharacterId, projects]);
 
   const handleDeleteClick = useCallback(
     (id: string, e: React.MouseEvent) => {
@@ -52,6 +45,12 @@ const MinifigTabs = memo(() => {
             setTabToDelete(null);
             removeProjectTab.onDisclosureClose();
 
+            refetechMinifigProjects().then(() => {
+              if (activeCharacterId === res.project._id) {
+                dispatch(setActiveMinifigure(projects[0]?._id || ''));
+              }
+            });
+
             if (activeCharacterId === res.project._id) {
               dispatch(setActiveMinifigure(''));
             }
@@ -59,7 +58,15 @@ const MinifigTabs = memo(() => {
         },
       });
     }
-  }, [activeCharacterId, deleteProject, dispatch, removeProjectTab, tabToDelete]);
+  }, [
+    activeCharacterId,
+    deleteProject,
+    dispatch,
+    projects,
+    refetechMinifigProjects,
+    removeProjectTab,
+    tabToDelete,
+  ]);
 
   const handleTabSelect = useCallback(
     (id: string) => {
@@ -71,11 +78,7 @@ const MinifigTabs = memo(() => {
   return (
     <section className="w-full py-4">
       <div className="flex items-center justify-end"></div>
-      <Tabs
-        value={activeTabValue || projects[0]?._id}
-        onValueChange={handleTabSelect}
-        className="flex-1"
-      >
+      <Tabs value={activeCharacterId || ''} onValueChange={handleTabSelect} className="flex-1">
         <TabsList className="w-full h-full flex px-2 overflow-x-auto gap-2 flex-wrap">
           <AnimatePresence>
             {projects.map((character, idx) => (
@@ -115,14 +118,16 @@ const MinifigTabs = memo(() => {
           <CTAButton
             variant="default"
             className="bg-yellow-300 cursor-pointer text-black hover:text-white hover:bg-minifig-brand-end text-md p-6 borderborder-gray-950"
-            onClick={() => setShowModal(true)}
+            onClick={() => openModal.onDisclosureOpen()}
           >
             Add New Project
           </CTAButton>
         </motion.div>
       </Tabs>
 
-      {showModal && <CreateMinifigModal mode="create" onClose={() => setShowModal(false)} />}
+      {openModal.open && (
+        <CreateMinifigModal mode="create" onClose={openModal.onDisclosureClose()} />
+      )}
 
       {removeProjectTab.open && (
         <ConfirmationDialog

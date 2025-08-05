@@ -21,4 +21,5 @@ export interface IConfirmationDialogProps extends IActionButtons, containerStyle
   title?: string;
   description?: string;
   icon?: React.ElementType | string;
+  isLoading?: boolean;
 }
