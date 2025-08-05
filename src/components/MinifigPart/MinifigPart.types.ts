@@ -6,4 +6,5 @@ export interface IMinifigPartProps {
   className?: string;
   totalMinifigParts?: number;
   title?: string;
+  imageSrc: string;
 }

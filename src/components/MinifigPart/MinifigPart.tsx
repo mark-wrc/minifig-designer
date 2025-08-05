@@ -6,9 +6,8 @@ import { useDisclosureParam } from '@/hooks';
 import { motion } from 'motion/react';
 import { MinifigPartAnimation } from '@/animations';
 
-const MinifigPart = memo<IMinifigPartProps>(({ type, minifigPartsImages, className }) => {
+const MinifigPart = memo<IMinifigPartProps>(({ type, imageSrc, className }) => {
   const modalDisclosure = useDisclosureParam();
-
   const handleCloseModal = useCallback(() => {
     modalDisclosure.onDisclosureClose();
   }, [modalDisclosure]);
@@ -22,12 +21,15 @@ const MinifigPart = memo<IMinifigPartProps>(({ type, minifigPartsImages, classNa
           animate="enter"
           exit="exit"
         >
-          {minifigPartsImages && (
-            <img src={minifigPartsImages} alt={type.toLowerCase()} className="object-contain" />
+          {imageSrc && ( // Use imageSrc here
+            <img
+              src={imageSrc || '/placeholder.svg'}
+              alt={type.toLowerCase()}
+              className="object-contain"
+            />
           )}
         </motion.figure>
       </div>
-
       {modalDisclosure.open && <CreateMinifigModal mode="create" onClose={handleCloseModal} />}
     </section>
   );

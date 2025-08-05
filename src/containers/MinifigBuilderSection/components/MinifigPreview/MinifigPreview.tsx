@@ -15,28 +15,32 @@ const MinifigPreview = memo<IMinifigPreviewProps>(({ selectedItems, className })
         case MinifigPartType.TORSO:
           return selectedItems?.torso?.image || BaseMinifigParts[MinifigPartType.TORSO].image;
         case MinifigPartType.LEGS:
-          return selectedItems?.leg?.image || BaseMinifigParts[MinifigPartType.LEGS].image;
+          return selectedItems?.legs?.image || BaseMinifigParts[MinifigPartType.LEGS].image;
         default:
           return null;
       }
     },
-    [selectedItems?.head?.image, selectedItems?.torso?.image, selectedItems?.leg?.image],
+    [selectedItems?.head?.image, selectedItems?.torso?.image, selectedItems?.legs?.image],
   );
 
   const getPartTitle = useCallback(
     (partType: MinifigPartType) => {
       switch (partType) {
         case MinifigPartType.HEAD:
-          return selectedItems?.head?.name || 'Default Head';
+          return selectedItems?.head?.product_name || 'Default Head';
         case MinifigPartType.TORSO:
-          return selectedItems?.torso?.name || 'Default Torso';
+          return selectedItems?.torso?.product_name || 'Default Torso';
         case MinifigPartType.LEGS:
-          return selectedItems?.leg?.name || 'Default Legs';
+          return selectedItems?.legs?.product_name || 'Default Legs';
         default:
           return `Default ${partType}`;
       }
     },
-    [selectedItems?.head?.name, selectedItems?.torso?.name, selectedItems?.leg?.name],
+    [
+      selectedItems?.head?.product_name,
+      selectedItems?.torso?.product_name,
+      selectedItems?.legs?.product_name,
+    ],
   );
 
   return (

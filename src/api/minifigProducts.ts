@@ -6,6 +6,8 @@ import { MinifigPartType } from '@/types';
 interface MinifigProductsResponse {
   data: MinifigPartData[];
   message: string;
+  products: MinifigPartData[];
+  allProducts: MinifigPartData[];
 }
 
 interface MinifigProductsParams {
