@@ -20,3 +20,8 @@ export const fetchMinifigProducts = async (
   });
   return data;
 };
+
+export const fetchAllMinifigProducts = async () => {
+  const { data } = await axios.get('/products');
+  return data;
+};

@@ -1,5 +1,6 @@
 import { Fragment, memo } from 'react';
 import { IMinifigProjectProps } from './MinifigProject.types';
+import MinifigPreview from './MinifigPreview';
 
 const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
   const { project, minifigPart, totalPrice, hasCustomParts } = summary;
@@ -45,26 +46,7 @@ const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
 
         <div className="mt-3 pt-3 border-t border-gray-200">
           <p className="text-xs font-medium text-gray-600 mb-2">Character Preview:</p>
-          <div className="flex gap-2">
-            <img
-              src={project.selectedItems.head?.image || ''}
-              alt="Head"
-              className="w-12 h-12 rounded border"
-              title={project.selectedItems?.head?.name || 'Default Head'}
-            />
-            <img
-              src={project.selectedItems.torso?.image || ''}
-              alt="Torso"
-              className="w-12 h-12 rounded border"
-              title={project.selectedItems?.torso?.name || 'Default Torso'}
-            />
-            <img
-              src={project.selectedItems.leg?.image || ''}
-              alt="Legs"
-              className="w-12 h-12 rounded border"
-              title={project.selectedItems?.leg?.name || 'Default Legs'}
-            />
-          </div>
+          <MinifigPreview selectedItems={project.selectedItems} />
         </div>
       </div>
     </Fragment>

@@ -24,8 +24,8 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
     const [error, setError] = useState<string | undefined>();
     const dispatch = useDispatch();
 
-    const { data: characters } = useFetchMinifigProjects();
-    const { mutate: createProject } = usePostMinifigProject();
+    const { data: characters, refetch: refetchProjects } = useFetchMinifigProjects();
+    const { mutate: createProject, isPending: isCreating } = usePostMinifigProject();
     const { mutate: updateProject } = usePutMinifigProject();
 
     const { handleSuccess, handleError } = useMutationHandlers({
@@ -58,16 +58,25 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
       createProject(payload, {
         onSuccess: (response) => {
           if (response.success && response.project) {
-            dispatch(setActiveMinifigure(response.project._id));
-
+            // Refetch projects first, then set the active character
+            refetchProjects().then(() => {
+              dispatch(setActiveMinifigure(response.project._id));
+            });
             handleSuccess();
           }
           onClose?.();
         },
         onError: () => handleError('Failed to create project'),
       });
-    }, [projectName, createProject, dispatch, handleSuccess, onClose, handleError]);
-
+    }, [
+      projectName,
+      createProject,
+      onClose,
+      refetchProjects,
+      handleSuccess,
+      dispatch,
+      handleError,
+    ]);
     // update project name
     const updateExistingProject = useCallback(() => {
       updateProject(
@@ -132,11 +141,11 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
 
             <DialogFooter className="mt-4">
               <CTAButton
+                isLoading={isCreating}
+                title="   Save & Start Building"
                 variant="ghost"
                 className=" cursor-pointer text-lg bg-yellow-400 hover:bg-yellow-500 translate-x-1 translate-y-1 text-black font-bold py-6 px-6 "
-              >
-                Save & Start Building
-              </CTAButton>
+              />
             </DialogFooter>
           </form>
         </DialogContent>

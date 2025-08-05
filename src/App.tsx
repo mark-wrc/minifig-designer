@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { persistor, store } from './store/index';
 import { createAppRouter } from './lib/routing';
 import { PersistGate } from 'redux-persist/lib/integration/react';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AuthProvider } from './context/AuthContext';
 import { useAuthFromURL } from './hooks';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
@@ -35,6 +36,7 @@ function App() {
           </Provider>
         </AuthProvider>
       </HelmetProvider>
+      <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   );
 }
