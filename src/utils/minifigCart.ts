@@ -19,7 +19,7 @@ const PART_CONFIG = {
     fallbackName: 'Torso',
   },
   LEGS: {
-    key: 'leg' as const,
+    key: 'legs' as const,
     baseImage: BaseMinifigParts[MinifigPartType.LEGS]?.image,
     dataSource: minifigDummyData.LEGS,
     fallbackName: 'Legs',
@@ -42,15 +42,15 @@ const createMinifigPart = (
   const config = PART_CONFIG[partType];
   if (!config) return null;
 
-  const partData = config.dataSource.find((item) => item.image === partImage);
-  const selectedItemName = character.selectedItems?.[config.key]?.name;
+  // Use the actual selected item from the project (from API)
+  const selectedItem = character.selectedItems?.[config.key];
 
   return {
     type: partType,
-    image: partImage,
-    name: selectedItemName || config.fallbackName,
-    stock: partData?.stock ?? 1,
-    price: MINIFIG_CONFIG.PRICE_PER_ITEM,
+    image: selectedItem?.image || partImage,
+    name: selectedItem?.product_name || selectedItem?.product_name || config.fallbackName,
+    stock: selectedItem?.stock ?? 1,
+    price: selectedItem?.price ?? 0,
   };
 };
 
@@ -80,8 +80,8 @@ export const getCustomPartsForMinifigProject = (project: IMinifigProject): Custo
 
 export const createProjectSummary = (project: IMinifigProject): MinfigProjectSummary => {
   const customParts = getCustomPartsForMinifigProject(project);
-  const totalPrice = customParts.length * MINIFIG_CONFIG.PRICE_PER_ITEM;
-
+  // Calculate totalPrice by summing the price of each custom part
+  const totalPrice = customParts.reduce((sum, part) => sum + (part.price ?? 0), 0);
   return {
     project,
     minifigPart: customParts,
@@ -91,7 +91,6 @@ export const createProjectSummary = (project: IMinifigProject): MinfigProjectSum
 };
 
 // Creates a complete cart summary from minifig array
-
 export const createCartSummary = (minifig: IMinifigProject[] | null | undefined): CartSummary => {
   if (!minifig?.length) {
     return {

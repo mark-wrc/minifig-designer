@@ -8,20 +8,30 @@ export interface MinifigPart {
   stock: number;
 }
 
+export interface IMinifigProductImage {
+  public_id: string;
+  url: string;
+  _id: number;
+}
+
 // for creating a project
 export interface MinifigPartData {
-  id: string;
-  type: 'HEAD' | 'TORSO' | 'LEGS';
-  name: string;
-  description: string;
+  _id: string;
+  minifig_part_type: 'HEAD' | 'TORSO' | 'LEGS';
+  product_name: string;
+  product_description_1: string;
+  product_description_2: string;
+  product_description_3: string;
+  product_images: IMinifigProductImage[];
   image: string;
   price: number;
+  stock: number;
 }
 
 export interface SelectedMinifigItems {
   head?: MinifigPartData;
   torso?: MinifigPartData;
-  leg?: MinifigPartData;
+  legs?: MinifigPartData;
 }
 
 export interface IMinifigProject {
@@ -29,7 +39,7 @@ export interface IMinifigProject {
   name: string;
   head: string;
   torso: string;
-  leg: string;
+  legs: string;
   selectedItems: SelectedMinifigItems;
 }
 
@@ -51,6 +61,7 @@ export interface IMinifigData {
   price: number;
   image?: string;
   type: MinifigPartType;
+  stock: number;
 }
 
 export interface CartSummary {

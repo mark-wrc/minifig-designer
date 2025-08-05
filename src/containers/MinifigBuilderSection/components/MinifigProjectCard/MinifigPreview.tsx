@@ -15,19 +15,19 @@ const MinifigPreview = memo<MinifigPreviewProps>(({ selectedItems, className = '
         src={selectedItems?.head?.image || BaseMinifigParts[MinifigPartType.HEAD].image}
         alt="Head"
         className="w-12 h-12 rounded border"
-        title={selectedItems?.head?.name || 'Default Head'}
+        title={selectedItems?.head?.product_name || 'Default Head'}
       />
       <img
         src={selectedItems?.torso?.image || BaseMinifigParts[MinifigPartType.TORSO].image}
         alt="Torso"
         className="w-12 h-12 rounded border"
-        title={selectedItems?.torso?.name || 'Default Torso'}
+        title={selectedItems?.torso?.product_name || 'Default Torso'}
       />
       <img
-        src={selectedItems?.leg?.image || BaseMinifigParts[MinifigPartType.LEGS].image}
+        src={selectedItems?.legs?.image || BaseMinifigParts[MinifigPartType.LEGS].image}
         alt="Legs"
         className="w-12 h-12 rounded border"
-        title={selectedItems?.leg?.name || 'Default Legs'}
+        title={selectedItems?.legs?.product_name || 'Default Legs'}
       />
     </div>
   );

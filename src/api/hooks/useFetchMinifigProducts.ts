@@ -12,7 +12,7 @@ export const useFetchMinifigProducts = (params: IFetchMinifigProductsParams) => 
     queryKey: ['useFetchMinifigProducts', params.minifig_part_type],
     queryFn: async () => {
       const response = await fetchMinifigProducts(params);
-      return response.data.map((item) => ({ ...item }));
+      return response.products.map((item) => ({ ...item }));
     },
     enabled: !!params.minifig_part_type,
   });

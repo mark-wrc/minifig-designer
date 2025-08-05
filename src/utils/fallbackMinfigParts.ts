@@ -8,10 +8,10 @@ export const createFallbackBuild = (): IMinifigProject => ({
   name: 'Deleted Character',
   head: BaseMinifigParts[MinifigPartType.HEAD].image,
   torso: BaseMinifigParts[MinifigPartType.TORSO].image,
-  leg: BaseMinifigParts[MinifigPartType.LEGS].image,
+  legs: BaseMinifigParts[MinifigPartType.LEGS].image,
   selectedItems: {
     head: undefined,
     torso: undefined,
-    leg: undefined,
+    legs: undefined,
   },
 });

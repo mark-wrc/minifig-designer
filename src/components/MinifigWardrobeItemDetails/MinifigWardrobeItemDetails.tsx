@@ -12,15 +12,15 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
             Back
           </CTAButton>
 
-          <p className="font-bold text-2xl md:text-4xl">{wardrobeItems.name}</p>
-          <p className="text-xl text-gray-800 mb-2">{wardrobeItems.description}</p>
+          <p className="font-bold text-2xl md:text-4xl">{wardrobeItems.product_name}</p>
+          <p className="text-xl text-gray-800 mb-2">{wardrobeItems.product_description_1}</p>
+          <p className="text-xl text-gray-800 mb-2">{wardrobeItems.product_description_2}</p>
+          <p className="text-xl text-gray-800 mb-2">{wardrobeItems.product_description_3}</p>
 
           <figure className="max-w-md">
-            <img
-              className="w-1/2 aspect-square mx-auto "
-              src={wardrobeItems.image}
-              alt={wardrobeItems.name}
-            />
+            {wardrobeItems.product_images.map((item) => (
+              <img className="w-1/2 aspect-square mx-auto " src={item.url} alt={item.public_id} />
+            ))}
           </figure>
 
           <p className="text-green-600 text-center font-bold text-xl">${wardrobeItems.price}</p>

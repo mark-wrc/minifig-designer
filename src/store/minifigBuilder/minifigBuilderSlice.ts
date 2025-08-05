@@ -43,20 +43,21 @@ const minifigBuilderSlice = createSlice({
       const character = state.characters.find((char) => char._id === state.activeCharacterId);
       if (!character) return;
 
-      const { type, image } = action.payload;
+      const { minifig_part_type, image } = action.payload;
 
       if (!image) {
-        character[type.toLowerCase() as keyof IMinifigProject] =
-          BaseMinifigParts[type as MinifigPartType].image;
+        character[minifig_part_type.toLowerCase() as keyof IMinifigProject] =
+          BaseMinifigParts[minifig_part_type as MinifigPartType].image;
         delete character.selectedItems[
-          type.toLowerCase() as keyof IMinifigProject['selectedItems']
+          minifig_part_type.toLowerCase() as keyof IMinifigProject['selectedItems']
         ];
         return;
       }
 
-      character[type.toLowerCase() as keyof IMinifigProject] = image;
-      character.selectedItems[type.toLowerCase() as keyof IMinifigProject['selectedItems']] =
-        action.payload;
+      character[minifig_part_type.toLowerCase() as keyof IMinifigProject] = image;
+      character.selectedItems[
+        minifig_part_type.toLowerCase() as keyof IMinifigProject['selectedItems']
+      ] = action.payload;
     },
 
     setActiveMinifigure: (state, action: PayloadAction<string>) => {

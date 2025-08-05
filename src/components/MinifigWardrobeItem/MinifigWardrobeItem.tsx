@@ -7,15 +7,18 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
   ({ onItemDetailsClick, minifigItem, onPartSelect }) => (
     <section className="flex flex-col h-full">
       <div
-        key={minifigItem?.id}
+        key={minifigItem?._id}
         className="bg-gray-100 rounded-sm p-1 h-full cursor-pointer"
         onClick={() => onItemDetailsClick(minifigItem as MinifigPartData)}
       >
-        <img
-          className="w-[100px] aspect-auto rounded-sm"
-          src={minifigItem.image}
-          alt={minifigItem.name}
-        />
+        {minifigItem.product_images.map((item) => (
+          <img
+            className="w-[100px] aspect-auto rounded-sm"
+            src={item.url}
+            alt={minifigItem.product_name}
+          />
+        ))}
+
         {/* <p className="font-medium text-sm">{item.name}</p>
                   <p className="text-xs text-gray-600 mb-2">{item.description}</p>
                   <p className="text-green-600 font-bold text-sm">${item.price}</p> */}

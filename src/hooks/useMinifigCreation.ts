@@ -41,13 +41,25 @@ export const useMinifigCreation = () => {
         setModalMode('create');
         return;
       }
-
       if (ActiveMinifigProject) {
-        const updatedItems = {
-          ...ActiveMinifigProject.selectedItems,
-          [item.type.toLowerCase()]: item,
+        const formattedItem = {
+          id: item._id,
+          type: item.minifig_part_type,
+          name: item.product_name,
+          description: item.product_description_1,
+
+          image:
+            item.product_images && item.product_images.length > 0
+              ? item.product_images[0].url
+              : undefined,
+          price: item.price,
+          stock: item.stock,
         };
 
+        const updatedItems = {
+          ...ActiveMinifigProject.selectedItems,
+          [item.minifig_part_type.toLowerCase()]: formattedItem, // Assign the formatted item
+        };
         updateProjectWithDebounce(ActiveMinifigProject._id, updatedItems);
       }
     },
