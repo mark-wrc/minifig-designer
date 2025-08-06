@@ -4,7 +4,7 @@ import type { IMinifigBuilderCardPopupModalProps } from './MinifigBuilderCardPop
 import { Button } from '@/components/ui/button';
 import { MinifigEmptyStateDialog } from '../MinifigEmptyStateDialog';
 import { useMinifigCart } from '../../hooks/useMinifigCart';
-import { createCartSummary } from '@/utils';
+import { createCartSummary, formatCurrency } from '@/utils';
 import { useAuth, useDisclosureParam } from '@/hooks';
 import { MinifigCartItemDetails } from '../MinifigCartItemDetails';
 
@@ -61,7 +61,7 @@ const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
                 disabled={!hasValidProjects}
                 onClick={handleAddToCart}
               >
-                Add to Cart (${totalPrice})
+                Add to Cart ({formatCurrency(totalPrice)})
               </Button>
             </div>
           </section>

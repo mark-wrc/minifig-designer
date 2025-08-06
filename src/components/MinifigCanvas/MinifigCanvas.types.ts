@@ -27,6 +27,7 @@ export interface IMinifigCanvasDataProps {
   wardrobeItems?: MinifigPartData[];
   minifigParts: IMinifigPartImageMap;
   cartModalDisclosure?: UseDisclosureReturn;
+  isLoading?: boolean;
 }
 
 export interface IMinifigCanvasProps

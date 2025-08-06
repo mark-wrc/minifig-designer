@@ -5,6 +5,7 @@ import { IMinifigProject, MinifigPartData } from '@/types/Minifig';
 export interface IMinifigMobileModeProps {
   modalDisclosure: UseDisclosureReturn;
   minifigProjects: IMinifigProject[];
+
   minifigParts: {
     [key in MinifigPartType]?: {
       image: string;
@@ -13,4 +14,5 @@ export interface IMinifigMobileModeProps {
   };
   minifigData: MinifigPartData[];
   activeProjectId?: IMinifigProject;
+  isLoading?: boolean;
 }

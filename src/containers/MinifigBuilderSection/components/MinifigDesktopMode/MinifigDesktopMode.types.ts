@@ -12,4 +12,5 @@ export interface IMinifigDesktopModeProps {
     };
   };
   minifigData: MinifigPartData[];
+  isLoading?: boolean;
 }

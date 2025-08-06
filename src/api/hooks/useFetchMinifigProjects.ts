@@ -9,6 +9,7 @@ const useFetchMinifigProjects = () => {
       const response = await fetchMinifigProjects();
       return response.projects;
     },
+    refetchOnWindowFocus: false,
   });
 };
 

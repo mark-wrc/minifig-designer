@@ -2,38 +2,109 @@ import { memo } from 'react';
 import { IMinifigWardrobeItemsDetailsProps } from './MinifigWardrobeItemDetails.types';
 import { ArrowLeft } from 'lucide-react';
 import { CTAButton } from '../CTAButton';
+import { StyledText } from '../StyledText';
+import { cn } from '@/lib/utils';
+import { MinifigProductSpecification } from '../MinifigProductSpecification';
 
 const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
   ({ wardrobeItems, onClick, onCategoryClick }) => {
+    const outOfstock = wardrobeItems.stock === 0;
     return (
-      <section className="border-2 border-gray-950 rounded-md p-2 md:border-0">
-        <div className="bg-white rounded-lg  w-full p-3 h-full">
-          <CTAButton onClick={onClick} icon={ArrowLeft} className="bg-yellow-500 text-lg mb-8">
-            Back
-          </CTAButton>
-
-          <p className="font-bold text-2xl md:text-4xl">{wardrobeItems.product_name}</p>
-          <p className="text-xl text-gray-800 mb-2">{wardrobeItems.product_description_1}</p>
-          <p className="text-xl text-gray-800 mb-2">{wardrobeItems.product_description_2}</p>
-          <p className="text-xl text-gray-800 mb-2">{wardrobeItems.product_description_3}</p>
-
-          <figure className="max-w-md">
-            {wardrobeItems.product_images.map((item) => (
-              <img className="w-1/2 aspect-square mx-auto " src={item.url} alt={item.public_id} />
-            ))}
-          </figure>
-
-          <p className="text-green-600 text-center font-bold text-xl">${wardrobeItems.price}</p>
-
-          <div className="w-full flex justify-center mt-10">
-            <CTAButton
-              variant="ghost"
-              className="bg-yellow-500 text-md w-fit self-center px-6 -translate-y-2 rounded-sm border border-gray-950"
-              onClick={() => onCategoryClick(wardrobeItems)}
-            >
-              Add to project
+      <section className="border-2 border-gray-950 rounded-md md:border-0 ">
+        <div className="bg-minifig-brand-end text-white w-full h-full overflow-y-auto max-h-[600px] minifig-scrollbar">
+          <div className="p-3">
+            <CTAButton onClick={onClick} icon={ArrowLeft} className="bg-yellow-500 text-lg mb-8">
+              Back
             </CTAButton>
+
+            <div className="flex flex-col lg:flex-row gap-4 justify-between">
+              {/*Product image  */}
+              <figure className="w-1/2  ">
+                {wardrobeItems.product_images.map((item) => (
+                  <img className="aspect-square rounded-md " src={item.url} alt={item.public_id} />
+                ))}
+              </figure>
+
+              {/*Product details Section  */}
+              <div className="w-full h-full">
+                <StyledText
+                  showCheckMark={false}
+                  className="font-bold text-2xl mb-4"
+                  text={wardrobeItems.product_name}
+                />
+                <StyledText
+                  showCheckMark={false}
+                  className="font-bold text-2xl mb-4"
+                  text={`$${wardrobeItems.price}`}
+                />
+
+                <section>
+                  <StyledText
+                    showCheckMark={false}
+                    className="font-semibold text-md"
+                    text="Features & Classifications"
+                  />
+                  <div className="flex gap-2">
+                    {wardrobeItems.product_sub_categories.map((subCategory) => (
+                      <StyledText
+                        className="rounded-full px-2.5 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-blue-600/10 text-blue-400 hover:bg-blue-600/20 border border-blue-600/20 "
+                        showCheckMark={false}
+                        key={subCategory._id}
+                        text={subCategory.name}
+                      />
+                    ))}
+                    {wardrobeItems.product_sub_collections.map((subCollections) => (
+                      <StyledText
+                        className="rounded-full px-2.5 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-purple-600/10 text-purple-400 hover:bg-purple-600/20 border border-purple-600/20 "
+                        showCheckMark={false}
+                        key={subCollections._id}
+                        text={subCollections.name}
+                      />
+                    ))}
+                  </div>
+                  <div>
+                    <StyledText
+                      className="font-semibold text-md"
+                      showCheckMark={false}
+                      text="Bundle Details"
+                    />
+                    <StyledText
+                      showCheckMark={false}
+                      className="rounded-full w-fit px-2.5 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-blue-600/10 text-blue-400 hover:bg-blue-600/20 border border-blue-600/20 "
+                      text={wardrobeItems.product_includes}
+                    />
+                  </div>
+                </section>
+                <StyledText text={wardrobeItems.product_description_1} />
+                <StyledText text={wardrobeItems.product_description_2} />
+                {wardrobeItems.product_description_3 && (
+                  <StyledText text={wardrobeItems.product_description_3} />
+                )}
+
+                {/* cta buttons */}
+                <div className="mt-5 flex w-full">
+                  <CTAButton
+                    variant="ghost"
+                    disabled={outOfstock}
+                    className={cn(
+                      'bg-yellow-500 text-md w-fit px-6 self-end rounded-sm text-black',
+                      outOfstock && 'bg-red-500',
+                    )}
+                    onClick={() => onCategoryClick(wardrobeItems)}
+                  >
+                    {outOfstock ? 'Out of Stock' : 'Add to Project'}
+                  </CTAButton>
+                </div>
+              </div>
+            </div>
           </div>
+          <MinifigProductSpecification
+            minifigProductSpecification={{
+              product_piece_count: wardrobeItems.product_piece_count,
+              product_designer: wardrobeItems.product_designer,
+              product_skill_level: wardrobeItems.product_skill_level,
+            }}
+          />
         </div>
       </section>
     );

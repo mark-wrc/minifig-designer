@@ -10,15 +10,6 @@ interface MinifigBuilderState {
   selectedCategory: MinifigPartType | null;
 }
 
-// const createEmptyCharacter = (name: string): IMinifigProject => ({
-//   id: crypto.randomUUID(),
-//   name,
-//   head: BaseMinifigParts[MinifigPartType.HEAD].image,
-//   torso: BaseMinifigParts[MinifigPartType.TORSO].image,
-//   legs: BaseMinifigParts[MinifigPartType.LEGS].image,
-//   selectedItems: {},
-// });
-
 const initialState: MinifigBuilderState = {
   characters: [],
   activeCharacterId: null,
@@ -29,12 +20,6 @@ const minifigBuilderSlice = createSlice({
   name: 'minifigBuilder',
   initialState,
   reducers: {
-    // createMinifigure: (state, action: PayloadAction<string>) => {
-    //   const newMinifigure = createEmptyCharacter(action.payload);
-    //   state.characters.push(newMinifigure);
-    //   state.activeCharacterId = newMinifigure.id;
-    // },
-
     setSelectedCategory: (state, action: PayloadAction<MinifigPartType>) => {
       state.selectedCategory = action.payload;
     },
@@ -64,34 +49,7 @@ const minifigBuilderSlice = createSlice({
       state.activeCharacterId = action.payload;
     },
 
-    deleteMinifigure: (state, action: PayloadAction<string>) => {
-      state.characters = state.characters.filter((char) => char._id !== action.payload);
-      if (state.activeCharacterId === action.payload) {
-        state.activeCharacterId = state.characters.length > 0 ? state.characters[0]._id : null;
-
-        // clear selected category if theres no project left
-        if (state.characters.length === 0) {
-          state.selectedCategory = null;
-        }
-      }
-    },
-
-    removePart: (state, action: PayloadAction<MinifigPartType>) => {
-      const character = state.characters.find((char) => char._id === state.activeCharacterId);
-      if (!character) return;
-
-      const partType = action.payload.toLowerCase() as keyof IMinifigProject;
-      character[partType] = BaseMinifigParts[action.payload].image;
-      delete character.selectedItems[partType as keyof IMinifigProject['selectedItems']];
-    },
-
-    renameCharacter: (state, action: PayloadAction<{ id: string; name: string }>) => {
-      const character = state.characters.find((char) => char._id === action.payload.id);
-      if (character) {
-        character.name = action.payload.name;
-      }
-    },
-
+    // for debug purposes
     resetBuilder: (state) => {
       state.characters = [];
       state.activeCharacterId = null;
@@ -103,14 +61,7 @@ const minifigBuilderSlice = createSlice({
   },
 });
 
-export const {
-  setActiveMinifigure,
-  deleteMinifigure,
-  renameCharacter,
-  resetBuilder,
-  setSelectedPart,
-  setSelectedCategory,
-  removePart,
-} = minifigBuilderSlice.actions;
+export const { setActiveMinifigure, resetBuilder, setSelectedPart, setSelectedCategory } =
+  minifigBuilderSlice.actions;
 
 export default minifigBuilderSlice.reducer;

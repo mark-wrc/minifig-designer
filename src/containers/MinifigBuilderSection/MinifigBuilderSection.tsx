@@ -17,9 +17,11 @@ const MinifigBuilderSection = () => {
   const isMobile = screenSize.width <= 767;
 
   // fetch hook for minifig products
-  const { data: wardrobeItems = [] } = useFetchMinifigProducts({
-    minifig_part_type: selectedCategory || undefined,
-  });
+  const { data: wardrobeItems = [], isLoading: isMinifigProductLoading } = useFetchMinifigProducts(
+    {
+      minifig_part_type: selectedCategory || undefined,
+    },
+  );
   const { data: projects = [] } = useFetchMinifigProjects();
   const { data: activeProject } = useMinifigProjectById(activeCharacterId || '');
 
@@ -36,6 +38,7 @@ const MinifigBuilderSection = () => {
           minifigData={wardrobeItems}
           modalDisclosure={modalDisclosure}
           minifigProjects={projects}
+          isLoading={isMinifigProductLoading}
         />
       ) : (
         <MinifigDesktopMode
@@ -43,6 +46,7 @@ const MinifigBuilderSection = () => {
           minifigData={wardrobeItems}
           modalDisclosure={modalDisclosure}
           minifigProjects={projects}
+          isLoading={isMinifigProductLoading}
         />
       )}
     </section>

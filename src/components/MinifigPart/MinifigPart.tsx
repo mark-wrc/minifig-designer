@@ -5,15 +5,22 @@ import { IMinifigPartProps } from './MinifigPart.types';
 import { useDisclosureParam } from '@/hooks';
 import { motion } from 'motion/react';
 import { MinifigPartAnimation } from '@/animations';
+import { Blocks } from 'react-loader-spinner';
 
-const MinifigPart = memo<IMinifigPartProps>(({ type, imageSrc, className }) => {
+const MinifigPart = memo<IMinifigPartProps>(({ type, imageSrc, className, isloading }) => {
   const modalDisclosure = useDisclosureParam();
   const handleCloseModal = useCallback(() => {
     modalDisclosure.onDisclosureClose();
   }, [modalDisclosure]);
 
+  {
+    if (isloading) {
+      return <Blocks width="150" height="130" color="red" ariaLabel="lego-part-loading" />;
+    }
+  }
+
   return (
-    <section className="flex justify-center w-[130px] md:w-[130px]">
+    <section className="flex justify-center w-[130px] md:w-[130px] ">
       <div className={cn('flex items-center', className)}>
         <motion.figure
           variants={MinifigPartAnimation}
