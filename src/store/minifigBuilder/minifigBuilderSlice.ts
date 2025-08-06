@@ -45,7 +45,7 @@ const minifigBuilderSlice = createSlice({
       ] = action.payload;
     },
 
-    setActiveMinifigure: (state, action: PayloadAction<string>) => {
+    setActiveMinifigure: (state, action: PayloadAction<string | null>) => {
       state.activeCharacterId = action.payload;
     },
 

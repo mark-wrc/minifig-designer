@@ -40,6 +40,7 @@ export interface MinifigPartData {
   product_length: number;
   product_width: number;
   product_height: number;
+  product_color: IMinifigProductBaseDetails;
 }
 
 export interface SelectedMinifigItems {

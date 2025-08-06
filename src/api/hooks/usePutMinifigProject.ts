@@ -4,12 +4,18 @@ import { updateMinifigProject } from '../minifigProject';
 
 export const usePutMinifigProject = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: Partial<IMinifigProject> }) =>
       updateMinifigProject(id, payload),
-    onSuccess: (variables) => {
+
+    // added a placehoder _data to avoid returning undefined
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['useFetchMinifigProjects'] });
-      queryClient.invalidateQueries({ queryKey: ['useFetchMinifigProjects', variables.id] });
+
+      if (variables?.id) {
+        queryClient.invalidateQueries({ queryKey: ['useMinifigProjectById', variables.id] });
+      }
     },
   });
 };

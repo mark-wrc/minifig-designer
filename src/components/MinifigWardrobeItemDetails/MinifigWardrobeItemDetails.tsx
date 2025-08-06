@@ -5,6 +5,7 @@ import { CTAButton } from '../CTAButton';
 import { StyledText } from '../StyledText';
 import { cn } from '@/lib/utils';
 import { MinifigProductSpecification } from '../MinifigProductSpecification';
+import { ColorBadge } from '@/ColorBadge';
 
 const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
   ({ wardrobeItems, onClick, onCategoryClick }) => {
@@ -74,6 +75,16 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
                       text={wardrobeItems.product_includes}
                     />
                   </div>
+
+                  <div>
+                    <StyledText
+                      className="font-semibold text-md"
+                      showCheckMark={false}
+                      text="Color"
+                    />
+                  </div>
+
+                  <ColorBadge colorName={wardrobeItems.product_color.name} />
                 </section>
                 <StyledText text={wardrobeItems.product_description_1} />
                 <StyledText text={wardrobeItems.product_description_2} />
@@ -103,6 +114,11 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
               product_piece_count: wardrobeItems.product_piece_count,
               product_designer: wardrobeItems.product_designer,
               product_skill_level: wardrobeItems.product_skill_level,
+            }}
+            productDimension={{
+              product_length: wardrobeItems.product_length,
+              product_width: wardrobeItems.product_width,
+              product_height: wardrobeItems.product_height,
             }}
           />
         </div>

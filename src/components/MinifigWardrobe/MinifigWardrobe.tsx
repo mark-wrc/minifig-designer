@@ -43,7 +43,7 @@ const MinifigWardrobe = memo(
         >
           {selectorComponent && <div className="md:hidden">{selectorComponent}</div>}
           {wardrobeItems?.length > 0 && (
-            <section className="grid grid-cols-3 lg:grid-cols-3 gap-4 max-h-[300px] md:max-h-[600px] overflow-y-auto p-2 mt-10 md:mt-0 minifig-scrollbar">
+            <section className="grid grid-cols-3 lg:grid-cols-3 gap-4  max-h-[300px] md:max-h-[600px] overflow-y-auto p-2 mt-10 md:mt-0 minifig-scrollbar">
               {wardrobeItems.map((item) => (
                 <MinifigWardrobeItem
                   onPartSelect={onPartSelect}

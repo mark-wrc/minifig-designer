@@ -6,7 +6,7 @@ import { CategorySection } from '@/containers/CategorySection';
 
 const MinifigDesktopMode = memo<IMinifigDesktopModeProps>(
   ({ minifigParts, minifigData, modalDisclosure, minifigProjects, isLoading }) => (
-    <section className="container mx-auto p-4 mb-4 w-fit">
+    <section className="container mx-auto p-4 mb-4 w-fit xl:w-6xl">
       <CategorySection />
       <MinifigTabs />
 

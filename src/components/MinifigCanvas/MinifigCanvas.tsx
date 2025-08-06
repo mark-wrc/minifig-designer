@@ -66,7 +66,7 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ wardrobeItems = [], ...props 
 
       <section
         className={cn(
-          'bg-minifig-brand-end flex flex-col mx-auto md:mx-0 mt-12 md:mt-0 flex-1/2',
+          'bg-white flex flex-col mx-auto md:mx-0 mt-12 md:mt-0 flex-1/2',
           wardrobeItems.length === 0 && 'justify-center',
           props.isLoading && 'justify-center w-full',
         )}

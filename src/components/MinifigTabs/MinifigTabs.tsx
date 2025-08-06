@@ -19,7 +19,7 @@ import { useDeleteMinifigProject } from '@/api/hooks';
 const MinifigTabs = memo(() => {
   const { activeCharacterId = null } = useSelector((state: RootState) => state.minifigBuilder);
 
-  const { data: projects = [], refetch: refetechMinifigProjects } = useFetchMinifigProjects();
+  const { data: projects = [] } = useFetchMinifigProjects();
   const { mutate: deleteProject } = useDeleteMinifigProject();
   const removeProjectTab = useDisclosureParam();
   const openModal = useDisclosureParam();
@@ -44,29 +44,11 @@ const MinifigTabs = memo(() => {
           if (res.success) {
             setTabToDelete(null);
             removeProjectTab.onDisclosureClose();
-
-            refetechMinifigProjects().then(() => {
-              if (activeCharacterId === res.project._id) {
-                dispatch(setActiveMinifigure(projects[0]?._id || ''));
-              }
-            });
-
-            if (activeCharacterId === res.project._id) {
-              dispatch(setActiveMinifigure(''));
-            }
           }
         },
       });
     }
-  }, [
-    activeCharacterId,
-    deleteProject,
-    dispatch,
-    projects,
-    refetechMinifigProjects,
-    removeProjectTab,
-    tabToDelete,
-  ]);
+  }, [deleteProject, removeProjectTab, tabToDelete]);
 
   const handleTabSelect = useCallback(
     (id: string) => {
@@ -81,9 +63,9 @@ const MinifigTabs = memo(() => {
       <Tabs value={activeCharacterId || ''} onValueChange={handleTabSelect} className="flex-1">
         <TabsList className="w-full h-full flex px-2 overflow-x-auto gap-2 flex-wrap">
           <AnimatePresence>
-            {projects.map((character, idx) => (
+            {projects.map((proj, idx) => (
               <motion.div
-                key={character._id}
+                key={proj._id}
                 variants={TabItemAnimation}
                 initial="initial"
                 animate="enter"
@@ -93,14 +75,14 @@ const MinifigTabs = memo(() => {
                 <TabsTrigger
                   className={cn(
                     'flex items-center p-3 w-fit relative group cursor-pointer text-left md:text-sm rounded-sm font-semibold bg-yellow-500 overflow-y-hidden',
-                    activeCharacterId === character._id &&
+                    activeCharacterId === proj._id &&
                       ' bg-minifig-brand-end  transition-all duration-300 text-white',
                   )}
-                  key={character._id}
-                  value={character._id}
+                  key={proj._id}
+                  value={proj._id}
                 >
                   {/* Tab Content  */}
-                  <MinifigTabContent character={character} onDelete={handleDeleteClick} />
+                  <MinifigTabContent character={proj} onDelete={handleDeleteClick} />
                 </TabsTrigger>
               </motion.div>
             ))}

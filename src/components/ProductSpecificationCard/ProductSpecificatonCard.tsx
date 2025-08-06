@@ -10,7 +10,7 @@ const ProductSpecificationCard = memo<IProductSpecificationCardProps>(({ product
       >
         {detail.icon}
 
-        <span className="font-semibold  text-base md:text-2xl p-3">{detail.label}</span>
+        <span className="font-semibold  text-base md:text-md p-3">{detail.label}</span>
         <span className="">{detail.subLabel}</span>
       </div>
     ))}

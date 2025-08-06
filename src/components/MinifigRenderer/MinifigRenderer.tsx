@@ -14,6 +14,7 @@ import { useMinifigProjectById, usePutMinifigProject } from '@/api/hooks';
 import useFetchMinifigProjects from '@/api/hooks/useFetchMinifigProjects';
 import { RootState } from '@/store';
 import { IMinifigProject } from '@/types/Minifig';
+import { createCartSummary, formatCurrency } from '@/utils';
 
 const MinifigRenderer = memo<IMinifigRendererProps>(
   ({ minifigParts, modalDisclosure, setModalMode, className }) => {
@@ -30,6 +31,10 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
     const { data: ActiveMinifigProject } = useMinifigProjectById(activeCharacterId || '');
     const { data: projects = [], isRefetching: isProjectRefetching } = useFetchMinifigProjects();
     const { mutate: updateProject } = usePutMinifigProject();
+
+    const cartSummary = createCartSummary(projects);
+
+    const { totalPrice } = cartSummary;
 
     useScrollIntoView({
       ref: minifigPartRef,
@@ -136,6 +141,8 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
               </div>
             </div>
           ))}
+
+          <p className=" mt-5 text-2xl font-bold"> Total: {formatCurrency(totalPrice)}</p>
         </section>
       </section>
     );
