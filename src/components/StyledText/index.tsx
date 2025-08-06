@@ -1,2 +1,2 @@
-export { default as StyledText } from './styledText';
-export type { IStyledTextProps } from './Styledtext.types';
+export { default as StyledText } from './StyledText';
+export type { IStyledTextProps } from './StyledText.types';
