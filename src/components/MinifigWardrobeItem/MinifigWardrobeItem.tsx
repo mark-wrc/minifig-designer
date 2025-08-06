@@ -2,18 +2,19 @@ import { memo } from 'react';
 import { IMinifigWardrobeItemProps } from './MinifigWardrobeItem.types';
 import { MinifigPartData } from '@/types/Minifig';
 import { CTAButton } from '../CTAButton';
+import { formatCurrency } from '@/utils';
 
 const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
   ({ onItemDetailsClick, minifigItem, onPartSelect }) => (
-    <section className="flex flex-col h-full">
+    <section className="flex flex-col h-full rounded-lg ">
       <div
         key={minifigItem?._id}
-        className="bg-gray-100 rounded-sm p-1 h-full cursor-pointer"
+        className=" h-full cursor-pointer"
         onClick={() => onItemDetailsClick(minifigItem as MinifigPartData)}
       >
         {minifigItem.product_images.map((item) => (
           <img
-            className="w-[100px] aspect-auto rounded-sm"
+            className="w-fit border-2 border-black rounded-sm "
             src={item.url}
             alt={minifigItem.product_name}
           />
@@ -24,13 +25,20 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
                   <p className="text-green-600 font-bold text-sm">${item.price}</p> */}
       </div>
 
-      <CTAButton
-        variant="default"
-        className="bg-yellow-300 text-md w-fit self-center px-6 -translate-y-2 hover:bg-minifig-brand-end hover:text-white rounded-sm text-black"
-        onClick={() => onPartSelect(minifigItem)}
-      >
-        Add
-      </CTAButton>
+      <div className=" flex  flex-col justify-center py-2  -translate-y-4 ">
+        <CTAButton
+          variant="default"
+          className="bg-yellow-300 text-md  hover:bg-yellow-400 w-fit self-center px-6 rounded-none text-black"
+          onClick={() => onPartSelect(minifigItem)}
+        >
+          Add
+        </CTAButton>
+
+        <div className="text-center">
+          <p className=" text-sm">{minifigItem.product_name}</p>
+          <p>{formatCurrency(minifigItem.price)}</p>
+        </div>
+      </div>
     </section>
   ),
 );

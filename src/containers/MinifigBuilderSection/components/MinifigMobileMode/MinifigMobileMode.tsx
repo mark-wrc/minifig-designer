@@ -7,7 +7,7 @@ import { RootState } from '@/store';
 import MinifigCategoryOptions from '@/containers/CategorySection/components/MinifigCategoryOptions';
 
 const MinifigMobileMode = memo<IMinifigMobileModeProps>(
-  ({ minifigParts, minifigData, modalDisclosure, minifigProjects }) => {
+  ({ minifigParts, minifigData, modalDisclosure, minifigProjects, isLoading }) => {
     const { activeCharacterId, characters = [] } = useSelector(
       (state: RootState) => state.minifigBuilder,
     );
@@ -35,6 +35,7 @@ const MinifigMobileMode = memo<IMinifigMobileModeProps>(
               wardrobeItems={minifigData}
               minifigProjects={minifigProjects}
               cartModalDisclosure={modalDisclosure}
+              isLoading={isLoading}
               selectorComponent={
                 <MinifigCategoryOptions activeMinifigProject={activeMinifigProject} isMobileMode />
               }

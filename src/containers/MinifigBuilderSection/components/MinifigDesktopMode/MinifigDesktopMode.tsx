@@ -5,12 +5,16 @@ import { IMinifigDesktopModeProps } from './MinifigDesktopMode.types';
 import { CategorySection } from '@/containers/CategorySection';
 
 const MinifigDesktopMode = memo<IMinifigDesktopModeProps>(
-  ({ minifigParts, minifigData, modalDisclosure, minifigProjects }) => (
-    <section className="container mx-auto p-4 mb-4 w-fit">
+  ({ minifigParts, minifigData, modalDisclosure, minifigProjects, isLoading }) => (
+    <section className="container mx-auto p-4 mb-4 w-fit xl:w-6xl">
       <CategorySection />
       <MinifigTabs />
 
-      <MinifigCanvas minifigParts={minifigParts} wardrobeItems={minifigData} />
+      <MinifigCanvas
+        minifigParts={minifigParts}
+        wardrobeItems={minifigData}
+        isLoading={isLoading}
+      />
       <div className="bg-minifig-brand-end px-2 py-3 rounded-b-2xl ">
         <CTAButton
           variant="default"

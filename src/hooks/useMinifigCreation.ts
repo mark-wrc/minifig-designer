@@ -1,4 +1,4 @@
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDisclosureParam } from '@/hooks';
 import { RootState } from '@/store';
@@ -10,7 +10,7 @@ import useFetchMinifigProjects from '@/api/hooks/useFetchMinifigProjects';
 export const useMinifigCreation = () => {
   const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
   const modalDisclosure = useDisclosureParam();
-  const debouncedRef = useRef<NodeJS.Timeout | undefined>(undefined);
+  // const debouncedRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const { data: projects = [] } = useFetchMinifigProjects();
   const { activeCharacterId } = useSelector((state: RootState) => state.minifigBuilder);
@@ -18,21 +18,21 @@ export const useMinifigCreation = () => {
 
   const ActiveMinifigProject = projects.find((proj) => proj._id === activeCharacterId);
 
-  const updateProjectWithDebounce = useCallback(
-    (id: string, selectedItems: Record<string, MinifigPartData>) => {
-      if (debouncedRef.current) {
-        clearTimeout(debouncedRef.current);
-      }
+  // const updateProjectWithDebounce = useCallback(
+  //   (id: string, selectedItems: Record<string, MinifigPartData>) => {
+  //     if (debouncedRef.current) {
+  //       clearTimeout(debouncedRef.current);
+  //     }
 
-      debouncedRef.current = setTimeout(() => {
-        updateProject({
-          id,
-          payload: { selectedItems },
-        });
-      }, 1000);
-    },
-    [updateProject],
-  );
+  //     debouncedRef.current = setTimeout(() => {
+  //       updateProject({
+  //         id,
+  //         payload: { selectedItems },
+  //       });
+  //     }, 1000);
+  //   },
+  //   [updateProject],
+  // );
 
   const handleSelectMinifigItem = useCallback(
     (item: MinifigPartData) => {
@@ -60,10 +60,13 @@ export const useMinifigCreation = () => {
           ...ActiveMinifigProject.selectedItems,
           [item.minifig_part_type.toLowerCase()]: formattedItem, // Assign the formatted item
         };
-        updateProjectWithDebounce(ActiveMinifigProject._id, updatedItems);
+        updateProject({
+          id: ActiveMinifigProject._id,
+          payload: { selectedItems: updatedItems },
+        });
       }
     },
-    [projects.length, modalDisclosure, ActiveMinifigProject, updateProjectWithDebounce],
+    [projects.length, ActiveMinifigProject, modalDisclosure, updateProject],
   );
 
   const handleCloseModal = useCallback(() => {

@@ -1,6 +1,7 @@
 import { Fragment, memo } from 'react';
 import { IMinifigProjectProps } from './MinifigProject.types';
-import MinifigPreview from './MinifigPreview';
+import { MinifigPreview } from '../MinifigPreview';
+import { formatCurrency } from '@/utils';
 
 const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
   const { project, minifigPart, totalPrice, hasCustomParts } = summary;
@@ -10,7 +11,7 @@ const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
       <div className="border rounded-lg p-4 bg-gray-50">
         <div className="flex justify-between items-center mb-3">
           <h4 className="font-semibold text-lg">{project.name}</h4>
-          <span className="font-bold text-lg">${totalPrice}</span>
+          <span className="font-bold text-lg">{formatCurrency(totalPrice)}</span>
         </div>
 
         {!hasCustomParts ? (

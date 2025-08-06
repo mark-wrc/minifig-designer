@@ -3,6 +3,7 @@ import { IMinifigWardrobeProps } from './MinifigWardrobe.types';
 import { cn } from '@/lib/utils';
 import { MinifigWardrobeItem } from '../MinifigWardrobeItem';
 import { EmptyStateComponent } from '../EmptyStateComponent';
+import { Blocks } from 'react-loader-spinner';
 
 const MinifigWardrobe = memo(
   forwardRef<HTMLDivElement, IMinifigWardrobeProps>(
@@ -15,10 +16,11 @@ const MinifigWardrobe = memo(
         selectorComponent,
         onItemDetailsClick,
         onPartSelect,
+        isLoading,
       },
       ref,
     ) => {
-      if (wardrobeItems.length === 0 || !selectedCategory) {
+      if (!selectedCategory) {
         return (
           <EmptyStateComponent
             className="px-4 text-xl text-center"
@@ -26,17 +28,22 @@ const MinifigWardrobe = memo(
           />
         );
       }
+
+      if (isLoading) {
+        return <Blocks width="100" height="100" />;
+      }
+
       return (
         <section
           className={cn(
             className,
-            'w-full h-full border-2 border-gray-950 rounded-md md:border-0 md:rounded-none',
+            'w-full h-full border-2 border-gray-950 rounded-md md:border-0 md:rounded-none ',
           )}
           ref={ref}
         >
           {selectorComponent && <div className="md:hidden">{selectorComponent}</div>}
           {wardrobeItems?.length > 0 && (
-            <section className="grid grid-cols-3 lg:grid-cols-4 gap-4 max-h-[300px] md:max-h-[480px] overflow-y-auto p-2 mt-10 md:mt-0 minifig-scrollbar">
+            <section className="grid grid-cols-3 lg:grid-cols-3 gap-4  max-h-[300px] md:max-h-[600px] overflow-y-auto p-2 mt-10 md:mt-0 minifig-scrollbar">
               {wardrobeItems.map((item) => (
                 <MinifigWardrobeItem
                   onPartSelect={onPartSelect}

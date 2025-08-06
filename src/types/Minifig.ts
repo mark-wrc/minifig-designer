@@ -14,6 +14,11 @@ export interface IMinifigProductImage {
   _id: number;
 }
 
+export interface IMinifigProductBaseDetails {
+  _id: string;
+  name: string;
+}
+
 // for creating a project
 export interface MinifigPartData {
   _id: string;
@@ -26,6 +31,16 @@ export interface MinifigPartData {
   image: string;
   price: number;
   stock: number;
+  product_sub_categories: IMinifigProductBaseDetails[];
+  product_sub_collections: IMinifigProductBaseDetails[];
+  product_skill_level: IMinifigProductBaseDetails;
+  product_designer: IMinifigProductBaseDetails;
+  product_piece_count: number;
+  product_includes: string;
+  product_length: number;
+  product_width: number;
+  product_height: number;
+  product_color: IMinifigProductBaseDetails;
 }
 
 export interface SelectedMinifigItems {

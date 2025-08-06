@@ -9,3 +9,4 @@ export * from './useMutationHandlers';
 export * from './useProjectValidation';
 export * from './useMinifigParts';
 export * from './useSendCartToCheckout';
+export * from './useMinifigPartRenderData';

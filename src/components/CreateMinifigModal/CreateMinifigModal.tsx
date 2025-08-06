@@ -24,7 +24,7 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
     const [error, setError] = useState<string | undefined>();
     const dispatch = useDispatch();
 
-    const { data: characters, refetch: refetchProjects } = useFetchMinifigProjects();
+    const { data: characters } = useFetchMinifigProjects();
     const { mutate: createProject, isPending: isCreating } = usePostMinifigProject();
     const { mutate: updateProject } = usePutMinifigProject();
 
@@ -58,25 +58,15 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
       createProject(payload, {
         onSuccess: (response) => {
           if (response.success && response.project) {
-            // Refetch projects first, then set the active character
-            refetchProjects().then(() => {
-              dispatch(setActiveMinifigure(response.project._id));
-            });
+            dispatch(setActiveMinifigure(response.project._id));
             handleSuccess();
           }
           onClose?.();
         },
         onError: () => handleError('Failed to create project'),
       });
-    }, [
-      projectName,
-      createProject,
-      onClose,
-      refetchProjects,
-      handleSuccess,
-      dispatch,
-      handleError,
-    ]);
+    }, [projectName, createProject, onClose, handleSuccess, dispatch, handleError]);
+
     // update project name
     const updateExistingProject = useCallback(() => {
       updateProject(

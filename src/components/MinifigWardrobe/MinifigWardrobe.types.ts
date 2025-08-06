@@ -8,6 +8,7 @@ export interface IMinifigWardrobeBaseProps {
   onPartSelect: (part: MinifigPartData) => void;
   onCategoryClick?: (item: MinifigPartData) => void;
   onItemDetailsClick: (item: MinifigPartData) => void;
+  isLoading?: boolean;
 }
 
 export interface IMinifigWardrobeUIProps {

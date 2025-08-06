@@ -9,6 +9,7 @@ import { useShoppingCart } from '@/hooks/useShoppingCart';
 import { motion } from 'motion/react';
 import { CartContainerAnimation, CartOverlayAnimation } from '@/animations';
 import { CheckoutButton } from '../CheckoutButton';
+import { formatCurrency } from '@/utils';
 
 const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
   const { projects, totalItems, totalPrice } = useSelector(
@@ -47,7 +48,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
         <div className="flex justify-between items-center mb-6">
           <div className="text-white">
             <h2 className="text-2xl">Cart ({totalItems})</h2>
-            <p className="text-lg">Sub total: ${totalPrice}</p>
+            <p className="text-lg">Sub total: ${formatCurrency(totalPrice)}</p>
           </div>
           <X
             color="white"
