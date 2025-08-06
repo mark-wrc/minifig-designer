@@ -1,7 +1,7 @@
 import { memo } from 'react';
-import { IStyledTextProps } from './Styledtext.types';
 import { CircleCheckBig } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { IStyledTextProps } from './Styledtext.types';
 
 const StyledText = memo<IStyledTextProps>(({ className, text, showCheckMark = true }) => (
   <div className={cn('flex gap-2 items-start mb-3', className)}>
