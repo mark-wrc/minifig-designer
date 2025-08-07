@@ -2,14 +2,11 @@
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
-import { useAuthFromURL } from './useAuthFromURL';
 import { IMinifigCart } from '@/types/Minifig';
 
 const BASE_CHECKOUT_URL = 'http://localhost:5173/checkout';
 
 export function useSendCartToCheckout() {
-  const { isAuthenticated } = useAuthFromURL();
-
   const cart = useSelector((state: RootState) => state.MinifigBuilderCart);
 
   const itemsToSend = useMemo(() => {
@@ -39,16 +36,11 @@ export function useSendCartToCheckout() {
   }, [itemsToSend]);
 
   const sendToCheckout = useCallback(() => {
-    if (!isAuthenticated) {
-      alert('Please log in to proceed to checkout.');
-      return;
-    }
-
     const mode = itemsToSend.length > 1 ? 'cart' : 'buy_now';
     const url = `${BASE_CHECKOUT_URL}?mode=${mode}&externalCart=${cartString}`;
 
     window.location.href = url;
-  }, [isAuthenticated, itemsToSend, cartString]);
+  }, [itemsToSend, cartString]);
 
-  return { sendToCheckout, isAuthenticated };
+  return { sendToCheckout };
 }
