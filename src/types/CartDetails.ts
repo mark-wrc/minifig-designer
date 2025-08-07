@@ -7,6 +7,10 @@ export interface ICartItem {
   addedAt: number;
   quantity: number;
   stock: number;
+  color?: string;
+  discount?: number;
+  discounted_price?: number;
+  includes?: string;
 }
 
 export interface CartProject {
@@ -22,11 +26,14 @@ export interface selectedMinifigParts {
   name: string;
   price?: number;
   stock?: number;
+  color?: string; // Added color for consistency
 }
+
 export interface AddCharacterPayload {
   projectName: string;
   selectedParts: selectedMinifigParts[];
   pricePerItem?: number;
   quantity?: number;
   stock?: number;
+  color: string;
 }

@@ -48,7 +48,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
         <div className="flex justify-between items-center mb-6">
           <div className="text-white">
             <h2 className="text-2xl">Cart ({totalItems})</h2>
-            <p className="text-lg">Sub total: ${formatCurrency(totalPrice)}</p>
+            <p className="text-lg">Sub total: {formatCurrency(totalPrice)}</p>
           </div>
           <X
             color="white"
@@ -71,7 +71,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
               <div className="flex justify-between items-center mb-2">
                 <div className="text-white">
                   <h3 className="text-lg">{projectName}</h3>
-                  <p className="text-sm text-gray-300">${project.totalPrice}</p>
+                  <p className="text-sm text-gray-300">{formatCurrency(project.totalPrice)}</p>
                 </div>
                 <Button
                   variant="destructive"
