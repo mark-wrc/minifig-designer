@@ -24,18 +24,18 @@ const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
             <ul className="space-y-2 mb-3">
               {minifigPart.map((part) => (
                 <li
-                  key={part.name}
+                  key={part.product_name}
                   className="flex items-center justify-between bg-white p-2 rounded border"
                 >
                   <div className="flex items-center gap-2">
                     <img
                       src={part.image || '/placeholder.svg'}
-                      alt={part.name}
+                      alt={part.product_name}
                       className="w-8 h-8 rounded border object-cover"
                     />
                     <div>
-                      <span className="font-medium text-gray-800">{part.name}</span>
-                      <p className="text-xs text-gray-500">{part.type}</p>
+                      <span className="font-medium text-gray-800">{part.product_name}</span>
+                      <p className="text-xs text-gray-500">{part.minifig_part_type}</p>
                     </div>
                   </div>
                   <span className="text-green-600 font-medium text-sm">${part.price}</span>

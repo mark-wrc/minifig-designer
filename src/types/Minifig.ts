@@ -20,6 +20,18 @@ export interface IMinifigProductBaseDetails {
 }
 
 // for creating a project
+
+export interface IBaseMinifigPart {
+  _id: string;
+  minifig_part_type: 'HEAD' | 'TORSO' | 'LEGS';
+  product_name: string;
+  product_description_1: string;
+  image: string;
+  price: number;
+  stock: number;
+  product_color: IMinifigProductBaseDetails;
+}
+
 export interface MinifigPartData {
   _id: string;
   minifig_part_type: 'HEAD' | 'TORSO' | 'LEGS';
@@ -43,6 +55,17 @@ export interface MinifigPartData {
   product_color: IMinifigProductBaseDetails;
 }
 
+export interface IApiMinifigSelectedPart {
+  id: string;
+  type: 'HEAD' | 'TORSO' | 'LEGS';
+  name: string;
+  description: string;
+  image: string;
+  price: number;
+  stock: number;
+  color: string;
+}
+
 export interface SelectedMinifigItems {
   head?: MinifigPartData;
   torso?: MinifigPartData;
@@ -58,13 +81,23 @@ export interface IMinifigProject {
   selectedItems: SelectedMinifigItems;
 }
 
-export interface CustomPart extends MinifigPart {
+export interface IMinifigCart {
+  _id: string;
+  minifig_part_type: 'HEAD' | 'TORSO' | 'LEGS';
+  product_name: string;
+  image: string;
   price: number;
+  stock: number;
+  discount?: number;
+  discounted_price?: number;
+  color?: string;
+  includes?: string;
+  quantity?: number;
 }
 
 export interface MinfigProjectSummary {
   project: IMinifigProject;
-  minifigPart: CustomPart[];
+  minifigPart: IBaseMinifigPart[];
   totalPrice: number;
   hasCustomParts: boolean;
 }
@@ -83,6 +116,7 @@ export interface CartSummary {
   validProjects: number;
   totalItems: number;
   totalPrice: number;
+
   projectSummaries: MinfigProjectSummary[];
 }
 

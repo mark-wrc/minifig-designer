@@ -1,83 +1,80 @@
+// This PART_CONFIG is primarily for base images and fallback names.
+
 import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
+import { MINIFIG_CONFIG } from '@/constants/Minifig';
 import { MinifigPartType } from '@/types';
+import {
+  CartSummary,
+  IApiMinifigSelectedPart,
+  IBaseMinifigPart,
+  IMinifigProject,
+  MinfigProjectSummary,
+} from '@/types/Minifig';
 
-import minifigDummyData from '@/api/dummyData.json';
-import { CartSummary, CustomPart, IMinifigProject, MinfigProjectSummary } from '@/types/Minifig';
-import { MINIFIG_CONFIG, MinifigPartTypeKey } from '@/constants/Minifig';
-
+// Data source will now come from the IMinifigProject.selectedItems directly.
 const PART_CONFIG = {
   HEAD: {
     key: 'head' as const,
     baseImage: BaseMinifigParts[MinifigPartType.HEAD]?.image,
-    dataSource: minifigDummyData.HEAD,
     fallbackName: 'Head',
   },
   TORSO: {
     key: 'torso' as const,
     baseImage: BaseMinifigParts[MinifigPartType.TORSO]?.image,
-    dataSource: minifigDummyData.TORSO,
     fallbackName: 'Torso',
   },
   LEGS: {
     key: 'legs' as const,
     baseImage: BaseMinifigParts[MinifigPartType.LEGS]?.image,
-    dataSource: minifigDummyData.LEGS,
     fallbackName: 'Legs',
   },
 } as const;
 
-//  Checks if a part is custom (different from base part)
-
+// Checks if a part is custom (different from base part)
 const isMinifigPart = (partImage: string | undefined, baseImage: string | undefined): boolean => {
   return Boolean(partImage && partImage !== baseImage);
 };
 
-// Creates a custom part object from character data
-
-const createMinifigPart = (
-  partType: MinifigPartTypeKey,
-  character: IMinifigProject,
-  partImage: string,
-): CustomPart | null => {
-  const config = PART_CONFIG[partType];
-  if (!config) return null;
-
-  // Use the actual selected item from the project (from API)
-  const selectedItem = character.selectedItems?.[config.key];
-
+/**
+ * Transforms an IApiMinifigSelectedPart (from API response) into a MinifigPartData (for application use).
+ * This maps the API's field names to the application's domain model field names.
+ */
+const transformApiPartToMinifigPartData = (apiPart: IApiMinifigSelectedPart): IBaseMinifigPart => {
   return {
-    type: partType,
-    image: selectedItem?.image || partImage,
-    name: selectedItem?.product_name || selectedItem?.product_name || config.fallbackName,
-    stock: selectedItem?.stock ?? 1,
-    price: selectedItem?.price ?? 0,
+    _id: apiPart.id,
+    minifig_part_type: apiPart.type,
+    product_name: apiPart.name,
+    product_description_1: apiPart.description,
+    image: apiPart.image,
+    price: apiPart.price,
+    stock: apiPart.stock,
+    product_color: {
+      _id: apiPart.color || 'default-color-id',
+      name: apiPart.color || 'Unknown Color',
+    },
   };
 };
 
-// Extracts all added parts from a character
-
-export const getCustomPartsForMinifigProject = (project: IMinifigProject): CustomPart[] => {
+// Extracts all added parts from a character, transforming them to MinifigPartData
+export const getCustomPartsForMinifigProject = (project: IMinifigProject): IBaseMinifigPart[] => {
   if (!project) return [];
-
-  const minifigParts: CustomPart[] = [];
+  const minifigParts: IBaseMinifigPart[] = [];
 
   MINIFIG_CONFIG.PART_TYPES.forEach((partType) => {
     const config = PART_CONFIG[partType];
-    const partImage = project.selectedItems?.[config.key]?.image;
+    const selectedApiPart = project.selectedItems?.[config.key]; // This is IApiMinifigSelectedPart
 
-    if (isMinifigPart(partImage, config.baseImage)) {
-      const minifigPart = createMinifigPart(partType, project, partImage!);
-      if (minifigPart) {
-        minifigParts.push(minifigPart);
-      }
+    if (selectedApiPart && isMinifigPart(selectedApiPart.image, config.baseImage)) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-expect-error
+      const transformedPart = transformApiPartToMinifigPartData(selectedApiPart);
+      minifigParts.push(transformedPart);
     }
   });
-
   return minifigParts;
 };
 
 // Creates a summary for a single project
-
 export const createProjectSummary = (project: IMinifigProject): MinfigProjectSummary => {
   const customParts = getCustomPartsForMinifigProject(project);
   // Calculate totalPrice by summing the price of each custom part
@@ -100,18 +97,15 @@ export const createCartSummary = (minifig: IMinifigProject[] | null | undefined)
       projectSummaries: [],
     };
   }
-
   const projectSummaries = minifig
     .filter(Boolean)
     .map(createProjectSummary)
     .filter((summary) => summary.hasCustomParts);
-
   const totalItems = projectSummaries.reduce(
     (sum, summary) => sum + summary.minifigPart.length,
     0,
   );
   const totalPrice = projectSummaries.reduce((sum, summary) => sum + summary.totalPrice, 0);
-
   return {
     validProjects: projectSummaries.length,
     totalItems,

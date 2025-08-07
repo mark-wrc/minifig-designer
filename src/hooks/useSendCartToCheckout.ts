@@ -1,24 +1,42 @@
-import { useAuthFromURL } from '@/hooks/useAuthFromURL';
-import { useSelector } from 'react-redux';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
+import { useAuthFromURL } from './useAuthFromURL';
+import { IMinifigCart } from '@/types/Minifig';
 
-const CHECKOUT_URL = 'https://www.worldofminifigs.com/checkout?mode=buy_now';
+const BASE_CHECKOUT_URL = 'http://localhost:5173/checkout';
 
 export function useSendCartToCheckout() {
   const { isAuthenticated } = useAuthFromURL();
+
   const cart = useSelector((state: RootState) => state.MinifigBuilderCart);
 
-  const cartString = useMemo(() => {
-    const items = Object.values(cart.projects).flatMap((project) =>
-      project.items.map((item) => ({
-        id: item.id,
-        qty: item.quantity,
-      })),
-    );
-
-    return encodeURIComponent(JSON.stringify(items));
+  const itemsToSend = useMemo(() => {
+    const collectedItems: IMinifigCart[] = [];
+    Object.values(cart.projects).forEach((project: any) => {
+      project.items.forEach((item: any) => {
+        collectedItems.push({
+          _id: item.id,
+          minifig_part_type: item.partType,
+          product_name: item.partName,
+          image: item.partImage,
+          price: item.price || 0,
+          stock: item.stock || 0,
+          discount: item.discount || 0,
+          discounted_price: item.discounted_price || item.price || 0,
+          color: item.color || 'unavailable',
+          includes: item.includes || 'unavailable',
+          quantity: item.quantity || 1,
+        });
+      });
+    });
+    return collectedItems;
   }, [cart.projects]);
+
+  const cartString = useMemo(() => {
+    return encodeURIComponent(JSON.stringify(itemsToSend));
+  }, [itemsToSend]);
 
   const sendToCheckout = useCallback(() => {
     if (!isAuthenticated) {
@@ -26,9 +44,11 @@ export function useSendCartToCheckout() {
       return;
     }
 
-    const url = `${CHECKOUT_URL}&cart=${cartString}`;
+    const mode = itemsToSend.length > 1 ? 'cart' : 'buy_now';
+    const url = `${BASE_CHECKOUT_URL}?mode=${mode}&externalCart=${cartString}`;
+
     window.location.href = url;
-  }, [isAuthenticated, cartString]);
+  }, [isAuthenticated, itemsToSend, cartString]);
 
   return { sendToCheckout, isAuthenticated };
 }

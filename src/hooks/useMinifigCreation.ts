@@ -54,6 +54,7 @@ export const useMinifigCreation = () => {
               : undefined,
           price: item.price,
           stock: item.stock,
+          product_color: item.product_color.name,
         };
 
         const updatedItems = {
