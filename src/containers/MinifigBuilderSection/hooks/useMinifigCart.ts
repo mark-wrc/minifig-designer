@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback } from 'react';
-import { getCustomPartsForMinifigProject } from '@/utils';
 import type { IMinifigProject } from '@/types/Minifig';
+import { buildSelectedParts } from '@/types';
 import { useShoppingCart } from '@/hooks/useShoppingCart';
 
 export interface IUseMinifigCart {
@@ -9,49 +10,43 @@ export interface IUseMinifigCart {
 }
 
 export const useMinifigCart = () => {
-  const { addCharacterToCart } = useShoppingCart();
+  const { addCharactersToCartBatch } = useShoppingCart();
 
   const addMinifigToCart = useCallback(
     ({ minifig, onSuccess }: IUseMinifigCart) => {
-      if (!minifig?.length) {
-        return;
-      }
+      if (!minifig?.length) return;
+
       try {
-        minifig.forEach((character, index) => {
-          if (!character) {
-            console.warn(`Character at index ${index} is null/undefined`);
-            return;
-          }
-          console.log(`Processing character: ${character.name}`, character);
-          const customParts = getCustomPartsForMinifigProject(character);
-          if (customParts.length === 0) {
-            console.warn(`No custom parts found for character: ${character.name}`);
-            return;
-          }
-          // Transform parts to the expected format
-          const selectedParts = customParts.map((part) => ({
-            type: part.minifig_part_type,
-            name: part.product_name,
-            image: part.image,
-            price: part.price,
-            stock: part.stock,
-            color: part.product_color.name,
-          }));
-          addCharacterToCart({
-            projectName: character.name,
-            selectedParts,
-            pricePerItem: undefined,
-            quantity: 1,
-            stock: undefined,
-            color: '',
-          });
-        });
+        const payloads = minifig
+          .filter(Boolean)
+          .map((character) => {
+            const selectedParts = buildSelectedParts(character.selectedItems);
+            if (selectedParts.length === 0) return null;
+
+            return {
+              _id: character._id,
+              projectName: character.name,
+              selectedParts,
+              quantity: 1,
+              pricePerItem: undefined,
+              stock: undefined,
+              color: '',
+            };
+          })
+          .filter((p): p is NonNullable<typeof p> => !!p);
+
+        if (payloads.length === 0) {
+          onSuccess?.();
+          return;
+        }
+
+        addCharactersToCartBatch(payloads as any);
         onSuccess?.();
       } catch {
         onSuccess?.();
       }
     },
-    [addCharacterToCart],
+    [addCharactersToCartBatch],
   );
 
   return { addMinifigToCart };
