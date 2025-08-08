@@ -14,7 +14,12 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
       <section className="border-2 border-gray-950 rounded-md md:border-0 ">
         <div className="bg-minifig-brand-end text-white w-full h-full overflow-y-auto max-h-[600px] minifig-scrollbar">
           <div className="p-3">
-            <CTAButton onClick={onClick} icon={ArrowLeft} className="bg-yellow-500 text-lg mb-8">
+            <CTAButton
+              variant="link"
+              onClick={onClick}
+              icon={ArrowLeft}
+              className="text-lg mb-8 text-white"
+            >
               Back
             </CTAButton>
 
@@ -95,10 +100,11 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
                 {/* cta buttons */}
                 <div className="mt-5 flex w-full">
                   <CTAButton
+                    size={null}
                     variant="ghost"
                     disabled={outOfstock}
                     className={cn(
-                      'bg-yellow-500 text-md w-fit px-6 self-end rounded-sm text-black',
+                      'bg-yellow-500 text-md w-fit py-3 px-6 self-end rounded-sm text-black',
                       outOfstock && 'bg-red-500',
                     )}
                     onClick={() => onCategoryClick(wardrobeItems)}

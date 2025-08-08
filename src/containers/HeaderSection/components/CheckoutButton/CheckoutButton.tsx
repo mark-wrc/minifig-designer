@@ -9,6 +9,7 @@ const CheckoutButton = memo<ICheckoutButtonProps>(({ className, totalPrice }) =>
 
   return (
     <CTAButton
+      size={null}
       onClick={sendToCheckout}
       className={className}
       title={`Checkout ${formatCurrency(totalPrice)}`}
