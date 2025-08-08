@@ -53,7 +53,7 @@ const MobileNavigation = memo<IMobileNavigation>(
 
           {/* Menu items */}
           <div className="pb-2">
-            <MenuItemNavigation className="px-4 py-2 text-lg" menuItems={menuItems} />
+            <MenuItemNavigation className="px-4 py-3 text-lg" menuItems={menuItems} />
           </div>
 
           {auth && (
@@ -61,23 +61,24 @@ const MobileNavigation = memo<IMobileNavigation>(
               <Divider className="bg-[#44608080]" />
 
               <div className="mt-4">
-                <MenuItemNavigation className="px-4 py-2 text-lg" menuItems={userItems} />
+                <MenuItemNavigation className="px-4 py-3 text-lg" menuItems={userItems} />
               </div>
+
+              <section className="p-4 w-full flex absolute left-0 bottom-1 border-t-2 border-t-[#44608080]">
+                <CTAButton
+                  size={null}
+                  variant="default"
+                  className="w-full bg-red-500 text-lg hover:bg-red-700 p-3"
+                  onClick={logout}
+                >
+                  <span className="flex items-center gap-2">
+                    Logout
+                    <LogOut strokeWidth={3} />
+                  </span>
+                </CTAButton>
+              </section>
             </>
           )}
-
-          <section className="p-3 w-full flex absolute left-0 bottom-1 border-t-2 border-t-[#44608080]">
-            <CTAButton
-              variant="default"
-              className="w-full bg-red-500 text-lg hover:bg-red-700"
-              onClick={logout}
-            >
-              <span className="flex items-center gap-2">
-                Logout
-                <LogOut strokeWidth={3} />
-              </span>
-            </CTAButton>
-          </section>
         </motion.section>
       </>
     );

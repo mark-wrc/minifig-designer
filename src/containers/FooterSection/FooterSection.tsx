@@ -27,7 +27,7 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
               item.title === 'Cart' ? (
                 <div
                   key={item.title}
-                  className="flex cursor-pointer mb-4 text-sm font-light text-gray-300"
+                  className="flex cursor-pointer mb-4 text-sm font-light"
                   onClick={onHandleCartClick}
                 >
                   <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline hover:text-yellow-300">
@@ -38,7 +38,7 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
               ) : (
                 <FooterLink
                   key={item.title}
-                  className="flex cursor-pointer mb-4 text-sm font-light text-gray-300"
+                  className="flex cursor-pointer mb-4 text-sm font-light "
                   href={item.link}
                 >
                   <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline hover:text-yellow-300">
@@ -52,7 +52,7 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
             {QuickLinks.map((item) => (
               <FooterLink
                 href={item.link}
-                className="cursor-pointer mb-4 text-sm font-light text-gray-300 w-fit"
+                className="cursor-pointer mb-4 text-sm font-light  w-fit"
                 key={item.title}
               >
                 <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline hover:text-yellow-300">
@@ -66,7 +66,7 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
         {/* Support section  */}
         <FooterSectionCard title="Support" className="flex flex-col">
           {Support.map((item) => (
-            <FooterLink className="flex mb-4 text-gray-300 " href={item.link} key={item.title}>
+            <FooterLink className="flex mb-4  " href={item.link} key={item.title}>
               <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline hover:text-yellow-300">
                 {item.title}
               </p>
@@ -77,7 +77,7 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
         {/*  Company description section  */}
         <FooterSectionCard title="World of Minifigs">
           <section>
-            <p className="text-sm text-gray-300">{CompanyDescription.description}</p>
+            <p className="text-sm font-light">{CompanyDescription.description}</p>
             <div className="flex gap-2 mt-4">
               <FooterLink
                 href={socialMediaLinks.facebookLink}

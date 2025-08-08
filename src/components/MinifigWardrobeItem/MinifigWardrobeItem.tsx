@@ -19,24 +19,21 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
             alt={minifigItem.product_name}
           />
         ))}
-
-        {/* <p className="font-medium text-sm">{item.name}</p>
-                  <p className="text-xs text-gray-600 mb-2">{item.description}</p>
-                  <p className="text-green-600 font-bold text-sm">${item.price}</p> */}
       </div>
 
-      <div className=" flex  flex-col justify-center py-2  -translate-y-4 ">
+      <div className=" flex  flex-col justify-center py-2  -translate-y-6 ">
         <CTAButton
+          size={null}
           variant="default"
-          className="bg-yellow-300 text-md  hover:bg-yellow-400 w-fit self-center px-6 rounded-none text-black"
+          className="bg-yellow-300 text-md  hover:bg-yellow-400 w-fit self-center py-3 px-8 rounded-sm text-black"
           onClick={() => onPartSelect(minifigItem)}
         >
           Add
         </CTAButton>
 
-        <div className="text-center">
-          <p className=" text-sm">{minifigItem.product_name}</p>
-          <p>{formatCurrency(minifigItem.price)}</p>
+        <div className="text-center mt-2">
+          <p className=" text-m font-medium">{minifigItem.product_name}</p>
+          <p className=" text-m font-medium">{formatCurrency(minifigItem.price)}</p>
         </div>
       </div>
     </section>

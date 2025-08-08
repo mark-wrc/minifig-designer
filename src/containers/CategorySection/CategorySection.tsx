@@ -13,9 +13,9 @@ const CategorySection = () => {
   }, [characters, activeCharacterId]);
 
   return (
-    <section className=" hidden md:block container mx-auto m-10 lg:py-12">
+    <section className=" hidden md:block container mx-auto my-4 lg:py-12">
       <header className="mb-12 text-center text-black">
-        <h1 className="text-6xl font-bold">CREATE YOUR OWN MINIFIG</h1>
+        <h1 className="text-6xl font-bold mb-3">BUILD YOUR OWN MINIFIG</h1>
         <h3 className="font-bold  text-2xl">START BUILDING</h3>
       </header>
       <MinifigCategoryOptions activeMinifigProject={activeMinifigProject} />
