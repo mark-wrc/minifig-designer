@@ -1,17 +1,19 @@
-import { memo } from 'react';
-import { ILoginMenuProps } from './LoginMenu.types';
+import { CTAButton } from '../CTAButton';
 
-const LoginMenu = memo<ILoginMenuProps>(({ userLoginItems }) => (
-  <section className="background-transparent p-2">
-    {userLoginItems.map((item) => (
-      <a href={item.link} key={item.label}>
-        <div className="w-full hover:bg-yellow-400 p-1 text-white hover:text-black rounded-sm">
-          {item.label}
-        </div>
+const LoginMenu = () => (
+  <section className="flex gap-3 align-middle background-transparent p-2">
+    <CTAButton variant={null} size={null} className="bg-none px-8 py-2">
+      <a href="https://www.worldofminifigs.com/login" rel="noopener noreferrer">
+        <span className=" text-white hover:underline text-lg">Login</span>
       </a>
-    ))}
+    </CTAButton>
+    <CTAButton variant="accent" size={null} className="px-8 py-3">
+      <a href="https://www.worldofminifigs.com/login" rel="noopener noreferrer">
+        <span className=" text-black text-lg">Register</span>
+      </a>
+    </CTAButton>
   </section>
-));
+);
 LoginMenu.displayName = 'LoginMenu';
 
 export default LoginMenu;
