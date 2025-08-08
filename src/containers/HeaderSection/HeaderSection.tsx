@@ -1,6 +1,6 @@
 import { memo, useCallback, useState } from 'react';
 import { WOFLogo } from '@/assets/images';
-import { useAuth } from '@/hooks';
+import { useAuth, useDisableScroll } from '@/hooks';
 import { ShoppingCart, Menu } from 'lucide-react';
 import { CartContainer } from './components/CartContainer';
 import { useSelector } from 'react-redux';
@@ -22,6 +22,8 @@ const HeaderSection = memo(() => {
 
   const { screenSize } = useWindowResize();
   const isMobile = screenSize.width <= 767;
+
+  useDisableScroll(openCart === true);
 
   const handleToggleCart = useCallback(() => {
     setOpenCart((prev) => !prev);

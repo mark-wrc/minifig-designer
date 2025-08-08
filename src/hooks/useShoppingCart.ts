@@ -1,4 +1,6 @@
-import { useCallback, useMemo } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartStorage } from '../services/cartStorage';
 import {
@@ -6,14 +8,7 @@ import {
   calculateGlobalTotals,
   createCartItem,
 } from '@/utils/cartCalculation';
-import {
-  setProjects,
-  setTotals,
-  updateProject,
-  removeProject,
-  removeItem,
-  clearAll,
-} from '@/store/shoppingCart/CartSlice';
+import { setProjects, setTotals, updateProject, clearAll } from '@/store/shoppingCart/CartSlice';
 import {
   selectAllProjects,
   selectTotalItems,
@@ -21,16 +16,14 @@ import {
   selectIsCartEmpty,
   selectCartSummary,
 } from '@/store/shoppingCart/Selectors';
-import { AddCharacterPayload, CartProject, ICartItem, selectedMinifigParts } from '@/types';
+import type { AddCharacterPayload, CartProject, ICartItem, selectedMinifigParts } from '@/types';
+
+const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
 
 export const useShoppingCart = () => {
   const dispatch = useDispatch();
 
-  const rawMinifigprojects = useSelector(selectAllProjects);
-  const minifigProjects: Record<string, CartProject> = useMemo(
-    () => rawMinifigprojects || {},
-    [rawMinifigprojects],
-  );
+  const projects = useSelector(selectAllProjects) || {};
   const totalItems = useSelector(selectTotalItems) || 0;
   const totalPrice = useSelector(selectTotalPrice) || 0;
   const isEmpty = useSelector(selectIsCartEmpty) ?? true;
@@ -41,217 +34,190 @@ export const useShoppingCart = () => {
     isEmpty: true,
   };
 
-  // Simple getter functions
-  const getMinifigProject = useCallback(
-    (projectName: string) => minifigProjects[projectName] || null,
-    [minifigProjects],
-  );
+  const latestRef = useRef<Record<string, CartProject>>({});
+  useEffect(() => {
+    latestRef.current = projects;
+  }, [projects]);
 
-  const getAllMinifigProjects = useCallback(
-    () => Object.values(minifigProjects),
-    [minifigProjects],
-  );
-
-  // Helper function to update projects and persist changes
-  const updateProjectsAndPersist = useCallback(
-    (updatedProjects: typeof minifigProjects) => {
-      const totals = calculateGlobalTotals(updatedProjects);
-      dispatch(setTotals(totals));
-      cartStorage.save(updatedProjects);
+  // One path to update state + totals + storage
+  const apply = useCallback(
+    (fn: (cur: Record<string, CartProject>) => Record<string, CartProject>) => {
+      const next = fn(latestRef.current);
+      dispatch(setProjects(next));
+      dispatch(setTotals(calculateGlobalTotals(next)));
+      cartStorage.save(next);
     },
     [dispatch],
   );
 
-  // Initialize cart from storage
   const initializeCart = useCallback(() => {
     try {
-      const savedProjects = cartStorage.load();
-      dispatch(setProjects(savedProjects));
-      updateProjectsAndPersist(savedProjects);
-    } catch (error) {
-      console.error('Failed to initialize cart:', error);
-      const emptyState = {};
-      dispatch(setProjects(emptyState));
+      const saved = cartStorage.load() || {};
+      dispatch(setProjects(saved));
+      dispatch(setTotals(calculateGlobalTotals(saved)));
+      cartStorage.save(saved);
+    } catch (e) {
+      console.error('Failed to initialize cart:', e);
+      dispatch(setProjects({}));
       dispatch(setTotals({ totalItems: 0, totalPrice: 0 }));
     }
-  }, [dispatch, updateProjectsAndPersist]);
+  }, [dispatch]);
 
-  // Helper function to update or create cart item
-  const updateOrCreateItem = useCallback(
+  // Upsert one item into an items array
+  const upsertItem = useCallback(
     (
       items: ICartItem[],
       part: selectedMinifigParts,
       quantity: number,
-      pricePerItem: number,
-      stock: number,
+      priceFallback: number,
+      stockFallback: number,
     ) => {
-      const existingIndex = items.findIndex(
-        (item) => item.partType === part.type && item.partName === part.name,
-      );
-
-      if (existingIndex !== -1) {
-        // Update existing item
-        const existingItem = items[existingIndex];
-        const newQuantity = Math.min(existingItem.quantity + quantity, existingItem.stock);
-
-        return items.map((item, index) =>
-          index === existingIndex ? { ...item, quantity: newQuantity, addedAt: Date.now() } : item,
+      const i = items.findIndex((it) => it.partType === part.type && it.partName === part.name);
+      if (i >= 0) {
+        const it = items[i];
+        const qty = clamp(it.quantity + quantity, 1, it.stock);
+        return items.map((x, idx) =>
+          idx === i ? { ...x, quantity: qty, addedAt: Date.now() } : x,
         );
-      } else {
-        // Add new item
-        const itemPrice = part.price || pricePerItem;
-        const itemStock = part.stock || stock;
-        const newItem = createCartItem(part, itemPrice, quantity, itemStock);
-
-        return [...items, newItem];
       }
+      const price = part.price ?? priceFallback;
+      const stock = part.stock ?? stockFallback;
+      return [...items, createCartItem(part, price, quantity, stock)];
     },
     [],
   );
 
   const addCharacterToCart = useCallback(
     (payload: AddCharacterPayload) => {
-      try {
-        const { projectName, selectedParts, pricePerItem = 10, quantity = 1, stock = 5 } = payload;
-
-        const existingProject = minifigProjects[projectName];
-        const baseProject = existingProject || {
-          projectName,
-          items: [],
-          totalPrice: 0,
-          createdAt: Date.now(),
-        };
-
-        // Process all parts to get updated items
-        let updatedItems = [...baseProject.items];
-
-        selectedParts.forEach((part) => {
-          updatedItems = updateOrCreateItem(updatedItems, part, quantity, pricePerItem, stock);
-        });
-
-        // Create updated project
-        const updatedProject = {
-          ...baseProject,
-          items: updatedItems,
-          totalPrice: calculateProjectTotal(updatedItems),
-        };
-
-        dispatch(updateProject(updatedProject));
-
-        const newProjects = { ...minifigProjects, [projectName]: updatedProject };
-        updateProjectsAndPersist(newProjects);
-      } catch (error) {
-        console.error('Failed to add character to cart:', error);
-        throw error;
-      }
+      const { projectName, selectedParts, pricePerItem = 10, quantity = 1, stock = 5 } = payload;
+      const cur = latestRef.current;
+      const base = cur[projectName] || {
+        projectName,
+        items: [],
+        totalPrice: 0,
+        createdAt: Date.now(),
+      };
+      let items = base.items;
+      for (const p of selectedParts) items = upsertItem(items, p, quantity, pricePerItem, stock);
+      const updated: CartProject = { ...base, items, totalPrice: calculateProjectTotal(items) };
+      dispatch(updateProject(updated));
     },
-    [minifigProjects, dispatch, updateProjectsAndPersist, updateOrCreateItem],
+    [upsertItem, dispatch],
   );
 
-  //https://www.shadcn-ui-blocks.com/blocks/shopping-cart
-  const updateItemQuantity = useCallback(
-    (projectName: string, itemId: string, newQuantity: number) => {
-      try {
-        const project = minifigProjects[projectName];
-        if (!project) {
-          console.warn(`Project ${projectName} not found`);
-          return;
+  // Batch add (persists once)
+  const addCharactersToCartBatch = useCallback(
+    (payloads: AddCharacterPayload[]) => {
+      apply((cur) => {
+        const next = { ...cur };
+        for (const {
+          projectName,
+          selectedParts,
+          pricePerItem = 10,
+          quantity = 1,
+          stock = 5,
+        } of payloads) {
+          const base = next[projectName] || {
+            projectName,
+            items: [],
+            totalPrice: 0,
+            createdAt: Date.now(),
+          };
+          let items = base.items;
+          for (const p of selectedParts)
+            items = upsertItem(items, p, quantity, pricePerItem, stock);
+          next[projectName] = { ...base, items, totalPrice: calculateProjectTotal(items) };
+          // optional immediate UI update
+          dispatch(updateProject(next[projectName]));
         }
-
-        const updatedItems = project.items.map((item) =>
-          item.id === itemId
-            ? {
-                ...item,
-                quantity: Math.max(1, Math.min(item.stock, newQuantity)),
-                addedAt: Date.now(),
-              }
-            : item,
-        );
-
-        const updatedProject = {
-          ...project,
-          items: updatedItems,
-          totalPrice: calculateProjectTotal(updatedItems),
-        };
-
-        dispatch(updateProject(updatedProject));
-
-        const updatedProjects = { ...minifigProjects, [projectName]: updatedProject };
-        updateProjectsAndPersist(updatedProjects);
-      } catch (error) {
-        console.error('Failed to update item quantity:', error);
-      }
+        return next;
+      });
     },
-    [minifigProjects, dispatch, updateProjectsAndPersist],
+    [apply, upsertItem, dispatch],
+  );
+
+  // Persist current cart (if its multiple single adds)
+  const persistCart = useCallback(() => apply((x) => ({ ...x })), [apply]);
+
+  const updateItemQuantity = useCallback(
+    (projectName: string, itemId: string, newQty: number) => {
+      apply((currentProject) => {
+        const proj = currentProject[projectName];
+        if (!proj) return currentProject;
+        const items = proj.items.map((it) =>
+          it.id === itemId
+            ? { ...it, quantity: clamp(newQty, 1, it.stock), addedAt: Date.now() }
+            : it,
+        );
+        return {
+          ...currentProject,
+          [projectName]: { ...proj, items, totalPrice: calculateProjectTotal(items) },
+        };
+      });
+    },
+    [apply],
   );
 
   const removeItemFromCart = useCallback(
     (projectName: string, itemId: string) => {
-      try {
-        dispatch(removeItem({ projectName, itemId }));
-
-        const project = minifigProjects[projectName];
-        if (!project) return;
-
-        const updatedItems = project.items.filter((item) => item.id !== itemId);
-        const updatedProjects = { ...minifigProjects };
-
-        if (updatedItems.length === 0) {
-          delete updatedProjects[projectName];
-        } else {
-          updatedProjects[projectName] = {
-            ...project,
-            items: updatedItems,
-            totalPrice: calculateProjectTotal(updatedItems),
-          };
+      apply((currentProject) => {
+        const proj = currentProject[projectName];
+        if (!proj) return currentProject;
+        const items = proj.items.filter((it) => it.id !== itemId);
+        if (items.length === 0) {
+          const { [projectName]: _, ...rest } = currentProject;
+          return rest;
         }
-
-        updateProjectsAndPersist(updatedProjects);
-      } catch (error) {
-        console.error('Failed to remove item from cart:', error);
-      }
+        return {
+          ...currentProject,
+          [projectName]: { ...proj, items, totalPrice: calculateProjectTotal(items) },
+        };
+      });
     },
-    [minifigProjects, dispatch, updateProjectsAndPersist],
+    [apply],
   );
 
   const removeProjectFromCart = useCallback(
     (projectName: string) => {
-      try {
-        dispatch(removeProject(projectName));
-
-        const updatedProjects = { ...minifigProjects };
-        delete updatedProjects[projectName];
-
-        updateProjectsAndPersist(updatedProjects);
-      } catch (error) {
-        console.error('Failed to remove project from cart:', error);
-      }
+      apply((currentProject) => {
+        if (!(projectName in currentProject)) return currentProject;
+        const { [projectName]: _, ...rest } = currentProject;
+        return rest;
+      });
     },
-    [minifigProjects, dispatch, updateProjectsAndPersist],
+    [apply],
   );
 
   const clearCart = useCallback(() => {
-    try {
-      dispatch(clearAll());
-      cartStorage.clear();
-    } catch (error) {
-      console.error('Failed to clear cart:', error);
-    }
+    dispatch(clearAll());
+    cartStorage.clear();
   }, [dispatch]);
 
+  // Getters
+  const getMinifigProject = useCallback(
+    (projectName: string) => projects[projectName] || null,
+    [projects],
+  );
+  const getAllMinifigProjects = useCallback(() => Object.values(projects), [projects]);
+
   return {
-    minifigProjects,
+    // state
+    minifigProjects: projects,
     totalItems,
     totalPrice,
     isEmpty,
     cartSummary,
+    // lifecycle
     initializeCart,
+    // mutations
     addCharacterToCart,
+    addCharactersToCartBatch,
+    persistCart,
     updateItemQuantity,
     removeItemFromCart,
     removeProjectFromCart,
     clearCart,
-    // Getters
+    // getters
     getMinifigProject,
     getAllMinifigProjects,
   };

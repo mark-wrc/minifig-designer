@@ -1,45 +1,67 @@
-// This PART_CONFIG is primarily for base images and fallback names.
-
-import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
-import { MINIFIG_CONFIG } from '@/constants/Minifig';
-import { MinifigPartType } from '@/types';
-import {
-  CartSummary,
+import type {
+  IMinifigProject,
   IApiMinifigSelectedPart,
   IBaseMinifigPart,
-  IMinifigProject,
   MinfigProjectSummary,
+  CartSummary,
+  MinifigPartData,
 } from '@/types/Minifig';
 
-// Data source will now come from the IMinifigProject.selectedItems directly.
-const PART_CONFIG = {
-  HEAD: {
-    key: 'head' as const,
-    baseImage: BaseMinifigParts[MinifigPartType.HEAD]?.image,
-    fallbackName: 'Head',
-  },
-  TORSO: {
-    key: 'torso' as const,
-    baseImage: BaseMinifigParts[MinifigPartType.TORSO]?.image,
-    fallbackName: 'Torso',
-  },
-  LEGS: {
-    key: 'legs' as const,
-    baseImage: BaseMinifigParts[MinifigPartType.LEGS]?.image,
-    fallbackName: 'Legs',
-  },
-} as const;
+/**
+ * We support both BE shape (IApiMinifigSelectedPart) and legacy MinifigPartData.
+ * This normalizer produces a consistent IApiMinifigSelectedPart shape.
+ */
+function normalizeToApiSelectedPart(
+  part: IApiMinifigSelectedPart | MinifigPartData | undefined,
+): IApiMinifigSelectedPart | null {
+  if (!part) return null;
 
-// Checks if a part is custom (different from base part)
-const isMinifigPart = (partImage: string | undefined, baseImage: string | undefined): boolean => {
-  return Boolean(partImage && partImage !== baseImage);
-};
+  if ('type' in part && 'id' in part) {
+    // IApiMinifigSelectedPart
+    return part as IApiMinifigSelectedPart;
+  }
+
+  // Legacy MinifigPartData shape -> map to API part shape
+  if ('minifig_part_type' in part) {
+    const p = part as MinifigPartData;
+    return {
+      id: p._id,
+      type: p.minifig_part_type,
+      name: p.product_name,
+      description: p.product_description_1,
+      image: p.image,
+      price: p.price,
+      stock: p.stock,
+      color: p.product_color?.name ?? 'Unknown Color',
+    };
+  }
+
+  return null;
+}
+
+const ORDERED_KEYS = ['head', 'torso', 'legs'] as const;
+type SelectedKey = (typeof ORDERED_KEYS)[number];
 
 /**
- * Transforms an IApiMinifigSelectedPart (from API response) into a MinifigPartData (for application use).
- * This maps the API's field names to the application's domain model field names.
+ * Returns true if the selected part is considered "custom"
+ * - If baseImages provided, compares by image inequality.
+ * - If no baseImages provided, any present part is treated as custom.
  */
-const transformApiPartToMinifigPartData = (apiPart: IApiMinifigSelectedPart): IBaseMinifigPart => {
+function isCustomByImage(
+  part: IApiMinifigSelectedPart,
+  baseImages?: Partial<Record<SelectedKey, string>>,
+) {
+  if (!baseImages) return true;
+  const key = part.type.toLowerCase() as SelectedKey;
+  const base = baseImages[key];
+  if (!base) return true;
+  return Boolean(part.image && part.image !== base);
+}
+
+/**
+ * Transform an API selected part into the slimmer app-facing IBaseMinifigPart shape.
+ */
+function toBaseMinifigPart(apiPart: IApiMinifigSelectedPart): IBaseMinifigPart {
   return {
     _id: apiPart.id,
     minifig_part_type: apiPart.type,
@@ -53,42 +75,71 @@ const transformApiPartToMinifigPartData = (apiPart: IApiMinifigSelectedPart): IB
       name: apiPart.color || 'Unknown Color',
     },
   };
-};
+}
 
-// Extracts all added parts from a character, transforming them to MinifigPartData
-export const getCustomPartsForMinifigProject = (project: IMinifigProject): IBaseMinifigPart[] => {
-  if (!project) return [];
-  const minifigParts: IBaseMinifigPart[] = [];
+/**
+ * Extracts all "custom" parts from a project.selectedItems.
+ * - Cleanly supports both BE (IApiMinifigSelectedPart) and legacy MinifigPartData inputs.
+ * - Optional baseImages lets you filter out base parts by image equality.
+ *
+ * Usage:
+ *   getCustomPartsForMinifigProject(project, {
+ *     head: BaseMinifigParts[MinifigPartType.HEAD]?.image,
+ *     torso: BaseMinifigParts[MinifigPartType.TORSO]?.image,
+ *     legs: BaseMinifigParts[MinifigPartType.LEGS]?.image,
+ *   })
+ */
+export function getCustomPartsForMinifigProject(
+  project: IMinifigProject | null | undefined,
+  baseImages?: Partial<Record<SelectedKey, string>>,
+): IBaseMinifigPart[] {
+  if (!project?.selectedItems) return [];
 
-  MINIFIG_CONFIG.PART_TYPES.forEach((partType) => {
-    const config = PART_CONFIG[partType];
-    const selectedApiPart = project.selectedItems?.[config.key]; // This is IApiMinifigSelectedPart
+  const parts: IBaseMinifigPart[] = [];
 
-    if (selectedApiPart && isMinifigPart(selectedApiPart.image, config.baseImage)) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-expect-error
-      const transformedPart = transformApiPartToMinifigPartData(selectedApiPart);
-      minifigParts.push(transformedPart);
-    }
-  });
-  return minifigParts;
-};
+  for (const key of ORDERED_KEYS) {
+    // selectedItems may be BE or legacy; normalize per part
 
-// Creates a summary for a single project
-export const createProjectSummary = (project: IMinifigProject): MinfigProjectSummary => {
-  const customParts = getCustomPartsForMinifigProject(project);
-  // Calculate totalPrice by summing the price of each custom part
+    const raw = project.selectedItems[key] as
+      | IApiMinifigSelectedPart
+      | MinifigPartData
+      | undefined;
+    const apiPart = normalizeToApiSelectedPart(raw);
+    if (!apiPart) continue;
+
+    if (!isCustomByImage(apiPart, baseImages)) continue;
+
+    parts.push(toBaseMinifigPart(apiPart));
+  }
+
+  return parts;
+}
+
+/**
+ * Creates a summary for a single project.
+ * Pass baseImages if you want to filter out base parts (optional).
+ */
+export function createProjectSummary(
+  project: IMinifigProject,
+  baseImages?: Partial<Record<SelectedKey, string>>,
+): MinfigProjectSummary {
+  const customParts = getCustomPartsForMinifigProject(project, baseImages);
   const totalPrice = customParts.reduce((sum, part) => sum + (part.price ?? 0), 0);
+
   return {
     project,
     minifigPart: customParts,
     totalPrice,
     hasCustomParts: customParts.length > 0,
   };
-};
+}
 
-// Creates a complete cart summary from minifig array
-export const createCartSummary = (minifig: IMinifigProject[] | null | undefined): CartSummary => {
+// Builds a cart summary across projects.
+
+export function createCartSummary(
+  minifig: IMinifigProject[] | null | undefined,
+  baseImages?: Partial<Record<SelectedKey, string>>,
+): CartSummary {
   if (!minifig?.length) {
     return {
       validProjects: 0,
@@ -97,19 +148,22 @@ export const createCartSummary = (minifig: IMinifigProject[] | null | undefined)
       projectSummaries: [],
     };
   }
+
   const projectSummaries = minifig
     .filter(Boolean)
-    .map(createProjectSummary)
+    .map((p) => createProjectSummary(p, baseImages))
     .filter((summary) => summary.hasCustomParts);
+
   const totalItems = projectSummaries.reduce(
     (sum, summary) => sum + summary.minifigPart.length,
     0,
   );
   const totalPrice = projectSummaries.reduce((sum, summary) => sum + summary.totalPrice, 0);
+
   return {
     validProjects: projectSummaries.length,
     totalItems,
     totalPrice,
     projectSummaries,
   };
-};
+}

@@ -30,6 +30,7 @@ export interface selectedMinifigParts {
 }
 
 export interface AddCharacterPayload {
+  _id: string;
   projectName: string;
   selectedParts: selectedMinifigParts[];
   pricePerItem?: number;

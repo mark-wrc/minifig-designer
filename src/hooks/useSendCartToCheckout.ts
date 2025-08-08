@@ -14,7 +14,7 @@ export function useSendCartToCheckout() {
     Object.values(cart.projects).forEach((project: any) => {
       project.items.forEach((item: any) => {
         collectedItems.push({
-          _id: item.id,
+          _id: item._id,
           minifig_part_type: item.partType,
           product_name: item.partName,
           image: item.partImage,

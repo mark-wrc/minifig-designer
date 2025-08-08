@@ -36,7 +36,7 @@ function App() {
           </Provider>
         </AuthProvider>
       </HelmetProvider>
-      <ReactQueryDevtools initialIsOpen={true} />
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

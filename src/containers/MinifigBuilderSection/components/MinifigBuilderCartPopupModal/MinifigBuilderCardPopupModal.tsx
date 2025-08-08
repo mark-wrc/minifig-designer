@@ -16,7 +16,7 @@ const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
     const cartSummary = createCartSummary(minifig);
 
     const handleAddToCart = useCallback(() => {
-      if (!user) {
+      if (user) {
         authDisclosure.onDisclosureOpen();
         return;
       }
