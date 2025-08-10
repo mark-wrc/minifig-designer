@@ -13,4 +13,5 @@ export interface IMinifigRendererProps {
   modalDisclosure: UseDisclosureReturn;
   setModalMode: (mode: 'create' | 'edit') => void;
   className?: string;
+  isMinfigItemDetails?: boolean;
 }

@@ -6,11 +6,11 @@ import { CreateMinifigModal } from '../CreateMinifigModal';
 
 const CategorySelector = memo<CategorySelectorProps>(
   ({ className, item, onClick, isCategoryTab = false, isSelected }) => {
-    const { projects, modalDisclosure, modalMode, ActiveMinifigProject, handleCloseModal } =
+    const { characters, modalDisclosure, modalMode, activeCharacter, handleCloseModal } =
       useMinifigCreation();
 
     const handleCategoryClick = useCallback(() => {
-      if (projects.length === 0) {
+      if (characters.length === 0) {
         modalDisclosure.onDisclosureOpen();
         return;
       }
@@ -18,7 +18,7 @@ const CategorySelector = memo<CategorySelectorProps>(
       if (item.type) {
         onClick(item.type);
       }
-    }, [item.type, modalDisclosure, onClick, projects.length]);
+    }, [item.type, modalDisclosure, onClick, characters.length]);
 
     return (
       <>
@@ -43,14 +43,13 @@ const CategorySelector = memo<CategorySelectorProps>(
           )}
         </section>
 
-        {modalDisclosure.open && (
-          <CreateMinifigModal
-            initialProjectName={modalMode === 'edit' ? ActiveMinifigProject?.name : ''}
-            characterId={modalMode === 'edit' ? ActiveMinifigProject?._id : undefined}
-            mode={modalMode}
-            onClose={handleCloseModal}
-          />
-        )}
+        <CreateMinifigModal
+          isOpen={modalDisclosure.open}
+          initialProjectName={modalMode === 'edit' ? activeCharacter?.name : ''}
+          characterId={modalMode === 'edit' ? activeCharacter?._id : undefined}
+          mode={modalMode}
+          onClose={handleCloseModal}
+        />
       </>
     );
   },

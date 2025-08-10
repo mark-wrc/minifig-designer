@@ -20,7 +20,7 @@ export const QuickLinks: IFooterSectionTypes[] = [
 
 export const Support: IFooterSectionTypes[] = [
   { title: 'Lehi, Utah 84043', link: '/' },
-  { title: 'brickextremeofficial@gmai.com', link: 'mailto:brickextremeofficial@gmai.com' },
+  { title: 'brickextremeofficial@gmail.com', link: 'mailto:brickextremeofficial@gmail.com' },
 ];
 
 export const CompanyDescription: IFooterSectionTypes = {

@@ -30,6 +30,7 @@
     "colornames": "^1.1.1",
     "dayjs": "^1.11.13",
     "jwt-decode": "^4.0.0",
+    "lottie-react": "^2.4.1",
     "lucide-react": "^0.503.0",
     "motion": "^12.23.6",
     "qs": "^6.14.0",
@@ -42,8 +43,10 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.3",
     "redux-persist": "^6.0.0",
+    "redux-persist-transform-encrypt": "^5.1.1",
     "tailwind-merge": "^3.2.0",
-    "usehooks-ts": "^3.1.1"
+    "usehooks-ts": "^3.1.1",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",

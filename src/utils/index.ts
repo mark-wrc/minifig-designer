@@ -5,3 +5,4 @@ export * from './getMinifigPartImage';
 export * from './getAuthToken';
 export * from './formatCurrency';
 export * from './getColorHex';
+export * from './createEmptyMinifigProject';

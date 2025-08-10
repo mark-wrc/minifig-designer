@@ -3,7 +3,7 @@ import { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tabs, TabsList } from '../ui/tabs';
 import { TabsTrigger } from '@radix-ui/react-tabs';
-import { setActiveMinifigure } from '@/store/minifigBuilder/minifigBuilderSlice';
+import { deleteMinifigure, setActiveMinifigure } from '@/store/minifigBuilder/minifigBuilderSlice';
 import { CreateMinifigModal } from '../CreateMinifigModal';
 import { cn } from '@/lib/utils';
 import { useDisclosureParam } from '@/hooks';
@@ -13,14 +13,12 @@ import { Divider } from '../Divider';
 import { AnimatePresence, motion } from 'motion/react';
 import { TabButtonAnimation, TabItemAnimation } from '@/animations';
 import { MinifigTabContent } from '../MinifigTabContent';
-import useFetchMinifigProjects from '@/api/hooks/useFetchMinifigProjects';
-import { useDeleteMinifigProject } from '@/api/hooks';
 
 const MinifigTabs = memo(() => {
-  const { activeCharacterId = null } = useSelector((state: RootState) => state.minifigBuilder);
+  const { activeCharacterId, characters } = useSelector(
+    (state: RootState) => state.minifigBuilder,
+  );
 
-  const { data: projects = [] } = useFetchMinifigProjects();
-  const { mutate: deleteProject } = useDeleteMinifigProject();
   const removeProjectTab = useDisclosureParam();
   const openModal = useDisclosureParam();
 
@@ -39,16 +37,11 @@ const MinifigTabs = memo(() => {
 
   const handleDeleteConfirm = useCallback(() => {
     if (tabToDelete) {
-      deleteProject(tabToDelete, {
-        onSuccess: (res) => {
-          if (res.success) {
-            setTabToDelete(null);
-            removeProjectTab.onDisclosureClose();
-          }
-        },
-      });
+      dispatch(deleteMinifigure(tabToDelete));
+      setTabToDelete(null);
+      removeProjectTab.onDisclosureClose();
     }
-  }, [deleteProject, removeProjectTab, tabToDelete]);
+  }, [dispatch, removeProjectTab, tabToDelete]);
 
   const handleTabSelect = useCallback(
     (id: string) => {
@@ -63,7 +56,7 @@ const MinifigTabs = memo(() => {
       <Tabs value={activeCharacterId || ''} onValueChange={handleTabSelect} className="flex-1">
         <TabsList className="w-full h-full flex px-2 overflow-x-auto gap-2 flex-wrap">
           <AnimatePresence>
-            {projects.map((proj, idx) => (
+            {characters.map((proj, idx) => (
               <motion.div
                 key={proj._id}
                 variants={TabItemAnimation}
@@ -82,7 +75,12 @@ const MinifigTabs = memo(() => {
                   value={proj._id}
                 >
                   {/* Tab Content  */}
-                  <MinifigTabContent character={proj} onDelete={handleDeleteClick} />
+
+                  <MinifigTabContent
+                    key={proj._id}
+                    character={proj}
+                    onDelete={handleDeleteClick}
+                  />
                 </TabsTrigger>
               </motion.div>
             ))}
@@ -107,9 +105,11 @@ const MinifigTabs = memo(() => {
         </motion.div>
       </Tabs>
 
-      {openModal.open && (
-        <CreateMinifigModal mode="create" onClose={openModal.onDisclosureClose()} />
-      )}
+      <CreateMinifigModal
+        mode="create"
+        isOpen={openModal.open}
+        onClose={openModal.onDisclosureClose()}
+      />
 
       {removeProjectTab.open && (
         <ConfirmationDialog

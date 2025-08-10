@@ -29,12 +29,13 @@ const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
                 >
                   <div className="flex items-center gap-2">
                     <img
-                      src={part.image || '/placeholder.svg'}
+                      src={part.product_images?.[0]?.url}
                       alt={part.product_name}
                       className="w-8 h-8 rounded border object-cover"
                     />
                     <div>
                       <span className="font-medium text-gray-800">{part.product_name}</span>
+                      <p className="font-medium text-gray-800">{part.product_color.name}</p>
                       <p className="text-xs text-gray-500">{part.minifig_part_type}</p>
                     </div>
                   </div>

@@ -3,6 +3,7 @@ import { IMinifigWardrobeItemProps } from './MinifigWardrobeItem.types';
 import { MinifigPartData } from '@/types/Minifig';
 import { CTAButton } from '../CTAButton';
 import { formatCurrency } from '@/utils';
+import { StyledText } from '../StyledText';
 
 const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
   ({ onItemDetailsClick, minifigItem, onPartSelect }) => (
@@ -14,15 +15,12 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
       >
         {minifigItem.product_images.map((item) => (
           <img
+            key={item._id}
             className="w-fit border-2 border-black rounded-sm "
             src={item.url}
             alt={minifigItem.product_name}
           />
         ))}
-
-        {/* <p className="font-medium text-sm">{item.name}</p>
-                  <p className="text-xs text-gray-600 mb-2">{item.description}</p>
-                  <p className="text-green-600 font-bold text-sm">${item.price}</p> */}
       </div>
 
       <div className=" flex  flex-col justify-center py-2  -translate-y-4 ">
@@ -35,8 +33,8 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
         </CTAButton>
 
         <div className="text-center">
-          <p className=" text-sm">{minifigItem.product_name}</p>
-          <p>{formatCurrency(minifigItem.price)}</p>
+          <StyledText className=" text-sm" text={minifigItem.product_name} />
+          <StyledText text={formatCurrency(minifigItem.price)} />
         </div>
       </div>
     </section>

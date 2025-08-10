@@ -3,7 +3,7 @@ import { IMinifigWardrobeProps } from './MinifigWardrobe.types';
 import { cn } from '@/lib/utils';
 import { MinifigWardrobeItem } from '../MinifigWardrobeItem';
 import { EmptyStateComponent } from '../EmptyStateComponent';
-import { Blocks } from 'react-loader-spinner';
+import { MinifigLoader } from '../MinifigLoader';
 
 const MinifigWardrobe = memo(
   forwardRef<HTMLDivElement, IMinifigWardrobeProps>(
@@ -30,7 +30,7 @@ const MinifigWardrobe = memo(
       }
 
       if (isLoading) {
-        return <Blocks width="100" height="100" />;
+        return <MinifigLoader size={200} />;
       }
 
       return (
@@ -46,6 +46,7 @@ const MinifigWardrobe = memo(
             <section className="grid grid-cols-3 lg:grid-cols-3 gap-4  max-h-[300px] md:max-h-[600px] overflow-y-auto p-2 mt-10 md:mt-0 minifig-scrollbar">
               {wardrobeItems.map((item) => (
                 <MinifigWardrobeItem
+                  key={item._id}
                   onPartSelect={onPartSelect}
                   minifigItem={item}
                   onCategoryClick={onCategoryClick}
