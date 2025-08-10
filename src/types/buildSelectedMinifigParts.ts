@@ -11,6 +11,7 @@ export function buildSelectedMinifigPart(rawMinifigPart: any): SelectedPartWithI
     'type' in rawMinifigPart
     ? {
         id: rawMinifigPart.id,
+        _id: rawMinifigPart.id,
         type: rawMinifigPart.type,
         name: rawMinifigPart.name,
         image: rawMinifigPart.image,

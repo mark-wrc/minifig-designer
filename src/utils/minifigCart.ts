@@ -7,10 +7,6 @@ import type {
   MinifigPartData,
 } from '@/types/Minifig';
 
-/**
- * We support both BE shape (IApiMinifigSelectedPart) and legacy MinifigPartData.
- * This normalizer produces a consistent IApiMinifigSelectedPart shape.
- */
 function normalizeToApiSelectedPart(
   part: IApiMinifigSelectedPart | MinifigPartData | undefined,
 ): IApiMinifigSelectedPart | null {
@@ -21,7 +17,6 @@ function normalizeToApiSelectedPart(
     return part as IApiMinifigSelectedPart;
   }
 
-  // Legacy MinifigPartData shape -> map to API part shape
   if ('minifig_part_type' in part) {
     const p = part as MinifigPartData;
     return {
@@ -29,10 +24,10 @@ function normalizeToApiSelectedPart(
       type: p.minifig_part_type,
       name: p.product_name,
       description: p.product_description_1,
-      image: p.image,
       price: p.price,
       stock: p.stock,
       color: p.product_color?.name ?? 'Unknown Color',
+      product_images: p.product_images,
     };
   }
 
@@ -55,7 +50,6 @@ function isCustomByImage(
   const key = part.type.toLowerCase() as SelectedKey;
   const base = baseImages[key];
   if (!base) return true;
-  return Boolean(part.image && part.image !== base);
 }
 
 /**
@@ -67,13 +61,13 @@ function toBaseMinifigPart(apiPart: IApiMinifigSelectedPart): IBaseMinifigPart {
     minifig_part_type: apiPart.type,
     product_name: apiPart.name,
     product_description_1: apiPart.description,
-    image: apiPart.image,
     price: apiPart.price,
     stock: apiPart.stock,
     product_color: {
       _id: apiPart.color || 'default-color-id',
       name: apiPart.color || 'Unknown Color',
     },
+    product_images: apiPart.product_images || [],
   };
 }
 

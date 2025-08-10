@@ -5,4 +5,5 @@ export interface ICreateMinifigModalProps extends DialogContentProps {
   onClose?: () => void;
   mode?: 'create' | 'edit';
   characterId?: string;
+  isOpen?: boolean;
 }

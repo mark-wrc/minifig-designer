@@ -16,13 +16,18 @@ import {
   selectIsCartEmpty,
   selectCartSummary,
 } from '@/store/shoppingCart/Selectors';
-import type { AddCharacterPayload, CartProject, ICartItem, selectedMinifigParts } from '@/types';
+import type {
+  AddCharacterPayload,
+  CartProject,
+  ICartItem,
+  MinifigPartType,
+  selectedMinifigParts,
+} from '@/types';
 
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
 
 export const useShoppingCart = () => {
   const dispatch = useDispatch();
-
   const projects = useSelector(selectAllProjects) || {};
   const totalItems = useSelector(selectTotalItems) || 0;
   const totalPrice = useSelector(selectTotalPrice) || 0;
@@ -35,11 +40,16 @@ export const useShoppingCart = () => {
   };
 
   const latestRef = useRef<Record<string, CartProject>>({});
+
   useEffect(() => {
     latestRef.current = projects;
   }, [projects]);
 
-  // One path to update state + totals + storage
+  /**
+   * Main state update function:
+   * Runs a transformation function on the current projects,
+   * updates Redux, recalculates totals, and saves to storage.
+   */
   const apply = useCallback(
     (fn: (cur: Record<string, CartProject>) => Record<string, CartProject>) => {
       const next = fn(latestRef.current);
@@ -63,7 +73,10 @@ export const useShoppingCart = () => {
     }
   }, [dispatch]);
 
-  // Upsert one item into an items array
+  /**
+   * Adds or updates an item in a project's items array
+   * Ensures quantities stay between 1 and available stock
+   */
   const upsertItem = useCallback(
     (
       items: ICartItem[],
@@ -74,19 +87,30 @@ export const useShoppingCart = () => {
     ) => {
       const i = items.findIndex((it) => it.partType === part.type && it.partName === part.name);
       if (i >= 0) {
+        // Update existing item quantity
         const it = items[i];
         const qty = clamp(it.quantity + quantity, 1, it.stock);
-        return items.map((x, idx) =>
-          idx === i ? { ...x, quantity: qty, addedAt: Date.now() } : x,
+        return items.map((item, idx) =>
+          idx === i ? { ...item, quantity: qty, addedAt: Date.now() } : item,
         );
       }
+
       const price = part.price ?? priceFallback;
       const stock = part.stock ?? stockFallback;
-      return [...items, createCartItem(part, price, quantity, stock)];
+
+      const newPart = {
+        ...part,
+        color: part.color ?? '',
+        _id: part._id,
+      };
+      return [...items, createCartItem(newPart, price, quantity, stock)];
     },
     [],
   );
 
+  /**
+   * Add a single project (character) to the cart
+   */
   const addCharacterToCart = useCallback(
     (payload: AddCharacterPayload) => {
       const { projectName, selectedParts, pricePerItem = 10, quantity = 1, stock = 5 } = payload;
@@ -98,18 +122,31 @@ export const useShoppingCart = () => {
         createdAt: Date.now(),
       };
       let items = base.items;
-      for (const p of selectedParts) items = upsertItem(items, p, quantity, pricePerItem, stock);
+      for (const minifigPart of selectedParts) {
+        const transformedPart: selectedMinifigParts = {
+          _id: minifigPart._id,
+          type: minifigPart.minifig_part_type as MinifigPartType,
+          name: minifigPart.product_name,
+          image: minifigPart.product_images?.[0]?.url || minifigPart.image || '',
+          price: minifigPart.price,
+          stock: minifigPart.stock,
+          color: minifigPart.product_color?.name,
+        };
+        items = upsertItem(items, transformedPart, quantity, pricePerItem, stock);
+      }
       const updated: CartProject = { ...base, items, totalPrice: calculateProjectTotal(items) };
       dispatch(updateProject(updated));
     },
     [upsertItem, dispatch],
   );
 
-  // Batch add (persists once)
+  /**
+   * Add multiple projects to cart in one update (better performance)
+   */
   const addCharactersToCartBatch = useCallback(
     (payloads: AddCharacterPayload[]) => {
-      apply((cur) => {
-        const next = { ...cur };
+      apply((currentProjects) => {
+        const updatedProjects = { ...currentProjects };
         for (const {
           projectName,
           selectedParts,
@@ -117,26 +154,41 @@ export const useShoppingCart = () => {
           quantity = 1,
           stock = 5,
         } of payloads) {
-          const base = next[projectName] || {
+          const base = updatedProjects[projectName] || {
             projectName,
             items: [],
             totalPrice: 0,
             createdAt: Date.now(),
           };
           let items = base.items;
-          for (const p of selectedParts)
-            items = upsertItem(items, p, quantity, pricePerItem, stock);
-          next[projectName] = { ...base, items, totalPrice: calculateProjectTotal(items) };
-          // optional immediate UI update
-          dispatch(updateProject(next[projectName]));
+          for (const minifigPart of selectedParts) {
+            // Transform the part data before upserting
+            const transformedPart: selectedMinifigParts = {
+              _id: minifigPart._id,
+              type: minifigPart.minifig_part_type as MinifigPartType,
+              name: minifigPart.product_name,
+              image: minifigPart.product_images?.[0]?.url || minifigPart.image || '',
+              price: minifigPart.price,
+              stock: minifigPart.stock,
+              color: minifigPart.product_color?.name,
+            };
+            items = upsertItem(items, transformedPart, quantity, pricePerItem, stock);
+          }
+          updatedProjects[projectName] = {
+            ...base,
+            items,
+            totalPrice: calculateProjectTotal(items),
+          };
         }
-        return next;
+        return updatedProjects;
       });
     },
-    [apply, upsertItem, dispatch],
+    [apply, upsertItem],
   );
 
-  // Persist current cart (if its multiple single adds)
+  /**
+   * Add multiple projects to cart in one update
+   */
   const persistCart = useCallback(() => apply((x) => ({ ...x })), [apply]);
 
   const updateItemQuantity = useCallback(
@@ -145,7 +197,7 @@ export const useShoppingCart = () => {
         const proj = currentProject[projectName];
         if (!proj) return currentProject;
         const items = proj.items.map((it) =>
-          it.id === itemId
+          it._id === itemId
             ? { ...it, quantity: clamp(newQty, 1, it.stock), addedAt: Date.now() }
             : it,
         );
@@ -163,7 +215,7 @@ export const useShoppingCart = () => {
       apply((currentProject) => {
         const proj = currentProject[projectName];
         if (!proj) return currentProject;
-        const items = proj.items.filter((it) => it.id !== itemId);
+        const items = proj.items.filter((it) => it._id !== itemId);
         if (items.length === 0) {
           const { [projectName]: _, ...rest } = currentProject;
           return rest;
@@ -198,6 +250,7 @@ export const useShoppingCart = () => {
     (projectName: string) => projects[projectName] || null,
     [projects],
   );
+
   const getAllMinifigProjects = useCallback(() => Object.values(projects), [projects]);
 
   return {

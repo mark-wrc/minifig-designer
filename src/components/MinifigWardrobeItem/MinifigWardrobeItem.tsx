@@ -3,6 +3,7 @@ import { IMinifigWardrobeItemProps } from './MinifigWardrobeItem.types';
 import { MinifigPartData } from '@/types/Minifig';
 import { CTAButton } from '../CTAButton';
 import { formatCurrency } from '@/utils';
+import { StyledText } from '../StyledText';
 
 const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
   ({ onItemDetailsClick, minifigItem, onPartSelect }) => (
@@ -14,6 +15,7 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
       >
         {minifigItem.product_images.map((item) => (
           <img
+            key={item._id}
             className="w-fit border-2 border-black rounded-sm "
             src={item.url}
             alt={minifigItem.product_name}
@@ -32,8 +34,8 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
         </CTAButton>
 
         <div className="text-center mt-2">
-          <p className=" text-m font-medium">{minifigItem.product_name}</p>
-          <p className=" text-m font-medium">{formatCurrency(minifigItem.price)}</p>
+          <StyledText className="text-sm font-medium" text={minifigItem.product_name} />
+          <StyledText className="font-medium" text={formatCurrency(minifigItem.price)} />
         </div>
       </div>
     </section>

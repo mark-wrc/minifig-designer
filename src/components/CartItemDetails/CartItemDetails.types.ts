@@ -1,5 +1,5 @@
 import { ICartItem } from '@/types';
 
-export interface ICartItemDetalsProps {
+export interface ICartItemDetailsProps {
   item: ICartItem;
 }

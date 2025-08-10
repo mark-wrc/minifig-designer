@@ -12,19 +12,28 @@ const MinifigPreview = memo<MinifigPreviewProps>(({ selectedItems, className = '
   return (
     <div className={`flex gap-2 ${className}`}>
       <img
-        src={selectedItems?.head?.image || BaseMinifigParts[MinifigPartType.HEAD].image}
+        src={
+          selectedItems?.head?.product_images?.[0]?.url ||
+          BaseMinifigParts[MinifigPartType.HEAD].image
+        }
         alt="Head"
         className="w-12 h-12 rounded border"
         title={selectedItems?.head?.product_name || 'Default Head'}
       />
       <img
-        src={selectedItems?.torso?.image || BaseMinifigParts[MinifigPartType.TORSO].image}
+        src={
+          selectedItems?.torso?.product_images?.[0]?.url ||
+          BaseMinifigParts[MinifigPartType.TORSO].image
+        }
         alt="Torso"
         className="w-12 h-12 rounded border"
         title={selectedItems?.torso?.product_name || 'Default Torso'}
       />
       <img
-        src={selectedItems?.legs?.image || BaseMinifigParts[MinifigPartType.LEGS].image}
+        src={
+          selectedItems?.legs?.product_images?.[0]?.url ||
+          BaseMinifigParts[MinifigPartType.LEGS].image
+        }
         alt="Legs"
         className="w-12 h-12 rounded border"
         title={selectedItems?.legs?.product_name || 'Default Legs'}

@@ -1,4 +1,5 @@
-import type { CartProject, ICartItem } from '@/types';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import type { CartProject, ICartItem, MinifigPartType } from '@/types';
 
 export const calculateProjectTotal = (items: ICartItem[]): number => {
   return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -21,14 +22,13 @@ export const findExistingItem = (
 };
 
 type PartInput = {
-  id?: string;
-  _id?: string;
+  _id: string;
   type: string;
   name: string;
   image: string;
   price?: number;
   stock?: number;
-  color?: string;
+  color: string;
 };
 
 /**
@@ -42,15 +42,15 @@ export const createCartItem = (
   quantity: number,
   defaultStock: number,
 ): ICartItem => {
-  const productId = part.id ?? part._id ?? crypto.randomUUID();
   const stock = part.stock ?? defaultStock;
   const price = part.price ?? defaultPrice;
 
+  //@ts-expect-error
   return {
-    id: productId,
-    partType: part.type,
+    _id: part._id,
+    partType: part.type as MinifigPartType,
     partName: part.name,
-    partImage: part.image,
+    images: part.image,
     color: part.color,
     price,
     quantity: Math.min(quantity, stock),

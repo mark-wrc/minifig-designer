@@ -29,3 +29,4 @@ export * from './MenuItemNavigation';
 export * from './Overlay';
 export * from './UserContent';
 export * from './StyledText';
+export * from './MinifigLoader';

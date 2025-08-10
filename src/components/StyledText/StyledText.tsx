@@ -3,7 +3,7 @@ import { CircleCheckBig } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { IStyledTextProps } from './StyledText.types';
 
-const StyledText = memo<IStyledTextProps>(({ className, text, showCheckMark = true }) => (
+const StyledText = memo<IStyledTextProps>(({ className, text, showCheckMark = false }) => (
   <div className={cn('flex gap-2 items-start mb-3', className)}>
     {showCheckMark && <CircleCheckBig width={22} className="text-green-500" />}
 

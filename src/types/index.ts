@@ -4,4 +4,4 @@ export * from './CartDetails';
 export * from './AuthConfig';
 export * from './MinifigBodyResponse';
 export * from './MinifigProject';
-export * from './builSelectedMinifigParts';
+export * from './buildSelectedMinifigParts';

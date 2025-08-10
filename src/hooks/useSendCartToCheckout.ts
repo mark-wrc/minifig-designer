@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
 import { IMinifigCart } from '@/types/Minifig';
+import { CartProject, ICartItem } from '@/types';
 
 const BASE_CHECKOUT_URL = 'http://localhost:5173/checkout';
 
@@ -11,19 +11,19 @@ export function useSendCartToCheckout() {
 
   const itemsToSend = useMemo(() => {
     const collectedItems: IMinifigCart[] = [];
-    Object.values(cart.projects).forEach((project: any) => {
-      project.items.forEach((item: any) => {
+    Object.values(cart.projects).forEach((project: CartProject) => {
+      project.items.forEach((item: ICartItem) => {
         collectedItems.push({
           _id: item._id,
           minifig_part_type: item.partType,
           product_name: item.partName,
-          image: item.partImage,
+          image: item.images,
           price: item.price || 0,
           stock: item.stock || 0,
-          discount: item.discount || 0,
-          discounted_price: item.discounted_price || item.price || 0,
+          discount: 0,
+          discounted_price: item.price || 0,
           color: item.color || 'unavailable',
-          includes: item.includes || 'unavailable',
+          includes: 'Brick Guide and Instructions',
           quantity: item.quantity || 1,
         });
       });

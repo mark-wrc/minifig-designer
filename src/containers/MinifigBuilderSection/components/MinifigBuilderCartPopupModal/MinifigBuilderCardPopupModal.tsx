@@ -5,23 +5,22 @@ import { Button } from '@/components/ui/button';
 import { MinifigEmptyStateDialog } from '../MinifigEmptyStateDialog';
 import { useMinifigCart } from '../../hooks/useMinifigCart';
 import { createCartSummary, formatCurrency } from '@/utils';
-import { useAuth, useDisclosureParam } from '@/hooks';
+import { useDisclosureParam } from '@/hooks';
 import { MinifigCartItemDetails } from '../MinifigCartItemDetails';
 
 const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
   ({ onclose, minifig }) => {
+    console.log('Minifig data received in modal:', minifig);
     const { addMinifigToCart } = useMinifigCart();
     const authDisclosure = useDisclosureParam();
-    const { user } = useAuth();
+
     const cartSummary = createCartSummary(minifig);
 
     const handleAddToCart = useCallback(() => {
-      if (user) {
-        authDisclosure.onDisclosureOpen();
-        return;
-      }
-      addMinifigToCart({ minifig, onSuccess: onclose });
-    }, [addMinifigToCart, authDisclosure, minifig, onclose, user]);
+      const projectsToAdd = minifig;
+
+      addMinifigToCart({ minifig: projectsToAdd, onSuccess: onclose });
+    }, [addMinifigToCart, minifig, onclose]);
 
     const handleClose = () => onclose?.();
 

@@ -1,16 +1,18 @@
+import { MinifigPartData } from './Minifig';
+import { MinifigPartType } from './MinifigActions';
+
 export interface ICartItem {
-  id: string;
-  partType: string;
-  partName: string;
-  partImage: string;
+  _id: string;
+  name: string;
+  images: string;
+  color: string;
   price: number;
-  addedAt: number;
-  quantity: number;
   stock: number;
-  color?: string;
-  discount?: number;
-  discounted_price?: number;
-  includes?: string;
+  quantity: number;
+  createdAt: number;
+  partType: MinifigPartType;
+  partName: string;
+  addedAt: number;
 }
 
 export interface CartProject {
@@ -26,13 +28,14 @@ export interface selectedMinifigParts {
   name: string;
   price?: number;
   stock?: number;
-  color?: string; // Added color for consistency
+  color?: string;
+  _id: string;
 }
 
 export interface AddCharacterPayload {
   _id: string;
   projectName: string;
-  selectedParts: selectedMinifigParts[];
+  selectedParts: MinifigPartData[];
   pricePerItem?: number;
   quantity?: number;
   stock?: number;

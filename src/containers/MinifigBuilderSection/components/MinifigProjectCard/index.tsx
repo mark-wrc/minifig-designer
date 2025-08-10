@@ -1,2 +1,2 @@
-export { default as MinifigProjectCard } from './MinifigProjectCart';
+export { default as MinifigProjectCard } from './MinifigProjectCard';
 export type { IMinifigProjectProps } from './MinifigProject.types';

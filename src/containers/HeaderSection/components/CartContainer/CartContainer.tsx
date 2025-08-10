@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect } from 'react';
 import type { ICartContainerProps } from './CartContainer.types';
 import { CartItem, Divider, Overlay } from '@/components';
-import { X } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
 import { Button } from '@/components/ui/button';
@@ -10,6 +9,7 @@ import { motion } from 'motion/react';
 import { CartContainerAnimation, CartOverlayAnimation } from '@/animations';
 import { CheckoutButton } from '../CheckoutButton';
 import { formatCurrency } from '@/utils';
+import { CartHeader } from '../CartHeader';
 
 const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
   const { projects, totalItems, totalPrice } = useSelector(
@@ -43,22 +43,11 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
         initial="initial"
         animate="enter"
         exit="exit"
-        className="w-full bg-minifig-brand-end sm:w-[55%] md:w-[60%] lg:w-1/4 xl:w-1/3 fixed right-0 top-0 bottom-0 z-[99999] p-4 flex flex-col"
+        className="w-full bg-minifig-brand-end sm:w-[55%] md:w-[60%] lg:w-1/4 xl:w-[40%] fixed right-0 top-0 bottom-0 z-[99999] p-4 flex flex-col"
       >
-        <div className="flex justify-between items-center mb-6">
-          <div className="text-white">
-            <h2 className="text-2xl">Cart ({totalItems})</h2>
-            <p className="text-lg">Sub total: {formatCurrency(totalPrice)}</p>
-          </div>
-          <X
-            color="white"
-            size={32}
-            className="cursor-pointer hover:bg-red-600 rounded-sm p-1"
-            onClick={onclose}
-          />
-        </div>
+        <CartHeader items={{ totalItems, totalPrice }} onClose={onclose} />
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto minifig-scrollbar ">
           {projectEntries.length === 0 && (
             <div className="text-center text-white h-full flex flex-col align-middle justify-center">
               <h1 className="text-4xl mb-4">Your cart is empty</h1>

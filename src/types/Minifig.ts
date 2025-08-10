@@ -20,16 +20,15 @@ export interface IMinifigProductBaseDetails {
 }
 
 // for creating a project
-
 export interface IBaseMinifigPart {
   _id: string;
   minifig_part_type: 'HEAD' | 'TORSO' | 'LEGS';
   product_name: string;
   product_description_1: string;
-  image: string;
   price: number;
   stock: number;
   product_color: IMinifigProductBaseDetails;
+  product_images: IMinifigProductImage[];
 }
 
 export interface MinifigPartData {
@@ -60,10 +59,10 @@ export interface IApiMinifigSelectedPart {
   type: 'HEAD' | 'TORSO' | 'LEGS';
   name: string;
   description: string;
-  image: string;
   price: number;
   stock: number;
   color: string;
+  product_images: IMinifigProductImage[];
 }
 
 export interface SelectedMinifigItems {

@@ -1,19 +1,21 @@
 import { memo } from 'react';
-import { ICartItemDetalsProps } from './CartItemDetails.types';
 import { formatCurrency } from '@/utils';
+import { StyledText } from '../StyledText';
+import { ICartItemDetailsProps } from './CartItemDetails.types';
 
-const CartItemDetails = memo<ICartItemDetalsProps>(({ item }) => (
+const CartItemDetails = memo<ICartItemDetailsProps>(({ item }) => (
   <section className="flex gap-2">
     <img
-      src={item.partImage || '/placeholder.svg'}
-      className="w-32 rounded-sm"
+      src={item.images || '/placeholder.svg'}
+      className=" w-1/2 rounded-md"
       alt={item.partName}
     />
+
     <div className="flex flex-col">
-      <h3>{item.partName}</h3>
-      <p>{item.partType}</p>
-      <p>{item.color}</p>
-      <p>{formatCurrency(item.price)}</p>
+      <StyledText className="font-bold text-lg mb-2" text={item.partName} />
+      <StyledText className="mb-1" text={item.partType} />
+      <StyledText className="mb-1" text={item.color} />
+      <StyledText text={formatCurrency(item.price)} />
     </div>
   </section>
 ));
