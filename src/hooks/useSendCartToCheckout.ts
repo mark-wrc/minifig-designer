@@ -4,7 +4,7 @@ import type { RootState } from '@/store';
 import { IMinifigCart } from '@/types/Minifig';
 import { CartProject, ICartItem } from '@/types';
 
-const BASE_CHECKOUT_URL = 'http://localhost:5173/checkout';
+const BASE_CHECKOUT_URL = 'http://localhost:5173/checkout'; // https://www.worldofminifigs.com/checkout
 
 export function useSendCartToCheckout() {
   const cart = useSelector((state: RootState) => state.MinifigBuilderCart);

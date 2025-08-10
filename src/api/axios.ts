@@ -6,7 +6,7 @@ interface ErrorResponse {
 }
 
 const axiosInstance = axios.create({
-  baseURL: '/api/v1',
+  baseURL: '/api/v1', // https://www.worldofminifigs.com/api/v1
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
