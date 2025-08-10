@@ -23,18 +23,19 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
         ))}
       </div>
 
-      <div className=" flex  flex-col justify-center py-2  -translate-y-4 ">
+      <div className=" flex  flex-col justify-center py-2  -translate-y-6 ">
         <CTAButton
+          size={null}
           variant="default"
-          className="bg-yellow-300 text-md  hover:bg-yellow-400 w-fit self-center px-6 rounded-none text-black"
+          className="bg-yellow-300 text-md  hover:bg-yellow-400 w-fit self-center py-3 px-8 rounded-sm text-black"
           onClick={() => onPartSelect(minifigItem)}
         >
           Add
         </CTAButton>
 
-        <div className="text-center">
-          <StyledText className=" text-sm" text={minifigItem.product_name} />
-          <StyledText text={formatCurrency(minifigItem.price)} />
+        <div className="text-center mt-2">
+          <StyledText className="text-sm font-medium" text={minifigItem.product_name} />
+          <StyledText className="font-medium" text={formatCurrency(minifigItem.price)} />
         </div>
       </div>
     </section>

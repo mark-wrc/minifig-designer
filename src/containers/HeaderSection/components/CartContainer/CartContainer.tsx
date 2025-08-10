@@ -89,7 +89,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
             </div>
             <CheckoutButton
               totalPrice={totalPrice}
-              className="w-full cursor-pointer bg-green-600 hover:bg-green-700 uppercase"
+              className="w-full cursor-pointer bg-green-600 hover:bg-green-700 py-3 text-lg"
             />
           </section>
         )}

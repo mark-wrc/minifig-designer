@@ -20,7 +20,9 @@ const MinifigMobileMode = memo<IMinifigMobileModeProps>(
     return (
       <section className="">
         <header className="mb-10 text-black text-center pt-12 md:hidden">
-          <h1 className=" text-[2.5em] font-bold leading-none">CREATE YOUR OWN MINIFIG</h1>
+          <h1 className=" text-[2.5em] font-bold leading-none mx-0.5 mb-3">
+            BUILD YOUR OWN MINIFIG
+          </h1>
           <h3 className="font-bold text-md">START BUILDING</h3>
         </header>
 

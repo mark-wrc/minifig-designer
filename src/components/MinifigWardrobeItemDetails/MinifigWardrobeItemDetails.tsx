@@ -104,10 +104,11 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
                 {/* cta buttons */}
                 <div className="mt-5 flex w-full">
                   <CTAButton
+                    size={null}
                     variant="ghost"
                     disabled={outOfstock}
                     className={cn(
-                      'bg-yellow-500 text-md w-fit px-6 self-end rounded-sm text-black',
+                      'bg-yellow-500 text-md w-fit py-3 px-6 self-end rounded-sm text-black',
                       outOfstock && 'bg-red-500',
                     )}
                     onClick={() => onCategoryClick(wardrobeItems)}
