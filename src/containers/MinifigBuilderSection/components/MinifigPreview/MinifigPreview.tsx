@@ -8,36 +8,30 @@ interface MinifigPreviewProps {
   className?: string;
 }
 
+const partOrder: MinifigPartType[] = [
+  MinifigPartType.HAIR,
+  MinifigPartType.HEAD,
+  MinifigPartType.TORSO,
+  MinifigPartType.LEGS,
+];
+
 const MinifigPreview = memo<MinifigPreviewProps>(({ selectedItems, className = '' }) => {
   return (
     <div className={`flex gap-2 ${className}`}>
-      <img
-        src={
-          selectedItems?.head?.product_images?.[0]?.url ||
-          BaseMinifigParts[MinifigPartType.HEAD].image
-        }
-        alt="Head"
-        className="w-12 h-12 rounded border"
-        title={selectedItems?.head?.product_name || 'Default Head'}
-      />
-      <img
-        src={
-          selectedItems?.torso?.product_images?.[0]?.url ||
-          BaseMinifigParts[MinifigPartType.TORSO].image
-        }
-        alt="Torso"
-        className="w-12 h-12 rounded border"
-        title={selectedItems?.torso?.product_name || 'Default Torso'}
-      />
-      <img
-        src={
-          selectedItems?.legs?.product_images?.[0]?.url ||
-          BaseMinifigParts[MinifigPartType.LEGS].image
-        }
-        alt="Legs"
-        className="w-12 h-12 rounded border"
-        title={selectedItems?.legs?.product_name || 'Default Legs'}
-      />
+      {partOrder.map((part) => {
+        const selectedPart = selectedItems?.[part.toLowerCase() as keyof SelectedMinifigItems];
+        const src = selectedPart?.product_images?.[0]?.url || BaseMinifigParts[part].image;
+        const title = selectedPart?.product_name || `Default ${part}`;
+        return (
+          <img
+            key={part}
+            src={src}
+            alt={part}
+            title={title}
+            className="w-12 h-12 rounded border object-contain"
+          />
+        );
+      })}
     </div>
   );
 });

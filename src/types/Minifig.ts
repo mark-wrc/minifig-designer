@@ -56,7 +56,7 @@ export interface MinifigPartData {
 
 export interface IApiMinifigSelectedPart {
   id: string;
-  type: 'HEAD' | 'TORSO' | 'LEGS';
+  type: MinifigPartType;
   name: string;
   description: string;
   price: number;
@@ -84,7 +84,7 @@ export interface IMinifigProject {
 
 export interface IMinifigCart {
   _id: string;
-  minifig_part_type: 'HEAD' | 'TORSO' | 'LEGS';
+  minifig_part_type: MinifigPartType;
   product_name: string;
   image: string;
   price: number;

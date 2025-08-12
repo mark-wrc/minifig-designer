@@ -34,7 +34,7 @@ function normalizeToApiSelectedPart(
   return null;
 }
 
-const ORDERED_KEYS = ['head', 'torso', 'legs'] as const;
+const ORDERED_KEYS = ['hair', 'head', 'torso', 'legs'] as const;
 type SelectedKey = (typeof ORDERED_KEYS)[number];
 
 /**
