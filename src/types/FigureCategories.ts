@@ -11,7 +11,7 @@ export enum IFigureCategories {
 
 export interface ICategoryItem {
   id: number;
-  title: IFigureCategories;
+  title: MinifigPartType;
   image: string;
   type?: MinifigPartType;
 }

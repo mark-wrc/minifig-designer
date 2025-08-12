@@ -32,7 +32,7 @@ const MinifigPart = memo<IMinifigPartProps>(({ type, imageSrc, className, isload
             <img
               src={imageSrc || '/placeholder.svg'}
               alt={type.toLowerCase()}
-              className="object-contain"
+              className={cn('object-contain block  w-full h-full ')}
             />
           )}
         </motion.figure>

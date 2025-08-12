@@ -3,15 +3,20 @@ import axios from './axios';
 import qs from 'qs';
 import { MinifigPartType } from '@/types';
 
-interface MinifigProductsResponse {
+export interface MinifigProductsResponse {
   data: MinifigPartData[];
   message: string;
   products: MinifigPartData[];
   allProducts: MinifigPartData[];
+  resPerPage: number;
+  filteredProductCount: number;
+  totalPages: number;
+  currentPage: number;
 }
 
 interface MinifigProductsParams {
   minifig_part_type?: MinifigPartType;
+  page?: number;
 }
 export const fetchMinifigProducts = async (
   params: MinifigProductsParams,
