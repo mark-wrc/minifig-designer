@@ -1,7 +1,7 @@
 import { memo, useCallback, useMemo } from 'react';
 import { IMinifigCategoryOptions } from './MinifigCategoryOptions.types';
-import { ICategoryItem, IFigureCategories, MinifigPartType } from '@/types';
-import { DefaultHairAndHead, DefaultLegs, DefaultTorso } from '@/assets/images';
+import { ICategoryItem, MinifigPartType } from '@/types';
+import { DefaultHairAndHead, DefaultLegs, DefaultHead, DefaultTorso } from '@/assets/images';
 import { CategorySelector } from '@/components';
 import { useDispatch, useSelector } from 'react-redux';
 import { cn } from '@/lib/utils';
@@ -28,24 +28,35 @@ const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
       () => [
         {
           id: 1,
-          title: IFigureCategories.Head,
-          image: activeMinifigProject?.head || DefaultHairAndHead,
-          type: MinifigPartType.HEAD,
+          title: MinifigPartType.HAIR,
+          image: activeMinifigProject?.hair || DefaultHairAndHead,
+          type: MinifigPartType.HAIR,
         },
         {
           id: 2,
-          title: IFigureCategories.Torso,
+          title: MinifigPartType.HEAD,
+          image: activeMinifigProject?.head || DefaultHead,
+          type: MinifigPartType.HEAD,
+        },
+        {
+          id: 3,
+          title: MinifigPartType.TORSO,
           image: activeMinifigProject?.torso || DefaultTorso,
           type: MinifigPartType.TORSO,
         },
         {
           id: 3,
-          title: IFigureCategories.Legs,
+          title: MinifigPartType.LEGS,
           image: activeMinifigProject?.legs || DefaultLegs,
           type: MinifigPartType.LEGS,
         },
       ],
-      [activeMinifigProject?.head, activeMinifigProject?.legs, activeMinifigProject?.torso],
+      [
+        activeMinifigProject?.hair,
+        activeMinifigProject?.head,
+        activeMinifigProject?.legs,
+        activeMinifigProject?.torso,
+      ],
     );
     return (
       <section

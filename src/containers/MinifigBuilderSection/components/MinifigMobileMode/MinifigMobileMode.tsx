@@ -1,4 +1,4 @@
-import { CTAButton, MinifigCanvas, MinifigTabs } from '@/components';
+import { CTAButton, MinifigCanvas, MinifigTabs, StyledText } from '@/components';
 import { memo, useMemo } from 'react';
 import { MinifigBuilderCardPopupModal } from '../MinifigBuilderCartPopupModal';
 import { IMinifigMobileModeProps } from './MinifigModalMode.types';
@@ -20,10 +20,12 @@ const MinifigMobileMode = memo<IMinifigMobileModeProps>(
     return (
       <section className="">
         <header className="mb-10 text-black text-center pt-12 md:hidden">
-          <h1 className=" text-[2.5em] font-bold leading-none mx-0.5 mb-3">
-            BUILD YOUR OWN MINIFIG
-          </h1>
-          <h3 className="font-bold text-md">START BUILDING</h3>
+          <StyledText
+            className=" text-[2.5em] font-bold leading-none mx-0.5 mb-3"
+            text=" BUILD YOUR OWN MINIFIG"
+            as="h1"
+          />
+          <StyledText className="font-bold text-md" as="h3" text="START BUILDING" />
         </header>
 
         <MinifigCategoryOptions activeMinifigProject={activeMinifigProject} />

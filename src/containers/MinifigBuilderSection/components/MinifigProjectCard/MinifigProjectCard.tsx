@@ -2,25 +2,29 @@ import { Fragment, memo } from 'react';
 import { IMinifigProjectProps } from './MinifigProject.types';
 import { MinifigPreview } from '../MinifigPreview';
 import { formatCurrency } from '@/utils';
+import { StyledText } from '@/components';
 
 const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
   const { project, minifigPart, totalPrice, hasCustomParts } = summary;
 
   return (
     <Fragment key={project._id || index}>
-      <div className="border rounded-lg p-4 bg-gray-50">
+      <section className="border rounded-lg p-4 bg-gray-50">
         <div className="flex justify-between items-center mb-3">
-          <h4 className="font-semibold text-lg">{project.name}</h4>
-          <span className="font-bold text-lg">{formatCurrency(totalPrice)}</span>
+          <StyledText className="font-semibold text-lg" as="h4" text={project.name} />
+          <StyledText className="font-bold text-lg" as="span" text={formatCurrency(totalPrice)} />
         </div>
 
         {!hasCustomParts ? (
           <div className="text-orange-500 text-sm bg-orange-50 p-2 rounded">
-            <p>⚠️ No custom parts selected</p>
+            <StyledText text="⚠️ No custom parts selected" />
           </div>
         ) : (
           <div className="text-sm text-gray-600">
-            <p className="mb-3 font-medium">{minifigPart.length} custom parts selected:</p>
+            <StyledText
+              className="mb-3 font-medium"
+              text={`${minifigPart.length} custom parts selected:`}
+            />
             <ul className="space-y-2 mb-3">
               {minifigPart.map((part) => (
                 <li
@@ -33,13 +37,25 @@ const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
                       alt={part.product_name}
                       className="w-8 h-8 rounded border object-cover"
                     />
-                    <div>
-                      <span className="font-medium text-gray-800">{part.product_name}</span>
-                      <p className="font-medium text-gray-800">{part.product_color.name}</p>
-                      <p className="text-xs text-gray-500">{part.minifig_part_type}</p>
-                    </div>
+
+                    {/* Product details section*/}
+                    <section>
+                      <StyledText className="font-medium text-gray-800" text={part.product_name} />
+                      <StyledText
+                        className="font-medium text-gray-800"
+                        text={part.product_color.name}
+                      />
+                      <StyledText
+                        className="text-xs text-gray-500"
+                        text={part.minifig_part_type}
+                      />
+                    </section>
                   </div>
-                  <span className="text-green-600 font-medium text-sm">${part.price}</span>
+                  <StyledText
+                    className="text-green-600 font-medium text-sm"
+                    as="span"
+                    text={formatCurrency(part.price)}
+                  />
                 </li>
               ))}
             </ul>
@@ -47,10 +63,13 @@ const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
         )}
 
         <div className="mt-3 pt-3 border-t border-gray-200">
-          <p className="text-xs font-medium text-gray-600 mb-2">Character Preview:</p>
+          <StyledText
+            className="text-xs font-medium text-gray-600 mb-2"
+            text="Character Preview:"
+          />
           <MinifigPreview selectedItems={project.selectedItems} />
         </div>
-      </div>
+      </section>
     </Fragment>
   );
 });

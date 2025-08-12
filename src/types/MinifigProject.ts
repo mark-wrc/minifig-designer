@@ -18,6 +18,7 @@ export type IMinifigProjectPayload = IMinifigProject;
 export interface ICreateMinifigProjectPayload {
   name: string;
   selectedItems: {
+    hair?: MinifigPartData | null;
     head?: MinifigPartData | null;
     torso?: MinifigPartData | null;
     leg?: MinifigPartData | null;

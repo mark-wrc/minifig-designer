@@ -22,7 +22,7 @@ export interface IMinifigProductBaseDetails {
 // for creating a project
 export interface IBaseMinifigPart {
   _id: string;
-  minifig_part_type: 'HEAD' | 'TORSO' | 'LEGS';
+  minifig_part_type: MinifigPartType;
   product_name: string;
   product_description_1: string;
   price: number;
@@ -33,7 +33,7 @@ export interface IBaseMinifigPart {
 
 export interface MinifigPartData {
   _id: string;
-  minifig_part_type: 'HEAD' | 'TORSO' | 'LEGS';
+  minifig_part_type: MinifigPartType;
   product_name: string;
   product_description_1: string;
   product_description_2: string;
@@ -66,6 +66,7 @@ export interface IApiMinifigSelectedPart {
 }
 
 export interface SelectedMinifigItems {
+  hair?: MinifigPartData;
   head?: MinifigPartData;
   torso?: MinifigPartData;
   legs?: MinifigPartData;
@@ -74,6 +75,7 @@ export interface SelectedMinifigItems {
 export interface IMinifigProject {
   _id: string;
   name: string;
+  hair: string;
   head: string;
   torso: string;
   legs: string;

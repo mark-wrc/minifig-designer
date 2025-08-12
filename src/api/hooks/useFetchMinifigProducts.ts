@@ -1,18 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import { MinifigPartType } from '@/types';
-import { MinifigPartData } from '@/types/Minifig';
-import { fetchMinifigProducts } from '../minifigProducts';
+import { fetchMinifigProducts, MinifigProductsResponse } from '../minifigProducts';
 
 interface IFetchMinifigProductsParams {
   minifig_part_type?: MinifigPartType;
+  page?: number;
 }
 
 export const useFetchMinifigProducts = (params: IFetchMinifigProductsParams) => {
-  return useQuery<MinifigPartData[]>({
-    queryKey: ['useFetchMinifigProducts', params.minifig_part_type],
+  return useQuery<MinifigProductsResponse>({
+    queryKey: ['useFetchMinifigProducts', params.minifig_part_type, params.page],
     queryFn: async () => {
       const response = await fetchMinifigProducts(params);
-      return response.products.map((item) => ({ ...item }));
+      return response; // now returning whole response
     },
     enabled: !!params.minifig_part_type,
   });
