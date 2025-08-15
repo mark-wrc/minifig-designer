@@ -17,9 +17,15 @@ const initialState: MinifigBuilderState = {
 };
 
 interface SetSelectedPartPayload {
-  minifig_part_type: keyof SelectedMinifigItems; // "head" | "torso" | "legs"
+  minifig_part_type: keyof SelectedMinifigItems;
   image?: string;
-  data?: MinifigPartData; // optional: full object to store in selectedItems
+  data?: MinifigPartData;
+  slotIndex?: number;
+}
+
+interface RemovePartPayload {
+  partType: MinifigPartType;
+  slotIndex?: number;
 }
 
 const minifigBuilderSlice = createSlice({
@@ -29,22 +35,51 @@ const minifigBuilderSlice = createSlice({
     addCharacter: (state, action: PayloadAction<string>) => {
       const newCharacter = createEmptyMinifigProject(action.payload);
       state.characters.push(newCharacter);
-      state.activeCharacterId = newCharacter._id; // newCharacter._id is a plain UUID string
+      state.activeCharacterId = newCharacter._id;
     },
     setSelectedCategory: (state, action: PayloadAction<MinifigPartType>) => {
       state.selectedCategory = action.payload;
     },
 
+    /* Updates the selected minifig part eg., if the part is an accessory -> handles multiple slot
+     *   for other parts (hair, head, torso, legs) -> replaces or removes the part
+     */
+
     setSelectedPart: (state, action: PayloadAction<SetSelectedPartPayload>) => {
       const character = state.characters.find((char) => char._id === state.activeCharacterId);
       if (!character) return;
 
-      const { minifig_part_type, data } = action.payload; // Destructure `data` and ignore `image` here
+      const { minifig_part_type, data, slotIndex } = action.payload;
 
-      const partKey = minifig_part_type as keyof IMinifigProject;
-      const selectedItemsPartKey = minifig_part_type as keyof SelectedMinifigItems;
+      if (minifig_part_type === 'accessory') {
+        let targetSlot = slotIndex;
+        if (targetSlot === undefined) {
+          // Find first empty slot or use slot 0 if all are full
+          targetSlot = character.selectedItems.accessory?.findIndex((slot) => slot === null) ?? 0;
+          if (targetSlot === -1) targetSlot = 0;
+        }
 
-      // Use `data` to determine if a part is being added or removed
+        if (data) {
+          // Adding accessory to specific slot
+          character.accessory[targetSlot] =
+            data.product_images[0]?.url || BaseMinifigParts[MinifigPartType.ACCESSORY].image;
+          if (!character.selectedItems.accessory) {
+            character.selectedItems.accessory = Array(4).fill(null);
+          }
+          character.selectedItems.accessory[targetSlot] = data;
+        } else {
+          // Removing accessory from specific slot
+          character.accessory[targetSlot] = BaseMinifigParts[MinifigPartType.ACCESSORY].image;
+          if (character.selectedItems.accessory) {
+            character.selectedItems.accessory[targetSlot] = null;
+          }
+        }
+        return;
+      }
+
+      const partKey = minifig_part_type as 'hair' | 'head' | 'torso' | 'legs';
+      const selectedItemsPartKey = minifig_part_type as 'hair' | 'head' | 'torso' | 'legs';
+
       if (data) {
         // Case 1: Adding a new part
         character[partKey] =
@@ -59,7 +94,7 @@ const minifigBuilderSlice = createSlice({
       }
     },
     setActiveMinifigure: (state, action: PayloadAction<string | null>) => {
-      state.activeCharacterId = action.payload; // action.payload should be a plain UUID string
+      state.activeCharacterId = action.payload;
     },
     resetBuilder: (state) => {
       state.characters = [];
@@ -74,12 +109,29 @@ const minifigBuilderSlice = createSlice({
         character.name = action.payload.name;
       }
     },
-    removePart: (state, action: PayloadAction<MinifigPartType>) => {
+    removePart: (state, action: PayloadAction<RemovePartPayload>) => {
       const character = state.characters.find((char) => char._id === state.activeCharacterId);
       if (!character) return;
-      const partType = action.payload.toLowerCase() as keyof IMinifigProject;
-      character[partType] = BaseMinifigParts[action.payload].image;
-      delete character.selectedItems[partType as keyof IMinifigProject['selectedItems']];
+
+      const { partType, slotIndex } = action.payload;
+      const partTypeKey = partType.toLowerCase();
+
+      if (partTypeKey === 'accessory') {
+        if (slotIndex !== undefined) {
+          character.accessory[slotIndex] = BaseMinifigParts[partType].image;
+          if (character.selectedItems.accessory) {
+            character.selectedItems.accessory[slotIndex] = null;
+          }
+        } else {
+          character.accessory = Array(4).fill(BaseMinifigParts[partType].image);
+          character.selectedItems.accessory = Array(4).fill(null);
+        }
+      } else {
+        // Handle single parts (hair, head, torso, legs)
+        const singlePartKey = partTypeKey as 'hair' | 'head' | 'torso' | 'legs';
+        character[singlePartKey] = BaseMinifigParts[partType].image;
+        delete character.selectedItems[singlePartKey];
+      }
     },
     deleteMinifigure: (state, action: PayloadAction<string>) => {
       state.characters = state.characters.filter((char) => char._id !== action.payload);

@@ -89,11 +89,11 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
               />
               {error && <p className="text-red-500 text-sm text-center">{error}</p>}
             </section>
-            <DialogFooter className="mt-4">
+            <DialogFooter className="mt-4 ">
               <CTAButton
                 title=" Save & Start Building"
                 variant="ghost"
-                className=" cursor-pointer text-lg bg-yellow-400 hover:bg-yellow-500 translate-x-1 translate-y-1 text-black font-bold py-6 px-6 "
+                className=" cursor-pointer text-lg bg-yellow-300 hover:shadow-md hover:bg-yellow-400 border-b-6 border-b-transparent  active:bg-yellow-400 hover:border-l-0 transition-all duration-75 active:border-l-0 border-l-8 border-t-8 border-l-yellow-600 border-t-yellow-400 shadow-lg shadow-yellow-500/40  text-black font-bold py-6 px-6 "
               />
             </DialogFooter>
           </form>

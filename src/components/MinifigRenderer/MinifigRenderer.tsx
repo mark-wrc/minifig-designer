@@ -1,7 +1,9 @@
+import type React from 'react';
+
 import { memo, useCallback, useRef } from 'react';
 import { MinifigPart } from '../MinifigPart';
 import { MinifigPartType } from '@/types';
-import { IMinifigRendererProps } from './MinifigRenderer.types';
+import type { IMinifigRendererProps } from './MinifigRenderer.types';
 import { cn } from '@/lib/utils';
 import { Trash2, Plus } from 'lucide-react';
 import { removePart, setSelectedCategory } from '@/store/minifigBuilder/minifigBuilderSlice';
@@ -9,8 +11,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CTAButton } from '../CTAButton';
 import { useMinifigPartRenderData, useScrollIntoView } from '@/hooks';
 import useWindowResize from '@/hooks/useWindowResize';
-import { RootState } from '@/store';
+import type { RootState } from '@/store';
 import { formatCurrency, createCartSummary } from '@/utils';
+import { StyledText } from '../StyledText';
 
 const MinifigRenderer = memo<IMinifigRendererProps>(
   ({ minifigParts, modalDisclosure, setModalMode, className }) => {
@@ -50,21 +53,27 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
       (type: MinifigPartType) => {
         if (!activeCharacter) {
           modalDisclosure.onDisclosureOpen();
-          setModalMode('create'); // If no active character, open modal in 'create' mode
+          setModalMode('create');
           return;
         }
         dispatch(setSelectedCategory(type));
+        // Store slot index for accessories
       },
-      [dispatch, modalDisclosure, activeCharacter, setModalMode], // Add setModalMode to dependencies
+      [dispatch, modalDisclosure, activeCharacter, setModalMode],
     );
 
     // Remove part
     const handleRemoveMinifigPart = useCallback(
-      (e: React.MouseEvent, type: MinifigPartType) => {
+      (e: React.MouseEvent, type: MinifigPartType, slotIndex?: number) => {
         e.stopPropagation();
         if (!activeCharacter) return;
 
-        dispatch(removePart(type)); // Dispatch the correct action here
+        dispatch(
+          removePart({
+            partType: type,
+            slotIndex: type === MinifigPartType.ACCESSORY ? slotIndex : undefined,
+          }),
+        );
       },
       [dispatch, activeCharacter],
     );
@@ -72,59 +81,115 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
     const parts = useMinifigPartRenderData({ activeProject: activeCharacter });
 
     return (
-      <section className={cn('flex-1', className)}>
+      <section className={cn(' h-full', className)}>
         <header className="flex flex-col mb-10">
-          <h3 className="text-center font-black mb-2 text-4xl md:text-3xl">
-            {activeCharacter?.name || 'No Project Selected'}
-          </h3>
+          <StyledText
+            as="h3"
+            className="text-center font-black mt-4 text-4xl md:text-3xl"
+            text={activeCharacter?.name || 'No Project Selected'}
+          />
+
           {activeCharacter && (
-            <span
+            <StyledText
               className="self-center text-lg md:text-base underline bg-transparent cursor-pointer w-fit hover:text-yellow-500"
               onClick={handleMinifigTitleEdit}
-            >
-              Edit Project Title
-            </span>
+              text="Edit Project Title"
+            />
           )}
         </header>
 
         <section className="flex flex-col items-center relative mx-auto sm:max-w-sm md:w-[350px]">
-          {parts.map(({ type, currentImage, hasMinifigParts }) => (
-            <div
-              key={type}
-              className="text-center flex flex-col w-full justify-center items-center relative"
-            >
-              {activeCharacter && (
-                <CTAButton
-                  variant="ghost"
-                  className="cursor-pointer left-5 absolute bg-yellow-500 rounded-md hover:bg-gray-950"
-                  onClick={() => handlePartClick(type)}
+          {/* Minifig Accessory section */}
+          {parts.map((part) => {
+            if (part.isArray && part.slots) {
+              return (
+                <section key={part.type} className="w-fit mb-4 ">
+                  <div className="grid grid-cols-2 gap-2 mt-4">
+                    {part.slots.map((slot) => (
+                      <div
+                        key={slot.slotIndex}
+                        className="text-center flex flex-col-reverse justify-center items-center relative border-2 border-dashed border-gray-300 rounded-lg p-4"
+                      >
+                        {slot.hasMinifigParts && (
+                          <CTAButton
+                            variant="ghost"
+                            onClick={(e) => handleRemoveMinifigPart(e, part.type, slot.slotIndex)}
+                            className=" bg-red-700 rounded-md  hover:bg-red-600 border-l-6 border-t-6 hover:border-t-0 active:border-t-0 border-b-6 border-b-transparent hover:border-b-0 active:border-b-0 border-l-red-800 border-t-red-600 hover:border-l-0 active:border-l-0 transition-all duration-75  hover:shadow-md shadow-lg  shadow-red-700/50 p-2"
+                          >
+                            <Trash2 size={16} color="white" />
+                          </CTAButton>
+                        )}
+
+                        <div className="flex flex-col">
+                          {!slot.hasMinifigParts ? (
+                            <CTAButton
+                              variant="ghost"
+                              className="cursor-pointer hover:bg-gray-600 active:bg-gray-600 active:border-t-0 hover:border-t-0 bg-gray-700 rounded-md border-l-6 border-l-gray-800 border-t-6 border-b-6 border-b-transparent hover:border-b-0 active:border-b-0 border-t-gray-600  shadow-lg shadow-gray-700/50 hover:border-l-0  active:border-l-0 transition-all  duration-75"
+                              onClick={() => handlePartClick(part.type)}
+                            >
+                              <Plus size={16} strokeWidth={2.75} color="white" />
+                            </CTAButton>
+                          ) : (
+                            <MinifigPart
+                              isloading={false}
+                              key={slot.currentImage}
+                              type={part.type}
+                              imageSrc={slot.currentImage}
+                              className="w-[50%]"
+                            />
+                          )}
+                          <StyledText
+                            className="text-xs font-bold mt-2"
+                            text={`Slot ${slot.slotIndex + 1}`}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              );
+            } else {
+              {
+                /* Minifig Body Parts section */
+              }
+              return (
+                <section
+                  key={part.type}
+                  className="text-center flex flex-col w-full justify-center items-center relative"
                 >
-                  <Plus size={22} strokeWidth={2.75} color="white" />
-                </CTAButton>
-              )}
+                  {activeCharacter && (
+                    <CTAButton
+                      variant="ghost"
+                      className="left-5 absolute hover:bg-gray-600 active:bg-gray-600 bg-gray-700 rounded-md border-l-6 hover:border-t-0 active:border-t-0 border-l-gray-800 border-t-6 border-b-6 border-b-transparent hover:border-b-0 active:border-b-0 border-t-gray-600 shadow-lg shadow-gray-700/50 hover:border-l-0  active:border-l-0 transition-all  duration-75 "
+                      onClick={() => handlePartClick(part.type)}
+                    >
+                      <Plus size={22} strokeWidth={2.75} color="white" />
+                    </CTAButton>
+                  )}
 
-              {hasMinifigParts && (
-                <CTAButton
-                  variant="ghost"
-                  onClick={(e) => handleRemoveMinifigPart(e, type)}
-                  className="absolute right-5 bg-red-700 rounded-md hover:bg-red-600 cursor-pointer p-2"
-                >
-                  <Trash2 size={22} color="white" />
-                </CTAButton>
-              )}
+                  {part.hasMinifigParts && (
+                    <CTAButton
+                      variant="ghost"
+                      onClick={(e) => handleRemoveMinifigPart(e, part.type)}
+                      className="absolute right-5 bg-red-700 rounded-md hover:bg-red-600 active:bg-red-600 border-l-6 border-t-6 border-b-6 border-transparent hover:border-b-0 active:border-b-0 hover:border-t-0 active:border-t-0 border-l-red-800 border-t-red-600 hover:border-l-0 active:border-l-0 active:-translate-x-1.5 transition-all duration-75 hover:-translate-x-1.5 hover:shadow-md shadow-lg shadow-red-700/50 p-2"
+                    >
+                      <Trash2 size={22} color="white" />
+                    </CTAButton>
+                  )}
 
-              <div ref={minifigPartRef}>
-                <MinifigPart
-                  isloading={false}
-                  key={currentImage}
-                  type={type}
-                  imageSrc={currentImage}
-                />
-              </div>
-            </div>
-          ))}
-
-          <p className="mt-5 text-2xl font-bold">Total: {formatCurrency(totalPrice)}</p>
+                  <div ref={minifigPartRef}>
+                    <MinifigPart
+                      isloading={false}
+                      key={part.currentImage}
+                      type={part.type}
+                      imageSrc={part.currentImage}
+                    />
+                  </div>
+                </section>
+              );
+            }
+          })}
+          <p className=" my-5 text-2xl font-bold">Total: {formatCurrency(totalPrice)}</p>
         </section>
       </section>
     );

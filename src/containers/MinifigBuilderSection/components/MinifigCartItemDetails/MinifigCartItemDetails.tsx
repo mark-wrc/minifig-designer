@@ -1,4 +1,4 @@
-import { Divider } from '@/components';
+import { Divider, StyledText } from '@/components';
 import { memo } from 'react';
 import { CartSummarySection } from '../CartSummarySection';
 import { IMinifigCartItemDetailsProps } from './MinifigCartItemDetails.types';
@@ -11,12 +11,12 @@ const MinifigCartItemDetails = memo<IMinifigCartItemDetailsProps>(({ minifig }) 
   const hasValidProjects = validProjects > 0;
 
   return (
-    <section className="overflow-y-auto minifig-scrollbar">
-      <div className="flex justify-between mb-2 sticky -top-1 bg-white z-10 pb-2">
-        <h3 className="font-bold">Project Name</h3>
-        <h3 className="font-bold">Price</h3>
+    <section className="overflow-y-auto minifig-scrollbar p-2">
+      <div className="flex justify-between mb-2 sticky -top-2 bg-white z-10 pb-2">
+        <StyledText className="font-bold" text="Project Name" as="h3" />
+        <StyledText className="font-bold" text="Price" as="h3" />
       </div>
-      <Divider className="bg-black mb-4" />
+      <Divider className="bg-gray-950 h-[2px] mb-4" />
       <div className="space-y-4 mb-6">
         {minifig.map((character, index) => {
           if (!character) return null;
@@ -35,9 +35,11 @@ const MinifigCartItemDetails = memo<IMinifigCartItemDetailsProps>(({ minifig }) 
       />
       {!hasValidProjects && (
         <div className="text-red-500 text-center mt-4 mb-4 p-3 bg-red-50 rounded">
-          <h1 className="text-base">
-            Please customize at least one project before adding to cart
-          </h1>
+          <StyledText
+            as="h1"
+            className="text-base"
+            text=" Please customize at least one project before adding to cart"
+          />
         </div>
       )}
     </section>

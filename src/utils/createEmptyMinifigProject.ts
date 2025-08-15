@@ -10,5 +10,8 @@ export const createEmptyMinifigProject = (name: string): IMinifigProject => ({
   head: BaseMinifigParts[MinifigPartType.HEAD].image,
   torso: BaseMinifigParts[MinifigPartType.TORSO].image,
   legs: BaseMinifigParts[MinifigPartType.LEGS].image,
-  selectedItems: {},
+  accessory: Array(4).fill(BaseMinifigParts[MinifigPartType.ACCESSORY].image),
+  selectedItems: {
+    accessory: Array(4).fill(null),
+  },
 });

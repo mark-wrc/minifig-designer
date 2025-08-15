@@ -34,16 +34,16 @@ const HeaderSection = memo(() => {
   }, []);
 
   return (
-    <section className="py-6">
-      <div className="w-full px-4 fixed z-50 bg-minifig-brand-end top-0 py-4">
+    <section className="py-6 ">
+      <div className="w-full px-4 fixed z-50 bg-minifig-brand-end top-0 py-4 shadow-md shadow-minifig-brand-end/50">
         <div className="lg:container mx-auto flex justify-between  align-middle">
           <img src={WOFLogo} className="w-[100px] md:w-1/12" alt="world of minifigs logo" />
           <section className="flex items-center gap-2">
             <div
-              className=" cursor-pointer relative  bg-transparent hover:bg-white/10 rounded-sm p-1"
+              className=" cursor-pointer relative border-l-8 border-t-6 border-b-6 border-b-transparent border-l-red-800 border-t-red-500 hover:border-l-0 active:border-l-0 active:border-t-0 active:shadow-md hover:shadow-md px-1.5 bg-red-600 hover:bg-red-600 hover:border-t-0 transition-all duration-75 shadow-lg shadow-red-500/50 rounded-sm p-1"
               onClick={handleToggleCart}
             >
-              <div className=" bg-red-500 rounded-full w-5 h-5 text-center flex flex-col align-middle justify-center text-white absolute -top-2 -right-2">
+              <div className=" bg-yellow-500 rounded-full w-5 h-5 text-center flex flex-col align-middle justify-center text-white absolute -top-2 -right-2">
                 {projectEntries.length}
               </div>
               <ShoppingCart color="white" size={24} />

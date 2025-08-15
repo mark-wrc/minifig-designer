@@ -1,7 +1,6 @@
-import { ConfirmationDialog, GeneralDialog, GeneralDialogTitle } from '@/components';
+import { ConfirmationDialog, CTAButton, GeneralDialog, GeneralDialogTitle } from '@/components';
 import { memo, useCallback } from 'react';
 import type { IMinifigBuilderCardPopupModalProps } from './MinifigBuilderCardPopupmodal.types';
-import { Button } from '@/components/ui/button';
 import { MinifigEmptyStateDialog } from '../MinifigEmptyStateDialog';
 import { useMinifigCart } from '../../hooks/useMinifigCart';
 import { createCartSummary, formatCurrency } from '@/utils';
@@ -27,10 +26,9 @@ const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
     const { validProjects, totalPrice } = cartSummary;
     const hasValidProjects = validProjects > 0;
 
-    // for testing
-    const handleRedirectToLogin = () => {
+    const handleRedirectToLogin = useCallback(() => {
       window.location.href = 'https://www.worldofminifigs.com/login';
-    };
+    }, []);
 
     if (!minifig?.length) {
       return <MinifigEmptyStateDialog onClose={handleClose} />;
@@ -38,30 +36,31 @@ const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
 
     return (
       <>
-        <GeneralDialog open={true} onOpenChange={handleClose}>
+        <GeneralDialog open={true} onOpenChange={handleClose} className="w-[500px]">
           <GeneralDialogTitle
             title="ADD TO CART"
             className="text-4xl font-black text-center mb-24"
           />
           <section className="flex flex-col max-h-[60vh]">
             {/*Cart Items details  */}
+
             <MinifigCartItemDetails minifig={minifig} />
 
             {/* Action Buttons */}
             <div className="flex justify-between mt-6">
-              <Button
+              <CTAButton
                 onClick={handleClose}
                 className="bg-red-500 font-black uppercase cursor-pointer"
               >
                 Cancel
-              </Button>
-              <Button
+              </CTAButton>
+              <CTAButton
                 className="bg-yellow-500 font-black uppercase cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
                 disabled={!hasValidProjects}
                 onClick={handleAddToCart}
               >
                 Add to Cart ({formatCurrency(totalPrice)})
-              </Button>
+              </CTAButton>
             </div>
           </section>
         </GeneralDialog>

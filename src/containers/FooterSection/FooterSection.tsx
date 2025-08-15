@@ -30,7 +30,7 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
                   className="flex cursor-pointer mb-4 text-sm font-light"
                   onClick={onHandleCartClick}
                 >
-                  <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline hover:text-yellow-300">
+                  <p className="translate-all font-semibold duration-150 hover:translate-x-1.5 hover:underline hover:text-yellow-300">
                     {' '}
                     {item.title}
                   </p>
@@ -41,7 +41,7 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
                   className="flex cursor-pointer mb-4 text-sm font-light "
                   href={item.link}
                 >
-                  <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline hover:text-yellow-300">
+                  <p className="translate-all duration-150 font-semibold hover:translate-x-1.5 hover:underline hover:text-yellow-300">
                     {item.title}
                   </p>
                 </FooterLink>
@@ -52,10 +52,10 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
             {QuickLinks.map((item) => (
               <FooterLink
                 href={item.link}
-                className="cursor-pointer mb-4 text-sm font-light  w-fit"
+                className="cursor-pointer mb-4 text-sm font-light w-fit"
                 key={item.title}
               >
-                <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline hover:text-yellow-300">
+                <p className="translate-all duration-150 font-semibold hover:translate-x-1.5 hover:underline hover:text-yellow-300">
                   {item.title}
                 </p>
               </FooterLink>
@@ -67,7 +67,7 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
         <FooterSectionCard title="Support" className="flex flex-col">
           {Support.map((item) => (
             <FooterLink className="flex mb-4  " href={item.link} key={item.title}>
-              <p className="translate-all duration-150 hover:translate-x-1.5 hover:underline hover:text-yellow-300">
+              <p className="translate-all duration-150 font-semibold hover:translate-x-1.5 hover:underline hover:text-yellow-300">
                 {item.title}
               </p>
             </FooterLink>
@@ -78,13 +78,13 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
         <FooterSectionCard title="World of Minifigs">
           <section>
             <p className="text-sm font-light">{CompanyDescription.description}</p>
-            <div className="flex gap-2 mt-4">
+            <div className="flex gap-4 mt-4">
               <FooterLink
                 href={socialMediaLinks.facebookLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className=" bg-minifig-lavander-blue/50 rounded-full p-3 hover:bg-minifig-lavander-blue"
+                className=" bg-blue-600 border-l-blue-700 border-t-blue-500 hover:border-t-blue-500 border-l-8 active:border-l-transparent active:-translate-x-0.5 active:shadow-md hover:shadow-md border-t-6 border-b-6 border-b-transparent rounded-md p-3 font-semibold hover:border-l-transparent hover:-translate-x-0.5 duration-75 transition-all shadow-lg shadow-blue-500/50"
               >
                 <Facebook />
               </FooterLink>
@@ -93,7 +93,7 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="bg-minifig-lavander-blue/50 rounded-full p-3 hover:bg-minifig-lavander-blue"
+                className="bg-[#e4405f] border-l-8 border-t-6 border-b-6 border-b-transparent rounded-md hover:shadow-md border-t-[#a45463] active:border-l-transparent active:-translate-x-0.5 active:shadow-md border-l-[#733c46] p-3  font-semibold hover:bg-[#a45463] hover:border-l-transparent  hover:-translate-x-0.5 shadow-lg shadow-[#a45463] transition-all duration-75"
               >
                 <Instagram />
               </FooterLink>

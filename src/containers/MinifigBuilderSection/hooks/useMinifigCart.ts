@@ -17,7 +17,7 @@ export const useMinifigCart = () => {
    * Add one or more minifig projects into the shopping cart.
    * This will:
    *  1. Check if `minifig` list exists and has items
-   *  2. Extract all parts (head, torso, legs) from each minifig
+   *  2. Extract all parts (head, torso, legs, accessories) from each minifig
    *  3. Calculate total price & available stock
    *  4. Prepare a payload for the cart
    *  5. Call `addCharactersToCartBatch` to store it in cart state
@@ -31,7 +31,13 @@ export const useMinifigCart = () => {
    *       selectedItems: {
    *         head: { _id: "h1", product_name: "Robot Head", price: 5, stock: 10, minifig_part_type: "HEAD" },
    *         torso: { _id: "t1", product_name: "Robot Torso", price: 8, stock: 10, minifig_part_type: "TORSO" },
-   *         legs: { _id: "l1", product_name: "Robot Legs", price: 7, stock: 10, minifig_part_type: "LEGS" }
+   *         legs: { _id: "l1", product_name: "Robot Legs", price: 7, stock: 10, minifig_part_type: "LEGS" },
+   *         accessory: [
+   *           { _id: "a1", product_name: "Robot Sword", price: 3, stock: 10, minifig_part_type: "ACCESSORY" },
+   *           null,
+   *           { _id: "a2", product_name: "Robot Shield", price: 4, stock: 10, minifig_part_type: "ACCESSORY" },
+   *           null
+   *         ]
    *       }
    *     }
    *   ],
@@ -47,10 +53,28 @@ export const useMinifigCart = () => {
         const payloads = minifig
           .filter(Boolean)
           .map((character) => {
-            // Get all part objects from selectedItems (head, torso, legs)
-            const selectedParts: MinifigPartData[] = Object.values(character.selectedItems).filter(
-              (part): part is MinifigPartData => !!part,
-            );
+            const selectedParts: MinifigPartData[] = [];
+
+            // Add single parts (hair, head, torso, legs)
+            const singleParts = ['hair', 'head', 'torso', 'legs'] as const;
+            for (const partType of singleParts) {
+              const part = character.selectedItems[partType];
+              if (part) {
+                selectedParts.push(part);
+              }
+            }
+
+            // Add accessory parts from array (each occupied slot becomes a separate cart item)
+            if (
+              character.selectedItems.accessory &&
+              Array.isArray(character.selectedItems.accessory)
+            ) {
+              for (const accessorySlot of character.selectedItems.accessory) {
+                if (accessorySlot) {
+                  selectedParts.push(accessorySlot);
+                }
+              }
+            }
 
             if (selectedParts.length === 0) return null;
 
@@ -71,8 +95,7 @@ export const useMinifigCart = () => {
               color: '',
             };
           })
-          .filter((p): p is NonNullable<typeof p> => !!p); // remove null payloads
-
+          .filter((p): p is NonNullable<typeof p> => !!p);
         if (payloads.length === 0) {
           onSuccess?.();
           return;

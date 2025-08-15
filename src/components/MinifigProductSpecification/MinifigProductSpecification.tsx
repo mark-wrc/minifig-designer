@@ -18,7 +18,7 @@ const MinifigProductSpecification = memo<IMinifigProductSpecificationProps>(
             <p className="text-2xl my-4 font-semibold">Specifications</p>
           </div>
 
-          <div className="flex">
+          <div className="flex p-3">
             <ProductSpecificationCard
               productDetails={[
                 {

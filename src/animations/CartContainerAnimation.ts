@@ -4,7 +4,6 @@ export const CartContainerAnimation: Variants = {
   initial: {
     x: '100%',
     transition: {
-      type: 'spring',
       damping: 30,
       stiffness: 300,
     },
@@ -12,7 +11,6 @@ export const CartContainerAnimation: Variants = {
   enter: {
     x: 0,
     transition: {
-      type: 'spring',
       damping: 30,
       stiffness: 300,
       duration: 0.3,
@@ -21,7 +19,6 @@ export const CartContainerAnimation: Variants = {
   exit: {
     x: '100%',
     transition: {
-      type: 'spring',
       damping: 30,
       stiffness: 300,
       duration: 0.3,

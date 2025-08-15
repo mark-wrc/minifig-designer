@@ -6,3 +6,4 @@ export * from './MinifigBodyResponse';
 export * from './MinifigProject';
 export * from './buildSelectedMinifigParts';
 export * from './pagination';
+export * from './Minifig';

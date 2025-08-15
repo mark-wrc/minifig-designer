@@ -16,4 +16,5 @@ export const createFallbackBuild = (): IMinifigProject => ({
     torso: undefined,
     legs: undefined,
   },
+  accessory: [],
 });

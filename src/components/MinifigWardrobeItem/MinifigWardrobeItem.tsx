@@ -7,7 +7,7 @@ import { StyledText } from '../StyledText';
 
 const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
   ({ onItemDetailsClick, minifigItem, onPartSelect }) => (
-    <section className="flex flex-col h-full rounded-lg ">
+    <section className="flex flex-col h-fit rounded-lg ">
       <div
         key={minifigItem?._id}
         className=" h-full cursor-pointer"
@@ -16,18 +16,18 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
         {minifigItem.product_images.map((item) => (
           <img
             key={item._id}
-            className="w-fit border-2 border-black rounded-sm "
+            className="w-fit mx-auto outline-2 outline-gray-600 bg-white rounded-sm "
             src={item.url}
             alt={minifigItem.product_name}
           />
         ))}
       </div>
 
-      <div className=" flex  flex-col justify-center py-2  -translate-y-6 ">
+      <div className="flex flex-col justify-center py-2 h-fit md:-translate-y-6">
         <CTAButton
           size={null}
           variant="default"
-          className="bg-yellow-300 text-md  hover:bg-yellow-400 w-fit self-center py-3 px-8 rounded-sm text-black"
+          className=" bg-yellow-300 md:text-lg font-bold hover:bg-yellow-400 hover:border-l-0  active:border-t-transparent active:border-b-transparent hover:border-t-transparent active:border-l-0 active:bg-yellow-400  transition-all duration-75 hover:shadow-md self-center py-3 px-8 rounded-md text-black shadow-lg shadow-yellow-500/50 border-l-8 border-t-6 border-b-6 border-b-transparent border-t-yellow-400  border-l-yellow-600"
           onClick={() => onPartSelect(minifigItem)}
         >
           Add
