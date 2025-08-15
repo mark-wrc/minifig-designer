@@ -1,3 +1,4 @@
+import Config from '@/Config';
 import axios, { AxiosError } from 'axios';
 
 interface ErrorResponse {
@@ -6,7 +7,7 @@ interface ErrorResponse {
 }
 
 const axiosInstance = axios.create({
-  baseURL: '/api/v1',
+  baseURL: `${Config.apiUrl}/api/v1`,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
