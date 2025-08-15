@@ -5,31 +5,41 @@ import convert from 'color-convert';
 
 /**
  * Converts a product color name into a hex code.
- * - Supports standard and extended color names
- * - Uses multiple fallbacks
+ * - Uses the last word (e.g., "Bright Pink" → "pink")
+ * - Supports custom mappings
+ * - Falls back to external libs
  * - Returns a default color if unknown
  */
 const customColorMap: Record<string, string> = {
-  'bright light yellow': '#FFFACD',
-  'bright light orange': '#F8BB3D',
-  'medium azure': '#63C5DA',
-  'sand green': '#A0BBAE',
-  'dark bluish gray': '#6D6E71',
-  'light bluish gray': '#A7A9AC',
+  pink: '#FFC0CB',
+  black: '#000000',
+  white: '#FFFFFF',
+  yellow: '#FFFACD',
+  orange: '#F8BB3D',
+  azure: '#63C5DA',
+  green: '#A0BBAE',
+  gray: '#6D6E71',
+  grey: '#A7A9AC',
 };
 
 export const getColorHex = (name: string, fallback: string = '#CCCCCC'): string => {
   if (!name) return fallback;
 
-  const normalized = name.trim().toLowerCase();
+  // Normalize and get the last word (e.g., "Bright Pink" → "pink")
+  const parts = name.trim().toLowerCase().split(/\s+/);
+  const normalized = parts[parts.length - 1];
+
+  // Check custom map first
+  if (customColorMap[normalized]) {
+    return customColorMap[normalized];
+  }
 
   return (
-    customColorMap[normalized] ||
     toHex(normalized) ||
     colorNameToHex(normalized as any) ||
     (() => {
       try {
-        const hex = convert.keyword.hex(normalized.replace(/\s+/g, ''));
+        const hex = convert.keyword.hex(normalized);
         return hex ? `#${hex}` : undefined;
       } catch {
         return undefined;
