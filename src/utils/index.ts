@@ -6,3 +6,4 @@ export * from './getAuthToken';
 export * from './formatCurrency';
 export * from './getColorHex';
 export * from './createEmptyMinifigProject';
+export * from './createEmptySlots';

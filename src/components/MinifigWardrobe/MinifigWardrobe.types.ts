@@ -1,6 +1,7 @@
 import { UseDisclosureReturn } from '@/hooks';
 import { MinifigPartType } from '@/types';
 import { IMinifigProject, MinifigPartData } from '@/types/Minifig';
+import { Dispatch } from 'react';
 
 export interface IMinifigWardrobeBaseProps {
   wardrobeItems: MinifigPartData[];
@@ -25,4 +26,8 @@ export interface IMinifigWardrobeExtras {
 export interface IMinifigWardrobeProps
   extends IMinifigWardrobeBaseProps,
     IMinifigWardrobeUIProps,
-    IMinifigWardrobeExtras {}
+    IMinifigWardrobeExtras {
+  currentPage: number;
+  totalPages: number;
+  setCurrentPage: Dispatch<React.SetStateAction<number>>;
+}

@@ -1,6 +1,6 @@
 import { Fragment, memo } from 'react';
 import { IMinifigProjectProps } from './MinifigProject.types';
-import { MinifigPreview } from '../MinifigPreview';
+
 import { formatCurrency } from '@/utils';
 import { StyledText } from '@/components';
 
@@ -17,13 +17,13 @@ const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
 
         {!hasCustomParts ? (
           <div className="text-orange-500 text-sm bg-orange-50 p-2 rounded">
-            <StyledText text="⚠️ No custom parts selected" />
+            <StyledText text="⚠️ No Minifig parts selected" />
           </div>
         ) : (
           <div className="text-sm text-gray-600">
             <StyledText
               className="mb-3 font-medium"
-              text={`${minifigPart.length} custom parts selected:`}
+              text={`${minifigPart.length} Minifig parts selected:`}
             />
             <ul className="space-y-2 mb-3">
               {minifigPart.map((part) => (
@@ -35,7 +35,7 @@ const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
                     <img
                       src={part.product_images?.[0]?.url}
                       alt={part.product_name}
-                      className="w-8 h-8 rounded border object-cover"
+                      className="w-1/4 rounded border object-cover"
                     />
 
                     {/* Product details section*/}
@@ -51,6 +51,7 @@ const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
                       />
                     </section>
                   </div>
+
                   <StyledText
                     className="text-green-600 font-medium text-sm"
                     as="span"
@@ -61,14 +62,6 @@ const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
             </ul>
           </div>
         )}
-
-        <div className="mt-3 pt-3 border-t border-gray-200">
-          <StyledText
-            className="text-xs font-medium text-gray-600 mb-2"
-            text="Character Preview:"
-          />
-          <MinifigPreview selectedItems={project.selectedItems} />
-        </div>
       </section>
     </Fragment>
   );

@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import MinifigCategoryOptions from './components/MinifigCategoryOptions';
 import { useMemo } from 'react';
+import { StyledText } from '@/components';
 
 const CategorySection = () => {
   const { activeCharacterId, characters = [] } = useSelector(
@@ -15,8 +16,8 @@ const CategorySection = () => {
   return (
     <section className=" hidden md:block container mx-auto my-4 lg:py-12">
       <header className="mb-12 text-center text-black">
-        <h1 className="text-6xl font-bold mb-3">BUILD YOUR OWN MINIFIG</h1>
-        <h3 className="font-bold  text-2xl">START BUILDING</h3>
+        <StyledText as="h1" className="text-6xl font-bold mb-3" text="BUILD YOUR OWN MINIFIG" />
+        <StyledText as="h3" className="font-bold  text-2xl" text="START BUILDING" />
       </header>
       <MinifigCategoryOptions activeMinifigProject={activeMinifigProject} />
     </section>

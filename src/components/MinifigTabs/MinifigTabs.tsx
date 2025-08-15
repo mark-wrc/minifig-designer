@@ -64,12 +64,13 @@ const MinifigTabs = memo(() => {
                 animate="enter"
                 exit="exit"
                 custom={idx}
+                className="py-4 "
               >
                 <TabsTrigger
                   className={cn(
-                    'flex items-center p-3 w-fit relative group cursor-pointer text-left md:text-sm rounded-sm font-semibold bg-yellow-500 overflow-y-hidden',
+                    'flex items-center p-3 w-fit relative group cursor-pointer text-left md:text-sm rounded-sm  border-t-6 border-b-6 border-l-8 active:border-l-0 active:border-t-transparent hover:shadow-md active:shadow-md border-l-yellow-600 border-t-yellow-400 border-b-transparent shadow-lg shadow-yellow-600/40 hover:border-l-0 hover:border-t-transparent transition-all duration-75 bg-yellow-500 overflow-y-hidden',
                     activeCharacterId === proj._id &&
-                      ' bg-minifig-brand-end  transition-all duration-300 text-white',
+                      ' bg-minifig-brand-end border-l-8 border-b-6 border-t-6 border-l-gray-800 border-b-transparent active:border-l-0 active:border-t-transparent border-t-gray-600 transition-all duration-75 hover:border-l-0 hover:border-t-transparent shadow-lg shadow-minifig-brand-end/50 text-white hover:shadow-md active:shadow-md',
                   )}
                   key={proj._id}
                   value={proj._id}
@@ -87,7 +88,7 @@ const MinifigTabs = memo(() => {
           </AnimatePresence>
         </TabsList>
 
-        <Divider className="mt-2 mb-2 h-[5px] bg-gray-950 rounded-full" />
+        <Divider className="mt-2 mb-2 h-[10px] bg-gray-800 shadow-gray-900/50" />
 
         <motion.div
           variants={TabButtonAnimation}
@@ -97,7 +98,7 @@ const MinifigTabs = memo(() => {
         >
           <CTAButton
             variant="default"
-            className="bg-yellow-300 cursor-pointer text-black hover:text-white hover:bg-minifig-brand-end text-md p-6 borderborder-gray-950"
+            className="bg-yellow-300 cursor-pointer text-black font-bold hover:bg-yellow-400 active:bg-yellow-400  border-b-6 active:border-b-transparent border-b-transparent hover:border-t-transparent active:border-t-tr active:border-l-0 text-md p-6 borderborder-gray-950 border-t-6 border-l-8 border-l-yellow-600 border-t-yellow-400 shadow-lg shadow-yellow-500/40  hover:-translate-x-0.5 active:-translate-x-0.5 transition-all duration-75 hover:border-l-0"
             onClick={() => openModal.onDisclosureOpen()}
           >
             Add New Project

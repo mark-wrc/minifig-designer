@@ -1,6 +1,7 @@
 import { UseDisclosureReturn } from '@/hooks';
 import { MinifigPartType } from '@/types';
 import { IMinifigProject, MinifigPartData } from '@/types/Minifig';
+import { Dispatch } from 'react';
 
 export interface IMinifigMobileModeProps {
   modalDisclosure: UseDisclosureReturn;
@@ -15,4 +16,7 @@ export interface IMinifigMobileModeProps {
   minifigData: MinifigPartData[];
   activeProjectId?: IMinifigProject;
   isLoading?: boolean;
+  currentPage: number;
+  totalPages: number;
+  setCurrentPage: Dispatch<React.SetStateAction<number>>;
 }

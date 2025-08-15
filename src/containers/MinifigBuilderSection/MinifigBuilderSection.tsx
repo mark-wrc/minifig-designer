@@ -5,8 +5,7 @@ import { useDisclosureParam, useMinifigParts } from '@/hooks';
 import useWindowResize from '@/hooks/useWindowResize';
 import { MinifigMobileMode } from './components/MinifigMobileMode';
 import { useFetchMinifigProducts } from '@/api/hooks';
-import { useState } from 'react';
-import { GeneralPagination } from '@/components/GeneralPagination';
+import { useEffect, useState } from 'react';
 
 const MinifigBuilderSection = () => {
   const { characters, activeCharacterId, selectedCategory } = useSelector(
@@ -18,6 +17,11 @@ const MinifigBuilderSection = () => {
   const isMobile = screenSize.width <= 767;
 
   const [currentPage, setCurrentPage] = useState(1);
+
+  // resets to page 1
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory]);
 
   const { data, isLoading: isMinifigProductLoading } = useFetchMinifigProducts({
     minifig_part_type: selectedCategory || undefined,
@@ -34,6 +38,9 @@ const MinifigBuilderSection = () => {
     <section>
       {isMobile ? (
         <MinifigMobileMode
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
           minifigParts={minifigParts}
           minifigData={wardrobeItems}
           modalDisclosure={modalDisclosure}
@@ -47,14 +54,11 @@ const MinifigBuilderSection = () => {
           modalDisclosure={modalDisclosure}
           minifigProjects={characters}
           isLoading={isMinifigProductLoading}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
         />
       )}
-
-      <GeneralPagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-      />
     </section>
   );
 };

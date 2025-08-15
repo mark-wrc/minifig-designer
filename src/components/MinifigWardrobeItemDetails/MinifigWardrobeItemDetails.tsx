@@ -6,25 +6,40 @@ import { StyledText } from '../StyledText';
 import { cn } from '@/lib/utils';
 import { MinifigProductSpecification } from '../MinifigProductSpecification';
 import { ColorBadge } from '@/ColorBadge';
+import { motion } from 'motion/react';
+import { ProductBackButtonAnimation, WardrobeItemDetailsAnimation } from '@/animations';
 
 const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
   ({ wardrobeItems, onClick, onCategoryClick }) => {
     const outOfstock = wardrobeItems.stock === 0;
     return (
       <section className="border-2 border-gray-950 rounded-md md:border-0 ">
-        <div className="bg-minifig-brand-end text-white w-full h-full overflow-y-auto max-h-[620px] minifig-scrollbar">
+        <div className="bg-minifig-brand-end text-white h-full overflow-y-auto minifig-scrollbar">
           {/* Inner Wrapper  */}
           <section className="p-3">
-            <CTAButton
-              variant="default"
-              onClick={onClick}
-              icon={ArrowLeft}
-              className="bg-yellow-500 text-black text-lg mb-8 hover:text-white"
+            <motion.div
+              className="w-fit h-fit"
+              variants={ProductBackButtonAnimation}
+              initial="initial"
+              animate="enter"
             >
-              Back
-            </CTAButton>
+              <CTAButton
+                variant="default"
+                onClick={onClick}
+                icon={ArrowLeft}
+                className="bg-yellow-300 border-l-8 border-t-6 border-b-6 border-b-transparent hover:border-l-0 hover:border-t-0 hover:border-b-0 active:border-l-0 active:border-t-0 active:border-b-0 active:shadow-md transition-all duration-75 border-l-yellow-600 border-t-yellow-400 hover:bg-yellow-400 shadow-lg shadow-yellow-400/50 text-black text-lg mb-8 font-bold hover:shadow-md"
+              >
+                Back
+              </CTAButton>
+            </motion.div>
 
-            <section className="flex flex-col lg:flex-row gap-4 justify-between">
+            <motion.section
+              variants={WardrobeItemDetailsAnimation}
+              animate="enter"
+              initial="initial"
+              exit="exit"
+              className="flex flex-col lg:flex-row gap-4 justify-between"
+            >
               {/*Product image  */}
               <figure className="w-1/2 rounded-md bg-white h-fit  border-2  border-gray-950">
                 {wardrobeItems.product_images.map((item) => (
@@ -49,7 +64,7 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
                 {outOfstock && (
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full animate-pulse bg-destructive" />
-                    <p className="text-destructive">Unavailable</p>
+                    <StyledText className="text-destructive" text="Unavailable" />
                   </div>
                 )}
 
@@ -79,6 +94,7 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
                       />
                     ))}
                   </div>
+
                   <div>
                     <StyledText className="font-semibold text-md" text="Bundle Details" />
                     <StyledText
@@ -98,7 +114,7 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
                 <StyledText showCheckMark text={wardrobeItems.product_description_1} />
                 <StyledText showCheckMark text={wardrobeItems.product_description_2} />
                 {wardrobeItems.product_description_3 && (
-                  <StyledText text={wardrobeItems.product_description_3} />
+                  <StyledText showCheckMark text={wardrobeItems.product_description_3} />
                 )}
 
                 {/* cta buttons */}
@@ -108,7 +124,7 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
                     variant="ghost"
                     disabled={outOfstock}
                     className={cn(
-                      'bg-yellow-500 text-md w-fit py-3 px-6 self-end rounded-sm text-black',
+                      'bg-yellow-300 text-md font-bold border-l-8 border-t-6 border-b-6 border-b-transparent border-l-yellow-600 border-t-yellow-400 shadow-lg shadow-yellow-400/50 hover:shadow-md hover:border-l-0 hover:border-t-transparent active:border-l-0 active:border-t-transparent transition-all duration-75 w-fit py-3 px-6 self-end rounded-sm text-black',
                       outOfstock && 'bg-red-500',
                     )}
                     onClick={() => onCategoryClick(wardrobeItems)}
@@ -117,7 +133,9 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
                   </CTAButton>
                 </div>
               </section>
-            </section>
+            </motion.section>
+
+            {/* Product Specication section */}
           </section>
 
           <MinifigProductSpecification

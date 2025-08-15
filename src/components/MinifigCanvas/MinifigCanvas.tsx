@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { IMinifigCanvasProps } from './MinifigCanvas.types';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
@@ -28,6 +28,11 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ wardrobeItems = [], ...props 
   const { selectedCategory = null } = useSelector(
     (state: RootState) => state.minifigBuilder || {},
   );
+
+  // Close MinifigWardrobeItemDetails if it's open when another minifig category is selected
+  useEffect(() => {
+    setSelectedItem(null);
+  }, [selectedCategory]);
 
   useScrollIntoView({
     ref: wardrobeRef,
@@ -62,13 +67,13 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ wardrobeItems = [], ...props 
   return (
     <section
       className={cn(
-        'flex h-full w-full flex-col md:flex-row md:border-3 md:rounded-t-md md:border-black/50',
+        'flex h-full w-full flex-col md:flex-row md:border-2 rounded-md border-gray-950',
         props.className,
       )}
     >
       {/* Minifig renderer section */}
 
-      <div className={cn('md:border-r-3 border-r-black/50 p-0 mr-0 lg:py-8 flex-1/5 text-black ')}>
+      <div className={cn('p-0 mr-0 flex-1/5 h-full text-black')}>
         <MinifigRenderer
           setModalMode={setModalMode}
           minifigParts={props.minifigParts}
@@ -77,22 +82,22 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ wardrobeItems = [], ...props 
       </div>
 
       <section className="flex-1/2">
-        {!selectedItem && (
-          <section className="bg-none mt-12 md:mt-0 md:bg-gray-800 py-4 flex justify-end">
-            <SearchBox
-              onSearch={setSearchQuery}
-              placeholder="Search minifigs..."
-              className="w-fit md:mr-4"
-            />
-          </section>
-        )}
         <div
           className={cn(
-            'flex flex-col mx-auto md:mx-0 md:mt-0 h-full',
+            'flex flex-col mx-auto md:mx-0 md:mt-0 h-full md:border-l-4 border-dashed border-gray-800',
             wardrobeItems.length === 0 && 'justify-center',
-            props.isLoading && 'justify-center w-full ',
+            props.isLoading && 'justify-center w-full h-full bg-[#FFF8E0]',
           )}
         >
+          {!selectedItem && !props.isLoading && wardrobeItems.length !== 0 && (
+            <section className="bg-none mt-12 md:mt-0 md:bg-gray-800 py-4 flex justify-end">
+              <SearchBox
+                onSearch={setSearchQuery}
+                placeholder="Search minifigs..."
+                className="w-fit md:mr-4"
+              />
+            </section>
+          )}
           <div className="mx-auto">
             {selectedItem ? (
               <MinifigWardrobeItemDetails
@@ -112,6 +117,9 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ wardrobeItems = [], ...props 
                 selectorComponent={props.selectorComponent}
                 onItemDetailsClick={handleMinifigItemDetailsClick}
                 isLoading={props.isLoading}
+                setCurrentPage={props.setCurrentPage}
+                currentPage={props.currentPage}
+                totalPages={props.totalPages}
               />
             )}
           </div>

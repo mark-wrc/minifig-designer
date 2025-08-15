@@ -1,9 +1,8 @@
 import { memo, useCallback, useEffect } from 'react';
 import type { ICartContainerProps } from './CartContainer.types';
-import { CartItem, Divider, Overlay } from '@/components';
+import { CartItem, CTAButton, Divider, Overlay, StyledText } from '@/components';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
-import { Button } from '@/components/ui/button';
 import { useShoppingCart } from '@/hooks/useShoppingCart';
 import { motion } from 'motion/react';
 import { CartContainerAnimation, CartOverlayAnimation } from '@/animations';
@@ -43,33 +42,36 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
         initial="initial"
         animate="enter"
         exit="exit"
-        className="w-full bg-minifig-brand-end sm:w-[55%] md:w-[60%] lg:w-1/4 xl:w-[40%] fixed right-0 top-0 bottom-0 z-[99999] p-4 flex flex-col"
+        className="w-full bg-minifig-brand-end sm:w-[55%] md:w-[60%] lg:w-1/4 xl:w-[50%] fixed right-0 top-0 bottom-0 z-[99999] p-4 flex flex-col"
       >
         <CartHeader items={{ totalItems, totalPrice }} onClose={onclose} />
 
         <div className="flex-1 overflow-y-auto minifig-scrollbar ">
           {projectEntries.length === 0 && (
             <div className="text-center text-white h-full flex flex-col align-middle justify-center">
-              <h1 className="text-4xl mb-4">Your cart is empty</h1>
-              <p>Add some minifigs to your cart to get started!</p>
+              <StyledText as="h1" className="text-4xl mb-4" text="Your cart is empty" />
+              <StyledText text="Add some minifigs to your cart to get started!" />
             </div>
           )}
 
           {projectEntries.map(([projectName, project]) => (
             <section key={projectName} className="mb-6">
-              <div className="flex justify-between items-center mb-2">
-                <div className="text-white">
-                  <h3 className="text-lg">{projectName}</h3>
-                  <p className="text-sm text-gray-300">{formatCurrency(project.totalPrice)}</p>
+              <div className="flex justify-between items-center mb-2 mx-4">
+                <div className="text-white pb-4">
+                  <StyledText as="h3" className="text-2xl font-bold" text={projectName} />
+                  <StyledText
+                    className="text-md font-semibold text-gray-300"
+                    text={formatCurrency(project.totalPrice)}
+                  />
                 </div>
-                <Button
+                <CTAButton
                   variant="destructive"
                   size="sm"
                   onClick={() => handleRemoveProject(projectName)}
-                  className="text-sm cursor-pointer"
+                  className="text-sm cursor-pointer border-b-transparent border-b-6 py-4 border-l-8 border-t-6 hover:border-l-0 hover:border-t-transparent hover:-translate-x-0.5 active:border-t-transparent active:border-l-0 active:shadow-md active:-translate-x-0.5 transition-all duration-75 border-l-red-800 border-t-red-500 shadow-lg hover:shadow-md shadow-red-500/50"
                 >
                   Remove All
-                </Button>
+                </CTAButton>
               </div>
 
               <CartItem data={project.items} projectName={projectName} />
@@ -82,14 +84,16 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
         {projectEntries.length > 0 && (
           <section className="pt-4">
             <div className="text-white mb-2">
-              <p className="text-sm">
-                {projectEntries.length} Minifig project{projectEntries.length !== 1 ? 's' : ''} •{' '}
-                {totalItems} total items
-              </p>
+              <StyledText
+                className="text-lg font-semibold"
+                text={`
+                ${projectEntries.length} Minifig project${projectEntries.length !== 1 ? 's' : ''} •
+                ${totalItems} total items`}
+              />
             </div>
             <CheckoutButton
               totalPrice={totalPrice}
-              className="w-full cursor-pointer bg-green-600 hover:bg-green-700 py-3 text-lg"
+              className="w-full cursor-pointer active:shadow-md active:border-l-0 active:border-t-transparent active:border-b-transparent bg-yellow-300  text-black shadow-lg shadow-yellow-400/50 hover:border-l-0 hover:border-b-transparent hover:border-t-transparent transition-all duration-75 font-bold hover:shadow-md hover:bg-yellow-400 py-3 text-lg border-b-6 border-l-8 border-t-6 border-t-yellow-400 border-l-yellow-600 border-b-transparent"
             />
           </section>
         )}

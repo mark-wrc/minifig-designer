@@ -11,7 +11,7 @@ const MinifigTabContent = memo<IMinifigTabContentProps>(({ character, onDelete }
       onClick={(e) => onDelete(character._id, e)}
     />
 
-    <p className="font-normal text-lg">{character.name}</p>
+    <p className="font-bold text-lg">{character.name}</p>
   </section>
 ));
 

@@ -18,7 +18,7 @@ const GeneralDialog = memo<IGeneralDialogProps>(
         <Dialog.Content
           className={cn(
             'fixed z-50 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
-            'bg-white dark:bg-zinc-900 rounded-md shadow-xl p-6 w-[90vw] max-w-md',
+            'bg-white dark:bg-zinc-900 rounded-md shadow-xl p-6 w-full',
             className,
           )}
           onInteractOutside={(e) => {

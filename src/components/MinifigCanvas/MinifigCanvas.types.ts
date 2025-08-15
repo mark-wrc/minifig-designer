@@ -1,6 +1,7 @@
 import { UseDisclosureReturn } from '@/hooks';
 import type { MinifigPartType } from '@/types';
 import { IMinifigProject, MinifigPartData } from '@/types/Minifig';
+import { Dispatch } from 'react';
 
 export type IMinifigPartImageMap = {
   [key in MinifigPartType]?: {
@@ -33,4 +34,8 @@ export interface IMinifigCanvasDataProps {
 export interface IMinifigCanvasProps
   extends IMinifigCanvasDataProps,
     IMinifigCanvasEventHandlers,
-    IMinifigCanvasUIProps {}
+    IMinifigCanvasUIProps {
+  currentPage: number;
+  totalPages: number;
+  setCurrentPage: Dispatch<React.SetStateAction<number>>;
+}

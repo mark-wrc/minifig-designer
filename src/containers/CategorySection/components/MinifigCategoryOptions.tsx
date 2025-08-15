@@ -1,7 +1,7 @@
 import { memo, useCallback, useMemo } from 'react';
 import { IMinifigCategoryOptions } from './MinifigCategoryOptions.types';
 import { ICategoryItem, MinifigPartType } from '@/types';
-import { DefaultHairAndHead, DefaultLegs, DefaultHead, DefaultTorso } from '@/assets/images';
+
 import { CategorySelector } from '@/components';
 import { useDispatch, useSelector } from 'react-redux';
 import { cn } from '@/lib/utils';
@@ -9,6 +9,7 @@ import { motion } from 'motion/react';
 import { CategorySelectiorAnimation } from '@/animations/CategorySelectorAnimation';
 import { RootState } from '@/store';
 import { setSelectedCategory } from '@/store/minifigBuilder/minifigBuilderSlice';
+import { CATEGORY_CONFIG } from './config/CategoryConfig';
 
 const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
   ({ activeMinifigProject, className, categoryContainerStyle, isMobileMode = false }) => {
@@ -25,39 +26,16 @@ const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
     );
 
     const minifigCategories = useMemo<ICategoryItem[]>(
-      () => [
-        {
-          id: 1,
-          title: MinifigPartType.HAIR,
-          image: activeMinifigProject?.hair || DefaultHairAndHead,
-          type: MinifigPartType.HAIR,
-        },
-        {
-          id: 2,
-          title: MinifigPartType.HEAD,
-          image: activeMinifigProject?.head || DefaultHead,
-          type: MinifigPartType.HEAD,
-        },
-        {
-          id: 3,
-          title: MinifigPartType.TORSO,
-          image: activeMinifigProject?.torso || DefaultTorso,
-          type: MinifigPartType.TORSO,
-        },
-        {
-          id: 3,
-          title: MinifigPartType.LEGS,
-          image: activeMinifigProject?.legs || DefaultLegs,
-          type: MinifigPartType.LEGS,
-        },
-      ],
-      [
-        activeMinifigProject?.hair,
-        activeMinifigProject?.head,
-        activeMinifigProject?.legs,
-        activeMinifigProject?.torso,
-      ],
+      () =>
+        CATEGORY_CONFIG.map((config, idx) => ({
+          id: idx + 1,
+          title: config.type,
+          image: (activeMinifigProject?.[config.key] as string) || config.defaultImage,
+          type: config.type,
+        })),
+      [activeMinifigProject],
     );
+
     return (
       <section
         className={cn('flex gap-4 flex-wrap mx-auto justify-center rounded-3xl', className)}
@@ -74,7 +52,7 @@ const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
             <CategorySelector
               key={category.id}
               item={category}
-              className="text-xl md:text-base rounded-sm mt-4 md:mt-0 w-full p-2"
+              className="text-sm md:text-base rounded-sm md:mt-0 w-full p-2"
               onClick={handleCategorySelect}
               isSelected={selectedCategory === category.type}
               isCategoryTab={isMobileMode}

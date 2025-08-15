@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 import { CategorySelectorProps } from './CategorySelector.types';
 import { useMinifigCreation } from '@/hooks';
 import { CreateMinifigModal } from '../CreateMinifigModal';
+import { StyledText } from '../StyledText';
 
 const CategorySelector = memo<CategorySelectorProps>(
   ({ className, item, onClick, isCategoryTab = false, isSelected }) => {
@@ -25,21 +26,22 @@ const CategorySelector = memo<CategorySelectorProps>(
         <section
           onClick={handleCategoryClick}
           className={cn(
-            ' bg-sunny w-ful h-full flex  items-center cursor-pointer hover:bg-minifig-brand-end transition-all duration-200 shadow-lg text-center',
+            ' bg-sunny w-full h-full flex items-center cursor-pointer hover:bg-minifig-brand-end hover:shadow-minifig-brand-end/50 transition-all duration-200 shadow-lg shadow-yellow-500/50 text-center',
             className,
-            isCategoryTab && 'bg-transparent hover:bg-yellow-300 p-0 px-4 py-1',
-            isSelected ? 'bg-yellow-300' : 'bg-none',
-            isSelected && !isCategoryTab ? 'bg-minifig-brand-end' : '',
+            isCategoryTab &&
+              'bg-minifig-brand-end text-white font-bold flex flex-wrap items-center border-l-6 border-gray-800 border-t-6 border-t-gray-600 hover:bg-minifig-brand-end/45 shadow-lg shadow-minifig-brand-end/50  mt-4 ',
+            isSelected
+              ? ' bg-yellow-300 text-black shadow-lg shadow-yellow-500/50 border-l-yellow-600 border-t-yellow-400 active:border-l-0 focus:shadow-md'
+              : 'bg-none',
+            isSelected && !isCategoryTab
+              ? 'bg-minifig-brand-end shadow-lg shadow-minifig-brand-end/50'
+              : '',
           )}
         >
           {!isCategoryTab ? (
-            <div>
-              <img src={item.image} alt={item.title} className="w-20 md:w-28 object-contain" />
-            </div>
+            <img src={item.image} alt={item.title} className="w-20 md:w-28 object-contain" />
           ) : (
-            <div className="py-0 px-3">
-              <span>{item.title}</span>
-            </div>
+            <StyledText as="span" text={item.title} className="mb-0 px-2" />
           )}
         </section>
 
