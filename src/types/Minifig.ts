@@ -54,6 +54,8 @@ export interface MinifigPartData {
   product_color: IMinifigProductBaseDetails;
 }
 
+export type MinifigSlot = MinifigPartData | null;
+
 export interface IApiMinifigSelectedPart {
   id: string;
   type: MinifigPartType;
@@ -70,6 +72,7 @@ export interface SelectedMinifigItems {
   head?: MinifigPartData;
   torso?: MinifigPartData;
   legs?: MinifigPartData;
+  accessory?: MinifigSlot[];
 }
 
 export interface IMinifigProject {
@@ -79,6 +82,7 @@ export interface IMinifigProject {
   head: string;
   torso: string;
   legs: string;
+  accessory: string[];
   selectedItems: SelectedMinifigItems;
 }
 
