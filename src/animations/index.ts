@@ -4,3 +4,5 @@ export * from './MinifigCanvasAnimation';
 export * from './TabContainerAnimation';
 export * from './MinifigPartAnimation';
 export * from './MobileMenuAnimation';
+export * from './WardrobeItemDetailsAnimation';
+export * from './ProductSpecificationCardAnimation';
