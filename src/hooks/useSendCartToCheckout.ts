@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
 import { IMinifigCart } from '@/types/Minifig';
 import { CartProject, ICartItem } from '@/types';
-
-const BASE_CHECKOUT_URL = 'http://localhost:5173/checkout'; // https://www.worldofminifigs.com/checkout
+import Config from '@/Config';
 
 export function useSendCartToCheckout() {
   const cart = useSelector((state: RootState) => state.MinifigBuilderCart);
@@ -37,7 +36,7 @@ export function useSendCartToCheckout() {
 
   const sendToCheckout = useCallback(() => {
     const mode = itemsToSend.length > 1 ? 'cart' : 'buy_now';
-    const url = `${BASE_CHECKOUT_URL}?mode=${mode}&externalCart=${cartString}`;
+    const url = `${Config.checkoutUrl}?mode=${mode}&externalCart=${cartString}`;
 
     window.location.href = url;
   }, [itemsToSend, cartString]);

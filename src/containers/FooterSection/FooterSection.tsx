@@ -84,18 +84,18 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className=" bg-blue-600 border-l-blue-700 border-t-blue-500 hover:border-t-blue-500 border-l-8 active:border-l-transparent active:-translate-x-0.5 active:shadow-md hover:shadow-md border-t-6 border-b-6 border-b-transparent rounded-md p-3 font-semibold hover:border-l-transparent hover:-translate-x-0.5 duration-75 transition-all shadow-lg shadow-blue-500/50"
+                className=" bg-blue-600 border-l-blue-700 group border-t-blue-500 hover:border-t-blue-500 border-l-8 active:border-l-transparent active:-translate-x-0.5 active:shadow-md hover:shadow-md border-t-6 border-b-6 border-b-transparent rounded-md p-3 font-semibold hover:border-l-transparent hover:-translate-x-0.5 duration-75 transition-all shadow-lg shadow-blue-500/50"
               >
-                <Facebook />
+                <Facebook className="group-hover:-translate-x-1 transition-all duration-75" />
               </FooterLink>
               <FooterLink
                 href={socialMediaLinks.instagramLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="bg-[#e4405f] border-l-8 border-t-6 border-b-6 border-b-transparent rounded-md hover:shadow-md border-t-[#a45463] active:border-l-transparent active:-translate-x-0.5 active:shadow-md border-l-[#733c46] p-3  font-semibold hover:bg-[#a45463] hover:border-l-transparent  hover:-translate-x-0.5 shadow-lg shadow-[#a45463] transition-all duration-75"
+                className="bg-[#e4405f] border-l-8 border-t-6 group border-b-6 border-b-transparent rounded-md hover:shadow-md border-t-[#a45463] active:border-l-transparent active:-translate-x-0.5 active:shadow-md border-l-[#733c46] p-3  font-semibold hover:bg-[#a45463] hover:border-l-transparent  hover:-translate-x-0.5 shadow-lg shadow-[#a45463] transition-all duration-75"
               >
-                <Instagram />
+                <Instagram className="group-hover:-translate-x-1 transition-all duration-75" />
               </FooterLink>
             </div>
           </section>
