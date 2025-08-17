@@ -84,7 +84,7 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ wardrobeItems = [], ...props 
       <section className="flex-1/2">
         <div
           className={cn(
-            'flex flex-col mx-auto md:mx-0 md:mt-0 h-full md:border-l-4 border-dashed border-gray-800',
+            'flex flex-col min-h-screen mx-auto md:mx-0 md:mt-0 h-full md:border-l-4 border-dashed border-gray-800',
             wardrobeItems.length === 0 && 'justify-center',
             props.isLoading && 'justify-center w-full h-full bg-[#FFF8E0]',
           )}
