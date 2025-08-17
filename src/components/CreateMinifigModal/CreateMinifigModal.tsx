@@ -15,6 +15,7 @@ import { useProjectValidation } from '@/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCharacter, renameCharacter } from '@/store/minifigBuilder/minifigBuilderSlice';
 import { RootState } from '@/store';
+import { MAX_PROJECT_NAME_LENGTH } from '@/constants/Minifig';
 
 const CreateMinifigModal = memo<ICreateMinifigModalProps>(
   ({ onClose, initialProjectName, mode, characterId, isOpen, ...props }) => {
@@ -60,8 +61,9 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
 
     const handleInputChange = useCallback(
       (e: ChangeEvent<HTMLInputElement>) => {
-        setProjectName(e.target.value);
-        if (error && e.target.value) {
+        const value = e.target.value.slice(0, MAX_PROJECT_NAME_LENGTH); // Limit input length
+        setProjectName(value);
+        if (error && value) {
           setError(undefined);
         }
       },
@@ -84,10 +86,16 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
                 value={projectName}
                 placeholder="Project name e.g. My Minifig Project"
                 onChange={handleInputChange}
+                maxLength={MAX_PROJECT_NAME_LENGTH}
                 autoFocus
                 className={cn(error && 'border-red-500 focus:border-red-500 ', 'text-center py-6')}
               />
-              {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+              <div className="flex flex-col items-center gap-1">
+                {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+                <small className="text-black font-bold text-lg">
+                  {projectName?.length || 0}/{MAX_PROJECT_NAME_LENGTH} characters
+                </small>
+              </div>
             </section>
             <DialogFooter className="mt-4 ">
               <CTAButton

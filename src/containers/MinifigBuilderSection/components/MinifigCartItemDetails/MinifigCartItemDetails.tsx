@@ -11,10 +11,10 @@ const MinifigCartItemDetails = memo<IMinifigCartItemDetailsProps>(({ minifig }) 
   const hasValidProjects = validProjects > 0;
 
   return (
-    <section className="overflow-y-auto minifig-scrollbar p-2">
+    <section className="overflow-y-auto minifig-scrollbar px-1">
       <div className="flex justify-between mb-2 sticky -top-2 bg-white z-10 pb-2">
         <StyledText className="font-bold" text="Project Name" as="h3" />
-        <StyledText className="font-bold" text="Price" as="h3" />
+        <StyledText className="font-bold " text="Price" as="h3" />
       </div>
       <Divider className="bg-gray-950 h-[2px] mb-4" />
       <div className="space-y-4 mb-6">

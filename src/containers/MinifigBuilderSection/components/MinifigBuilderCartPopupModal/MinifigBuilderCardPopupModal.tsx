@@ -36,7 +36,11 @@ const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
 
     return (
       <>
-        <GeneralDialog open={true} onOpenChange={handleClose} className="w-[500px]">
+        <GeneralDialog
+          open={true}
+          onOpenChange={handleClose}
+          className="sm:w-[80%] md:w-[70%] lg:w-[35%]"
+        >
           <GeneralDialogTitle
             title="ADD TO CART"
             className="text-4xl font-black text-center mb-24"
@@ -47,15 +51,15 @@ const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
             <MinifigCartItemDetails minifig={minifig} />
 
             {/* Action Buttons */}
-            <div className="flex justify-between mt-6">
+            <div className="flex  items-center justify-between mt-6">
               <CTAButton
                 onClick={handleClose}
-                className="bg-red-500 font-black uppercase cursor-pointer"
+                className="bg-red-500 font-black py-6 sm:text-lg uppercase cursor-pointer"
               >
                 Cancel
               </CTAButton>
               <CTAButton
-                className="bg-yellow-500 font-black uppercase cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="bg-yellow-500 font-black sm:text-lg py-6 uppercase cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
                 disabled={!hasValidProjects}
                 onClick={handleAddToCart}
               >
