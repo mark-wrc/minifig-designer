@@ -5,6 +5,7 @@ import { MinifigWardrobeItem } from '../MinifigWardrobeItem';
 import { EmptyStateComponent } from '../EmptyStateComponent';
 import { MinifigLoader } from '../MinifigLoader';
 import { GeneralPagination } from '../GeneralPagination';
+import { StyledText } from '../StyledText';
 
 const MinifigWardrobe = memo(
   forwardRef<HTMLDivElement, IMinifigWardrobeProps>(({ ...props }, ref) => {
@@ -21,12 +22,22 @@ const MinifigWardrobe = memo(
       return <MinifigLoader size={200} />;
     }
 
+    if (!props.wardrobeItems || props.wardrobeItems.length === 0) {
+      return (
+        <StyledText
+          className="text-center font-bold text-3xl"
+          as="p"
+          text="⚠️ Unable to load minifig parts. Please try again later."
+        />
+      );
+    }
+
     return (
       <>
         <section
           className={cn(
             props.className,
-            'w-full md:h-dvh py-4 overflow-y-auto minifig-scrollbar rounded-md md:border-0 md:rounded-none  bg-[#FFF8E0]',
+            'w-full md:h-dvh py-4 overflow-y-auto minifig-scrollbar rounded-md md:border-0 md:rounded-none bg-[#FFF8E0]',
           )}
           ref={ref}
         >
