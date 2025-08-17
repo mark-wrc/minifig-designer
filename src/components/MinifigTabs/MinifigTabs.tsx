@@ -68,9 +68,9 @@ const MinifigTabs = memo(() => {
               >
                 <TabsTrigger
                   className={cn(
-                    'flex items-center p-3 w-fit relative group cursor-pointer text-left md:text-sm rounded-sm  border-t-6 border-b-6 border-l-8 active:border-l-0 active:border-t-transparent hover:shadow-md active:shadow-md border-l-yellow-600 border-t-yellow-400 border-b-transparent shadow-lg shadow-yellow-600/40 hover:border-l-0 hover:border-t-transparent transition-all duration-75 bg-yellow-500 overflow-y-hidden',
+                    'flex items-center p-3 w-fit relative group cursor-pointer text-left md:text-sm rounded-sm bg-yellow-300 shadow-md shadow-yellow-400/50  ',
                     activeCharacterId === proj._id &&
-                      ' bg-minifig-brand-end border-l-8 border-b-6 border-t-6 border-l-gray-800 border-b-transparent active:border-l-0 active:border-t-transparent border-t-gray-600 transition-all duration-75 hover:border-l-0 hover:border-t-transparent shadow-lg shadow-minifig-brand-end/50 text-white hover:shadow-md active:shadow-md',
+                      ' bg-minifig-brand-end text-white shadow-lg shadow-minifig-brand-end/50 ',
                   )}
                   key={proj._id}
                   value={proj._id}

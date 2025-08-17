@@ -48,17 +48,14 @@ const CartItem = memo<ICartItemProps>(({ projectName }) => {
               <div className="flex flex-col gap-0 md:gap-4 p-2">
                 <CTAButton
                   variant="ghost"
-                  className="self-end hover:bg-red-500 border-b-6 border-l-6 border-t-6 py-4 bg-red-500 border-l-red-800 border-t-red-500 border-b-transparent shadow-lg hover:shadow-md shadow-red-500/50 hover:border-l-0 hover:border-t-transparent  hover:-translate-x-0.5  active:-translate-x-0.5 active:border-l-0 active:border-t-transparent hover:text-white"
+                  className="self-end bg-red-700 hover:bg-red-600 shadow-md shadow-red-500/50"
                   onClick={() => handleRemoveCartItem(projectName, item._id)}
                 >
-                  <Trash2 />
+                  <Trash2 color="white" />
                 </CTAButton>
                 <div className=" mt-4 flex items-center gap-4 justify-end self-end p-2 border-2 border-gray-600/30 w-fit rounded-md ">
                   <CTAButton
-                    className={cn(
-                      'cursor-pointer bg-red-500 hover:bg-red-600 py-4 hover:border-l-transparent group active:border-l-transparent active:border-t-transparent hover:border-t-transparent hover:-translate-x-0.5 active:translate-x-0.5  hover:text-white border-l-8 border-b-6 border-t-6 border-l-red-800 border-t-red-400 border-b-transparent transition-all duration-75 shadow-lg hover:shadow-md shadow-red-500/50',
-                      itemQuantity && 'opacity-50',
-                    )}
+                    className={cn(itemQuantity && 'opacity-50')}
                     onClick={() => updateQuantity(item._id, -1)}
                     disabled={itemQuantity}
                   >
@@ -69,7 +66,7 @@ const CartItem = memo<ICartItemProps>(({ projectName }) => {
                   </CTAButton>
                   <span className="min-w-[2rem] text-center">{item.quantity}</span>
                   <CTAButton
-                    className="cursor-pointer bg-yellow-300 border-l-8 py-4 border-t-6 border-b-6 group hover:border-l-transparent  hover:border-t-transparent hover:-translate-x-0.5 active:-translate-x-0.5 border-l-yellow-600 border-t-yellow-400 border-b-transparent shadow-lg hover:shadow-md shadow-yellow-400/50 text-black hover:bg-yellow-400"
+                    className="cursor-pointer  "
                     onClick={() => updateQuantity(item._id, 1)}
                     disabled={item.quantity >= item.stock}
                   >

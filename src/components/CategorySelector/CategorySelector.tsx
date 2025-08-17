@@ -29,9 +29,9 @@ const CategorySelector = memo<CategorySelectorProps>(
             ' bg-sunny w-full h-full flex items-center cursor-pointer hover:bg-minifig-brand-end hover:shadow-minifig-brand-end/50 transition-all duration-200 shadow-lg shadow-yellow-500/50 text-center',
             className,
             isCategoryTab &&
-              'bg-minifig-brand-end text-white font-bold flex flex-wrap items-center border-l-6 border-gray-800 border-t-6 border-t-gray-600 hover:bg-minifig-brand-end/45 shadow-lg shadow-minifig-brand-end/50  mt-4 ',
+              'bg-minifig-brand-end text-white font-bold flex flex-wrap items-center border-l-6 active:border-l-0 transition-all duration-100 border-gray-800 border-t-6 border-t-gray-600 hover:bg-minifig-brand-end/45 shadow-lg shadow-minifig-brand-end/50  mt-4 ',
             isSelected
-              ? ' bg-yellow-300 text-black shadow-lg shadow-yellow-500/50 border-l-yellow-600 border-t-yellow-400 active:border-l-0 focus:shadow-md'
+              ? ' bg-yellow-300 text-black shadow-lg shadow-yellow-500/50 border-l-yellow-600 border-t-yellow-400 active:border-l-0 focus:shadow-md '
               : 'bg-none',
             isSelected && !isCategoryTab
               ? 'bg-minifig-brand-end shadow-lg shadow-minifig-brand-end/50'

@@ -7,7 +7,7 @@ const MinifigTabContent = memo<IMinifigTabContentProps>(({ character, onDelete }
     <X
       width={20}
       height={20}
-      className="hover:bg-red-500 rounded-full hover:text-white"
+      className="hover:bg-red-500 active:bg-red-500 active:text-white rounded-full hover:text-white"
       onClick={(e) => onDelete(character._id, e)}
     />
 

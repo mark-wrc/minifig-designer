@@ -40,10 +40,10 @@ const HeaderSection = memo(() => {
           <img src={WOFLogo} className="w-[100px] md:w-1/12" alt="world of minifigs logo" />
           <section className="flex items-center gap-2">
             <div
-              className=" cursor-pointer relative border-l-8 border-t-6 border-b-6 border-b-transparent border-l-red-800 border-t-red-500 hover:border-l-0 active:border-l-0 active:border-t-transparent active:shadow-md hover:shadow-md px-1.5 bg-red-600 hover:bg-red-600 hover:border-t-transparent hover:-translate-x-1.5 active:-translate-x-1.5 transition-all duration-75 shadow-lg shadow-red-500/50 rounded-sm p-1"
+              className="cursor-pointer relative hover:bg-black/50 p-1 rounded-sm"
               onClick={handleToggleCart}
             >
-              <div className=" bg-yellow-500 rounded-full w-5 h-5 text-center flex flex-col align-middle justify-center text-white absolute -top-2 -right-2">
+              <div className=" bg-yellow-300 font-bold rounded-full w-5 h-5 text-center flex flex-col align-middle justify-center text-black absolute -top-2 -right-2">
                 {projectEntries.length}
               </div>
               <ShoppingCart color="white" size={24} />
