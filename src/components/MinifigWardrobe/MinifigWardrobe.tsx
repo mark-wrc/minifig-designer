@@ -32,7 +32,7 @@ const MinifigWardrobe = memo(
         >
           {props.selectorComponent && <div className=" md:hidden">{props.selectorComponent}</div>}
           {props.wardrobeItems?.length > 0 && (
-            <section className="grid grid-cols-2 lg:grid-cols-3 gap-4 max-h-[300px] md:max-h-none overflow-y-auto p-2 mt-10 md:mt-0 minifig-scrollbar">
+            <section className="grid grid-cols-2 lg:grid-cols-3 gap-4 max-h-[500px] md:max-h-none overflow-y-auto p-2 mt-10 md:mt-0 minifig-scrollbar">
               {props.wardrobeItems.map((item) => (
                 <MinifigWardrobeItem
                   key={item._id}

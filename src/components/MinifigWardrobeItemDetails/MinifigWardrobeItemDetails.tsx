@@ -27,7 +27,7 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
                 variant="default"
                 onClick={onClick}
                 icon={ArrowLeft}
-                className="bg-yellow-300 border-l-8 border-t-6 border-b-6 border-b-transparent hover:border-l-0 hover:border-t-0 hover:border-b-0 active:border-l-0 active:border-t-0 active:border-b-0 active:shadow-md transition-all duration-75 border-l-yellow-600 border-t-yellow-400 hover:bg-yellow-400 shadow-lg shadow-yellow-400/50 text-black text-lg mb-8 font-bold hover:shadow-md"
+                className="bg-yellow-300 mb-4 text-black text-lg font-bold hover:text-white p-6"
               >
                 Back
               </CTAButton>

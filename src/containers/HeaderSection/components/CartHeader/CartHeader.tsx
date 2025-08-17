@@ -14,7 +14,7 @@ const CartHeader = memo<ICartHeaderProps>(({ items, onClose }) => (
 
       <div
         onClick={() => onClose?.()}
-        className=" cursor-pointer border-l-10 rounded-md hover:border-l-0 active:border-l-0 active:border-t-transparent px-1 shadow-lg hover:shadow-md shadow-red-500/50 transition-all duration-75 hover:-translate-x-0.5 active:-translate-x-0.5 h-fit border-b-6 border-t-6 bg-red-600 border-l-red-700 border-b-transparent border-t-red-500"
+        className=" cursor-pointer hover:bg-red-600 h-fit p-1 rounded-sm"
       >
         <X color="white" size={32} className="p-1" />
       </div>

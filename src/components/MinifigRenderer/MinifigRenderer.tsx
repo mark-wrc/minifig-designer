@@ -114,7 +114,7 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
                           <CTAButton
                             variant="ghost"
                             onClick={(e) => handleRemoveMinifigPart(e, part.type, slot.slotIndex)}
-                            className=" bg-red-700 rounded-md  hover:bg-red-600 border-l-6 border-t-6 hover:border-t-0 active:border-t-0 border-b-6 border-b-transparent hover:border-b-0 active:border-b-0 border-l-red-800 border-t-red-600 hover:border-l-0 active:border-l-0 transition-all duration-75  hover:shadow-md shadow-lg  shadow-red-700/50 p-2"
+                            className=" bg-red-700 rounded-md hover:bg-red-600 active:bg-red-600"
                           >
                             <Trash2 size={16} color="white" />
                           </CTAButton>
@@ -124,7 +124,7 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
                           {!slot.hasMinifigParts ? (
                             <CTAButton
                               variant="ghost"
-                              className="cursor-pointer hover:bg-gray-600 active:bg-gray-600 active:border-t-0 hover:border-t-0 bg-gray-700 rounded-md border-l-6 border-l-gray-800 border-t-6 border-b-6 border-b-transparent hover:border-b-0 active:border-b-0 border-t-gray-600  shadow-lg shadow-gray-700/50 hover:border-l-0  active:border-l-0 transition-all  duration-75"
+                              className="cursor-pointer hover:bg-gray-600 active:bg-gray-600  bg-gray-800"
                               onClick={() => handlePartClick(part.type)}
                             >
                               <Plus size={16} strokeWidth={2.75} color="white" />
@@ -160,7 +160,7 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
                   {activeCharacter && (
                     <CTAButton
                       variant="ghost"
-                      className="left-5 absolute hover:bg-gray-600 active:bg-gray-600 bg-gray-700 rounded-md border-l-6 hover:border-t-0 active:border-t-0 border-l-gray-800 border-t-6 border-b-6 border-b-transparent hover:border-b-0 active:border-b-0 border-t-gray-600 shadow-lg shadow-gray-700/50 hover:border-l-0  active:border-l-0 transition-all  duration-75 "
+                      className="left-5 absolute hover:bg-gray-600 active:bg-gray-600 bg-gray-700 "
                       onClick={() => handlePartClick(part.type)}
                     >
                       <Plus size={22} strokeWidth={2.75} color="white" />
@@ -171,7 +171,7 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
                     <CTAButton
                       variant="ghost"
                       onClick={(e) => handleRemoveMinifigPart(e, part.type)}
-                      className="absolute right-5 bg-red-700 rounded-md hover:bg-red-600 active:bg-red-600 border-l-6 border-t-6 border-b-6 border-transparent hover:border-b-0 active:border-b-0 hover:border-t-0 active:border-t-0 border-l-red-800 border-t-red-600 hover:border-l-0 active:border-l-0 active:-translate-x-1.5 transition-all duration-75 hover:-translate-x-1.5 hover:shadow-md shadow-lg shadow-red-700/50 p-2"
+                      className="absolute right-5 bg-red-700 rounded-md hover:bg-red-600 active:bg-red-600 "
                     >
                       <Trash2 size={22} color="white" />
                     </CTAButton>

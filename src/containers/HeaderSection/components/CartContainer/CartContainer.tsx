@@ -68,7 +68,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
                   variant="destructive"
                   size="sm"
                   onClick={() => handleRemoveProject(projectName)}
-                  className="text-sm cursor-pointer border-b-transparent border-b-6 py-4 border-l-8 border-t-6 hover:border-l-0 hover:border-t-transparent hover:-translate-x-0.5 active:border-t-transparent active:border-l-0 active:shadow-md active:-translate-x-0.5 transition-all duration-75 border-l-red-800 border-t-red-500 shadow-lg hover:shadow-md shadow-red-500/50"
+                  className="text-sm shadow-md shadow-red-500/50 "
                 >
                   Remove All
                 </CTAButton>

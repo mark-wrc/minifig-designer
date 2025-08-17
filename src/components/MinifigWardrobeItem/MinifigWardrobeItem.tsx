@@ -27,7 +27,8 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
         <CTAButton
           size={null}
           variant="default"
-          className=" bg-yellow-300 md:text-lg font-bold hover:bg-yellow-400 hover:border-l-0  active:border-t-transparent active:border-b-transparent hover:border-t-transparent active:border-l-0 active:bg-yellow-400  transition-all duration-75 hover:shadow-md self-center py-3 px-8 rounded-md text-black shadow-lg shadow-yellow-500/50 border-l-8 border-t-6 border-b-6 border-b-transparent border-t-yellow-400  border-l-yellow-600"
+          className=" bg-yellow-300 md:text-lg font-bold hover:bg-yellow-400  py-3 px-8 text-black self-center border-b-8 border-b-yellow-600/50 hover:translate-y-1 active:translate-y-1 border-t-6 border-t-transparent hover:border-b-transparent active:border-b-transparent shadow-lg hover:shadow-md shadow-yellow-600/50 transition-all duration-100
+          "
           onClick={() => onPartSelect(minifigItem)}
         >
           Add
