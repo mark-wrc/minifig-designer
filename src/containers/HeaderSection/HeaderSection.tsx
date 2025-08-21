@@ -35,7 +35,7 @@ const HeaderSection = memo(() => {
 
   return (
     <section className="py-6 ">
-      <div className="w-full px-4 fixed z-50 bg-minifig-brand-end top-0 py-4 shadow-md shadow-minifig-brand-end/50">
+      <div className="w-full px-4 fixed z-[99999] bg-minifig-brand-end top-0 py-4 shadow-md shadow-minifig-brand-end/50">
         <div className="lg:container mx-auto flex justify-between  align-middle">
           <img src={WOFLogo} className="w-[100px] md:w-1/12" alt="world of minifigs logo" />
           <section className="flex items-center gap-2">

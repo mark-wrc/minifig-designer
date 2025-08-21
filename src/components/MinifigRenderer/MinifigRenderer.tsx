@@ -1,5 +1,4 @@
 import type React from 'react';
-
 import { memo, useCallback, useRef } from 'react';
 import { MinifigPart } from '../MinifigPart';
 import { MinifigPartType } from '@/types';
@@ -43,12 +42,11 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
 
     // Rename character
     const handleMinifigTitleEdit = useCallback(() => {
-      if (!activeCharacter) return; // Ensure an active character exists
-      setModalMode('edit'); // Set the mode to 'edit'
-      modalDisclosure.onDisclosureOpen(); // Open the modal
-    }, [activeCharacter, modalDisclosure, setModalMode]); // Dependencies are correct
+      if (!activeCharacter) return;
+      setModalMode('edit');
+      modalDisclosure.onDisclosureOpen();
+    }, [activeCharacter, modalDisclosure, setModalMode]);
 
-    // Add/change part
     const handlePartClick = useCallback(
       (type: MinifigPartType) => {
         if (!activeCharacter) {
@@ -57,7 +55,6 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
           return;
         }
         dispatch(setSelectedCategory(type));
-        // Store slot index for accessories
       },
       [dispatch, modalDisclosure, activeCharacter, setModalMode],
     );
@@ -131,7 +128,6 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
                             </CTAButton>
                           ) : (
                             <MinifigPart
-                              isloading={false}
                               key={slot.currentImage}
                               type={part.type}
                               imageSrc={slot.currentImage}
@@ -179,7 +175,6 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
 
                   <div ref={minifigPartRef}>
                     <MinifigPart
-                      isloading={false}
                       key={part.currentImage}
                       type={part.type}
                       imageSrc={part.currentImage}
