@@ -6,6 +6,5 @@ export interface IMinifigPartProps {
   className?: string;
   totalMinifigParts?: number;
   title?: string;
-  isloading?: boolean;
   imageSrc: string;
 }

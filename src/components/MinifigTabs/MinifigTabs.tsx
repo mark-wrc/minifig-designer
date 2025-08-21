@@ -70,7 +70,7 @@ const MinifigTabs = memo(() => {
                   className={cn(
                     'flex items-center p-3 w-fit relative group cursor-pointer text-left md:text-sm rounded-sm bg-yellow-300 shadow-md shadow-yellow-400/50  ',
                     activeCharacterId === proj._id &&
-                      ' bg-minifig-brand-end text-white shadow-lg shadow-minifig-brand-end/50 ',
+                      'bg-minifig-brand-end text-white shadow-lg shadow-minifig-brand-end/50',
                   )}
                   key={proj._id}
                   value={proj._id}
@@ -118,7 +118,7 @@ const MinifigTabs = memo(() => {
           className="md:w-fit"
           emoji={{ text: '⚠️', emojiStyles: 'text-[80px] text-center' }}
           descriptionContainerStyle="max-w-[300px] mx-auto p-0 text-md text-black"
-          actionContainerStyles="self-center  justify-center"
+          actionContainerStyles="self-center justify-center"
           description="Are your sure that you'd like to remove this project"
           onConfirm={removeProjectTab.onDisclosureClose(handleDeleteConfirm)}
           onClose={removeProjectTab.onDisclosureClose()}

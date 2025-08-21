@@ -49,7 +49,11 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
         <div className="flex-1 overflow-y-auto minifig-scrollbar ">
           {projectEntries.length === 0 && (
             <div className="text-center text-white h-full flex flex-col align-middle justify-center">
-              <StyledText as="h1" className="text-4xl mb-4" text="Your cart is empty" />
+              <StyledText
+                as="h1"
+                className="text-5xl md:text-4xl mb-4 font-bold"
+                text="Your cart is empty"
+              />
               <StyledText text="Add some minifigs to your cart to get started!" />
             </div>
           )}
