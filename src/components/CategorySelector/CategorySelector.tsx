@@ -4,7 +4,6 @@ import { CategorySelectorProps } from './CategorySelector.types';
 import { useMinifigCreation } from '@/hooks';
 import { CreateMinifigModal } from '../CreateMinifigModal';
 import { StyledText } from '../StyledText';
-import { MinifigPartType } from '@/types';
 
 const CategorySelector = memo<CategorySelectorProps>(
   ({ className, item, onClick, isCategoryTab = false, isSelected }) => {
@@ -40,14 +39,7 @@ const CategorySelector = memo<CategorySelectorProps>(
           )}
         >
           {!isCategoryTab ? (
-            <img
-              src={item.image}
-              alt={item.title}
-              className={cn(
-                'w-20 md:w-28 object-contain',
-                item.type === MinifigPartType.ACCESSORY && 'h-36',
-              )}
-            />
+            <img src={item.image} alt={item.title} className="w-28 h-30 object-contain" />
           ) : (
             <StyledText as="span" text={item.title} className="mb-0 px-2" />
           )}
