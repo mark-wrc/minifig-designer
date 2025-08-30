@@ -3,8 +3,6 @@ import { cn } from '@/lib/utils';
 import { CreateMinifigModal } from '../CreateMinifigModal';
 import { IMinifigPartProps } from './MinifigPart.types';
 import { useDisclosureParam } from '@/hooks';
-import { motion } from 'motion/react';
-import { MinifigPartAnimation } from '@/animations';
 import { MinifigPartType } from '@/types';
 
 const MinifigPart = memo<IMinifigPartProps>(({ type, imageSrc, className }) => {
@@ -16,25 +14,22 @@ const MinifigPart = memo<IMinifigPartProps>(({ type, imageSrc, className }) => {
   return (
     <section className="flex justify-center w-[130px] md:w-[130px] ">
       <div className={cn('flex items-center relative', className)}>
-        <motion.figure
-          variants={MinifigPartAnimation}
-          initial="initial"
-          animate="enter"
-          exit="exit"
-        >
+        <figure>
           {imageSrc && (
             <img
               src={imageSrc}
               alt={type.toLowerCase()}
               className={cn(
-                'object-contain block w-full h-full -mt-2 ',
-                type === MinifigPartType.HEAD ? 'relative z-50' : 'relative z-10',
-                type === MinifigPartType.HAIR && 'translate-y-4',
-                type === MinifigPartType.LEGS && '-mt-4',
+                'object-contain block w-full h-full -mt-4 relative z-10 ',
+                type === MinifigPartType.HAIR && ' z-20 -mb-10',
+                type === MinifigPartType.HEAD && 'relative z-30 scale-70 -translate-y-2',
+                type === MinifigPartType.TORSO && 'z-40 scale-150',
+                type === MinifigPartType.LEGS && ' z-10 -mt-10 ',
+                type === MinifigPartType.ACCESSORY && 'mt-0 rounded-md border-2 border-gray-800',
               )}
             />
           )}
-        </motion.figure>
+        </figure>
       </div>
       {modalDisclosure.open && <CreateMinifigModal mode="create" onClose={handleCloseModal} />}
     </section>
