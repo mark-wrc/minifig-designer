@@ -1,35 +1,41 @@
 import { MinifigPartType } from '@/types';
-import { DefaultHairAndHead, DefaultTorso, DefaultLegs, DefaultHead } from '@/assets/images';
+import {
+  DefaultHair,
+  DefaultTorso,
+  DefaultLegs,
+  DefaultHead,
+  DefaultAccessory,
+} from '@/assets/images';
 
 export const BaseMinifigParts = {
   [MinifigPartType.HAIR]: {
-    id: 'placeholder',
+    id: 'placeholder_hair',
     type: MinifigPartType.HEAD,
-    image: DefaultHairAndHead,
+    image: DefaultHair,
     isPlaceholder: true,
   },
   [MinifigPartType.HEAD]: {
-    id: 'placeholder',
+    id: 'placeholder_head',
     type: MinifigPartType.HEAD,
     image: DefaultHead,
     isPlaceholder: true,
   },
   [MinifigPartType.TORSO]: {
-    id: 'placeholder',
+    id: 'placeholder_torso',
     type: MinifigPartType.TORSO,
     image: DefaultTorso,
     isPlaceholder: true,
   },
   [MinifigPartType.LEGS]: {
-    id: 'placeholder',
+    id: 'placeholder_legs',
     type: MinifigPartType.LEGS,
     image: DefaultLegs,
     isPlaceholder: true,
   },
   [MinifigPartType.ACCESSORY]: {
-    id: 'placeholder',
+    id: 'placeholder_accessory',
     type: MinifigPartType.ACCESSORY,
-    image: DefaultLegs,
+    image: DefaultAccessory,
     isPlaceholder: true,
   },
 };

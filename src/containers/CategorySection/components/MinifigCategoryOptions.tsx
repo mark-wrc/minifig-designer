@@ -27,12 +27,34 @@ const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
 
     const minifigCategories = useMemo<ICategoryItem[]>(
       () =>
-        CATEGORY_CONFIG.map((config, idx) => ({
-          id: idx + 1,
-          title: config.type,
-          image: (activeMinifigProject?.[config.key] as string) || config.defaultImage,
-          type: config.type,
-        })),
+        CATEGORY_CONFIG.map((config, idx) => {
+          let imageSrc = config.defaultImage;
+
+          if (activeMinifigProject?.selectedItems) {
+            if (config.type === MinifigPartType.ACCESSORY) {
+              //Accessories (array of MinifigSlot)
+              const accessories = activeMinifigProject.selectedItems.accessory;
+              if (accessories && accessories.length > 0 && accessories[0]) {
+                imageSrc = accessories[0].product_images[0]?.url || config.defaultImage;
+              }
+            } else {
+              const part =
+                activeMinifigProject.selectedItems[
+                  config.key.toLowerCase() as keyof typeof activeMinifigProject.selectedItems
+                ];
+              if (part && !Array.isArray(part)) {
+                imageSrc = part.product_images[0]?.url || config.defaultImage;
+              }
+            }
+          }
+
+          return {
+            id: idx + 1,
+            title: config.type,
+            image: imageSrc,
+            type: config.type,
+          };
+        }),
       [activeMinifigProject],
     );
 
