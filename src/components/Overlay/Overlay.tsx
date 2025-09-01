@@ -9,7 +9,7 @@ const Overlay = memo<IOverlayProps>(({ className, onClick, ...props }) => (
     initial="initial"
     animate="enter"
     exit="exit"
-    className={cn('bg-black/90 fixed w-full top-0 left-0 z-50 bottom-0 h-full', className)}
+    className={cn('bg-black/90 fixed w-full top-0 left-0 z-[99999] bottom-0 h-full', className)}
     onClick={() => onClick?.()}
   />
 ));
