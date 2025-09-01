@@ -21,9 +21,9 @@ const MinifigPart = memo<IMinifigPartProps>(({ type, imageSrc, className }) => {
               alt={type.toLowerCase()}
               className={cn(
                 'object-contain block w-full h-full -mt-4 relative z-10 ',
-                type === MinifigPartType.HAIR && ' z-20 -mb-10',
-                type === MinifigPartType.HEAD && 'relative z-30 scale-70 -translate-y-2',
-                type === MinifigPartType.TORSO && 'z-40 scale-150',
+                type === MinifigPartType.HAIR && ' z-20 -mb-18',
+                type === MinifigPartType.HEAD && 'relative z-40 scale-65 translate-y-5.5',
+                type === MinifigPartType.TORSO && 'z-30 scale-150',
                 type === MinifigPartType.LEGS && ' z-10 -mt-10 ',
                 type === MinifigPartType.ACCESSORY && 'mt-0 rounded-md border-2 border-gray-800',
               )}
