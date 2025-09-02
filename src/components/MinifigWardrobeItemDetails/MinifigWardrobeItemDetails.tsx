@@ -41,11 +41,11 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
               className="flex flex-col lg:flex-row gap-4 justify-between"
             >
               {/*Product image  */}
-              <figure className="w-1/2 rounded-md bg-white h-fit  border-2  border-gray-950">
+              <figure className="w-1/2 rounded-md bg-white h-fit p-4 outline-4 outline-yellow-400">
                 {wardrobeItems.product_images.map((item) => (
                   <img
                     key={item._id}
-                    className=" rounded-md "
+                    className="rounded-md aspect-square "
                     src={item.url}
                     alt={item.public_id}
                   />

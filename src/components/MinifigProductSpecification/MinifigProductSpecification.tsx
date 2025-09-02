@@ -6,9 +6,17 @@ import { Divider } from '../Divider';
 
 const MinifigProductSpecification = memo<IMinifigProductSpecificationProps>(
   ({ minifigProductSpecification, productDimension }) => {
-    const formattedDimensions = productDimension
+    const hasDimensions =
+      productDimension &&
+      productDimension.product_length &&
+      productDimension.product_width &&
+      productDimension.product_height;
+
+    const formattedDimensions = hasDimensions
       ? `${productDimension.product_length}x${productDimension.product_width}x${productDimension.product_height} cm`
-      : 'N/A';
+      : 'Unavailable';
+
+    const hasPieceCount = minifigProductSpecification?.product_piece_count > 0;
 
     return (
       <section className="py-4 mt-4 bg-[#28385880] px-3">
@@ -24,7 +32,9 @@ const MinifigProductSpecification = memo<IMinifigProductSpecificationProps>(
                 {
                   icon: <Box className="text-orange-400" size={32} />,
                   label: 'Piece Count',
-                  subLabel: minifigProductSpecification.product_piece_count,
+                  subLabel: hasPieceCount
+                    ? minifigProductSpecification.product_piece_count
+                    : 'Unavailable',
                 },
                 {
                   icon: <Dices className="text-green-400" size={32} />,

@@ -10,13 +10,14 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
     <section className="flex flex-col h-fit rounded-lg ">
       <div
         key={minifigItem?._id}
-        className=" h-full cursor-pointer"
+        className="cursor-pointer w-[80%] mx-auto object-contain outline-3 outline-gray-600 group hover:outline-yellow-600 active:outline-yellow-600 duration-75 transition-all active:outline-4 hover:outline-4
+         bg-white p-4 rounded-sm"
         onClick={() => onItemDetailsClick(minifigItem as MinifigPartData)}
       >
         {minifigItem.product_images.map((item) => (
           <img
             key={item._id}
-            className="w-fit mx-auto outline-2 outline-gray-600 bg-white rounded-sm "
+            className="w-fit mx-auto rounded-sm aspect-square hover:scale-110 transition-al duration-75"
             src={item.url}
             alt={minifigItem.product_name}
           />
@@ -27,8 +28,7 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
         <CTAButton
           size={null}
           variant="default"
-          className=" bg-yellow-300 md:text-lg font-bold hover:bg-yellow-400  py-3 px-8 text-black self-center border-b-8 border-b-yellow-600/50 hover:translate-y-1 active:translate-y-1 border-t-6 border-t-transparent hover:border-b-transparent active:border-b-transparent shadow-lg hover:shadow-md shadow-yellow-600/50 transition-all duration-100
-          "
+          className="bg-yellow-300 md:text-lg font-bold hover:bg-yellow-400  py-3 px-8 text-black self-center border-b-8 border-b-yellow-600/50 hover:translate-y-1 active:translate-y-1 border-t-6 border-t-transparent hover:border-b-transparent active:border-b-transparent shadow-lg hover:shadow-md shadow-yellow-600/50 transition-all duration-100"
           onClick={() => onPartSelect(minifigItem)}
         >
           Add
