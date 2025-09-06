@@ -12,7 +12,7 @@ const MinifigCartItemDetails = memo<IMinifigCartItemDetailsProps>(({ minifig }) 
 
   return (
     <section className="overflow-y-auto minifig-scrollbar px-1">
-      <div className="flex justify-between mb-2 sticky -top-2 bg-white z-10 pb-2">
+      <div className="flex justify-between mb-2 sticky top-0 bg-white z-10 pb-2">
         <StyledText className="font-bold" text="Project Name" as="h3" />
         <StyledText className="font-bold " text="Price" as="h3" />
       </div>

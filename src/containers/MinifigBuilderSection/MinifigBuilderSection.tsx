@@ -34,31 +34,20 @@ const MinifigBuilderSection = () => {
   const activeCharacter = characters.find((c) => c._id === activeCharacterId);
   const minifigParts = useMinifigParts(activeCharacter);
 
+  const MinifigComponent = isMobile ? MinifigMobileMode : MinifigDesktopMode;
+
   return (
     <section>
-      {isMobile ? (
-        <MinifigMobileMode
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-          minifigParts={minifigParts}
-          minifigData={wardrobeItems}
-          modalDisclosure={modalDisclosure}
-          minifigProjects={characters}
-          isLoading={isMinifigProductLoading}
-        />
-      ) : (
-        <MinifigDesktopMode
-          minifigParts={minifigParts}
-          minifigData={wardrobeItems}
-          modalDisclosure={modalDisclosure}
-          minifigProjects={characters}
-          isLoading={isMinifigProductLoading}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-        />
-      )}
+      <MinifigComponent
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+        minifigParts={minifigParts}
+        minifigData={wardrobeItems}
+        modalDisclosure={modalDisclosure}
+        minifigProjects={characters}
+        isLoading={isMinifigProductLoading}
+      />
     </section>
   );
 };

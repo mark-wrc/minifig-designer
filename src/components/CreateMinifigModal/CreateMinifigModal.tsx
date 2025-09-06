@@ -75,7 +75,9 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
         <DialogContent className="p-12">
           <form onSubmit={handleSubmit}>
             <DialogHeader className="flex justify-center items-center">
-              <DialogTitle className=" font-black text-3xl">START YOUR BUILD</DialogTitle>
+              <DialogTitle className=" font-black text-2xl md:text-3xl">
+                START YOUR BUILD
+              </DialogTitle>
               <DialogDescription className="my-4 text-lg">
                 {mode === 'create' ? 'Name your Project' : 'Enter new project name'}
               </DialogDescription>

@@ -54,12 +54,13 @@ const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
             <div className="flex  items-center justify-between mt-6">
               <CTAButton
                 onClick={handleClose}
-                className="bg-red-500 font-black py-6 sm:text-lg uppercase cursor-pointer"
+                className="bg-red-500 font-black py-6 sm:text-lg md:text-sm uppercase cursor-pointer"
               >
                 Cancel
               </CTAButton>
+
               <CTAButton
-                className="bg-yellow-500 font-black sm:text-lg py-6 uppercase cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="bg-yellow-500 font-black sm:text-lg py-6 md:text-sm uppercase cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
                 disabled={!hasValidProjects}
                 onClick={handleAddToCart}
               >

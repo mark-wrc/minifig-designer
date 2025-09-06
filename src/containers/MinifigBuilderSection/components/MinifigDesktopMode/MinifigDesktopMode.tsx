@@ -5,8 +5,9 @@ import { IMinifigDesktopModeProps } from './MinifigDesktopMode.types';
 import { CategorySection } from '@/containers/CategorySection';
 
 const MinifigDesktopMode = memo<IMinifigDesktopModeProps>(({ ...props }) => (
-  <section className="container mx-auto p-4 mb-4 w-fit xl:w-6xl  ">
+  <section className="container mx-auto p-4 mb-4 w-fit xl:w-6xl">
     <CategorySection />
+
     <MinifigTabs />
 
     <MinifigCanvas
