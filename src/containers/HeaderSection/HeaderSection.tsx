@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { WOFLogo } from '@/assets/images';
 import { useAuth, useDisableScroll } from '@/hooks';
 import { ShoppingCart, Menu } from 'lucide-react';
@@ -15,7 +15,6 @@ import useWindowResize from '@/hooks/useWindowResize';
 const HeaderSection = memo(() => {
   const { user } = useAuth();
   const { projects } = useSelector((state: RootState) => state.MinifigBuilderCart);
-  const projectEntries = Object.entries(projects);
 
   const [openCart, setOpenCart] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
@@ -33,18 +32,26 @@ const HeaderSection = memo(() => {
     setOpenMenu((prev) => !prev);
   }, []);
 
+  const totalCartItems = useMemo(() => {
+    return Object.values(projects).reduce((acc, project) => {
+      return acc + project.items.reduce((itemAcc, item) => itemAcc + item.quantity, 0);
+    }, 0);
+  }, [projects]);
+
   return (
     <section className="py-6 ">
-      <div className="w-full px-4 fixed z-[99999] bg-minifig-brand-end top-0 py-4 shadow-md shadow-minifig-brand-end/50">
+      <section className="w-full px-4 fixed z-50 bg-minifig-brand-end top-0 py-4 shadow-md shadow-minifig-brand-end/50">
         <div className="lg:container mx-auto flex justify-between  align-middle">
+          {/* LOGO */}
           <img src={WOFLogo} className="w-[100px] md:w-1/12" alt="world of minifigs logo" />
           <section className="flex items-center gap-2">
             <div
               className="cursor-pointer relative hover:bg-black/50 p-1 rounded-sm"
               onClick={handleToggleCart}
             >
-              <div className=" bg-yellow-300 font-bold rounded-full w-5 h-5 text-center flex flex-col align-middle justify-center text-black absolute -top-2 -right-2">
-                {projectEntries.length}
+              {/* shopping cart icon */}
+              <div className="text-xs bg-yellow-300 font-black rounded-full w-5 h-5 text-center flex flex-col align-middle justify-center text-black absolute -top-2 -right-2">
+                {totalCartItems}
               </div>
               <ShoppingCart color="white" size={24} />
             </div>
@@ -66,7 +73,7 @@ const HeaderSection = memo(() => {
             )}
           </section>
         </div>
-      </div>
+      </section>
       <AnimatePresence>
         {openMenu && isMobile && (
           <MobileNavigation
