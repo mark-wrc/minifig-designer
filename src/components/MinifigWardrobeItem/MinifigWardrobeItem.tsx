@@ -17,7 +17,7 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
         {minifigItem.product_images.map((item) => (
           <img
             key={item._id}
-            className="w-fit mx-auto rounded-sm aspect-square hover:scale-110 transition-al duration-75"
+            className="w-fit mx-auto rounded-sm aspect-square object-contain hover:scale-110 transition-al duration-75"
             src={item.url}
             alt={minifigItem.product_name}
           />

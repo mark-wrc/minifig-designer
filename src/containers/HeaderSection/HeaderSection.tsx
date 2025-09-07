@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { WOFLogo } from '@/assets/images';
 import { useAuth, useDisableScroll } from '@/hooks';
 import { ShoppingCart, Menu } from 'lucide-react';
@@ -11,6 +11,7 @@ import { UserLoginDisplay } from '@/components';
 import { MobileNavigation } from './components';
 import { MenuItems, UserMenuData } from '@/constants/UserMenuData';
 import useWindowResize from '@/hooks/useWindowResize';
+import { cn } from '@/lib/utils';
 
 const HeaderSection = memo(() => {
   const { user } = useAuth();
@@ -18,6 +19,7 @@ const HeaderSection = memo(() => {
 
   const [openCart, setOpenCart] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const { screenSize } = useWindowResize();
   const isMobile = screenSize.width <= 767;
@@ -38,9 +40,23 @@ const HeaderSection = memo(() => {
     }, 0);
   }, [projects]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <section className="py-6 ">
-      <section className="w-full px-4 fixed z-50 bg-minifig-brand-end top-0 py-4 shadow-md shadow-minifig-brand-end/50">
+      <section
+        className={cn(
+          'w-full px-4 fixed z-50 bg-minifig-brand-end top-0 py-4 shadow-lg shadow-minifig-brand-end/50 ',
+          isScrolled && 'border-b-2 border-b-gray-800 transition-all duration-75',
+        )}
+      >
         <div className="lg:container mx-auto flex justify-between  align-middle">
           {/* LOGO */}
           <img src={WOFLogo} className="w-[100px] md:w-1/12" alt="world of minifigs logo" />
@@ -50,7 +66,7 @@ const HeaderSection = memo(() => {
               onClick={handleToggleCart}
             >
               {/* shopping cart icon */}
-              <div className="text-xs bg-yellow-300 font-black rounded-full w-5 h-5 text-center flex flex-col align-middle justify-center text-black absolute -top-2 -right-2">
+              <div className="text-xs bg-yellow-300 font-semibold rounded-full w-5 h-5 text-center flex flex-col align-middle justify-center text-black absolute -top-2 -right-2">
                 {totalCartItems}
               </div>
               <ShoppingCart color="white" size={24} />

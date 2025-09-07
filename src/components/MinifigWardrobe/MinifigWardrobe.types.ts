@@ -13,7 +13,6 @@ export interface IMinifigWardrobeBaseProps {
 }
 
 export interface IMinifigWardrobeUIProps {
-  ref: HTMLDivElement;
   className?: string;
   selectorComponent?: React.ReactElement | null;
 }

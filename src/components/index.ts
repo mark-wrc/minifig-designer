@@ -30,3 +30,4 @@ export * from './Overlay';
 export * from './UserContent';
 export * from './StyledText';
 export * from './MinifigLoader';
+export * from './ColorBadge';
