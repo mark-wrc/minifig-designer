@@ -2,6 +2,8 @@ import { UseDisclosureReturn } from '@/hooks';
 import type { MinifigPartType } from '@/types';
 import { IMinifigProject, MinifigPartData } from '@/types/Minifig';
 import { Dispatch } from 'react';
+import { IMinifigWardrobeItemsDetailsProps } from '../MinifigWardrobeItemDetails';
+import { IMinifigWardrobeProps } from '../MinifigWardrobe';
 
 export type IMinifigPartImageMap = {
   [key in MinifigPartType]?: {
@@ -10,6 +12,7 @@ export type IMinifigPartImageMap = {
   };
 };
 
+export type IWardrobeProps = IMinifigWardrobeItemsDetailsProps | IMinifigWardrobeProps;
 export interface IMinifigCanvasEventHandlers {
   onPartClick?: (type: MinifigPartType) => void;
   onTitleEdit?: () => void;

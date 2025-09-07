@@ -1,4 +1,4 @@
-import { Divider, StyledText } from '@/components';
+import { StyledText } from '@/components';
 import { memo } from 'react';
 import { CartSummarySection } from '../CartSummarySection';
 import { IMinifigCartItemDetailsProps } from './MinifigCartItemDetails.types';
@@ -12,11 +12,15 @@ const MinifigCartItemDetails = memo<IMinifigCartItemDetailsProps>(({ minifig }) 
 
   return (
     <section className="overflow-y-auto minifig-scrollbar px-1">
-      <div className="flex justify-between mb-2 sticky top-0 bg-white z-10 pb-2">
-        <StyledText className="font-bold" text="Project Name" as="h3" />
-        <StyledText className="font-bold " text="Price" as="h3" />
+      {/* Header section for project list */}
+
+      <div className="flex justify-between mb-2 sticky top-0 bg-[#f6f6f6] border-b-3 border-gray-950 z-10 pb-2">
+        <StyledText className="font-black" text="Project Name" as="h3" />
+        <StyledText className="font-black " text="Price" as="h3" />
       </div>
-      <Divider className="bg-gray-950 h-[2px] mb-4" />
+
+      {/* Project cards list section */}
+
       <div className="space-y-4 mb-6">
         {minifig.map((character, index) => {
           if (!character) return null;
@@ -28,11 +32,17 @@ const MinifigCartItemDetails = memo<IMinifigCartItemDetailsProps>(({ minifig }) 
           );
         })}
       </div>
+
+      {/* Cart summary section */}
+
       <CartSummarySection
         validProjects={validProjects}
         totalItems={totalItems}
         totalPrice={totalPrice}
       />
+
+      {/* Warning message if no valid minifig projects */}
+
       {!hasValidProjects && (
         <div className="text-red-500 text-center mt-4 mb-4 p-3 bg-red-50 rounded">
           <StyledText

@@ -21,7 +21,6 @@ const CartItem = memo<ICartItemProps>(({ projectName }) => {
     [removeItemFromCart],
   );
 
-  // Update quantity in Redux store
   const updateQuantity = useCallback(
     (itemId: string, change: number) => {
       const item = cartItems.find((item) => item._id === itemId);
@@ -53,6 +52,9 @@ const CartItem = memo<ICartItemProps>(({ projectName }) => {
                 >
                   <Trash2 color="white" />
                 </CTAButton>
+
+                {/* Quantity control section */}
+
                 <div className=" mt-4 flex items-center gap-4 justify-end self-end p-2 border-2 border-gray-600/30 w-fit rounded-md ">
                   <CTAButton
                     className={cn(itemQuantity && 'opacity-50')}

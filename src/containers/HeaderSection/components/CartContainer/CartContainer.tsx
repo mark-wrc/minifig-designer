@@ -42,9 +42,14 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
         initial="initial"
         animate="enter"
         exit="exit"
-        className="w-full bg-minifig-brand-end sm:w-[55%] md:w-[60%] lg:w-1/4 xl:w-[50%] fixed right-0 top-0 bottom-0 z-[99999] p-4 flex flex-col"
+        className="w-full bg-minifig-brand-end sm:w-[55%] md:w-[60%] lg:w-[80%] xl:w-[50%] fixed right-0 top-0 bottom-0 z-[99999] p-2 flex flex-col"
       >
-        <CartHeader items={{ totalItems, totalPrice }} onClose={onclose} />
+        <div className="mb-4">
+          <CartHeader items={{ totalItems, totalPrice }} onClose={onclose} />
+          <Divider className="mt-2 border border-gray-600" />
+        </div>
+
+        {/*Empty state UI */}
 
         <div className="flex-1 overflow-y-auto minifig-scrollbar ">
           {projectEntries.length === 0 && (
@@ -58,13 +63,19 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
             </div>
           )}
 
+          {/* Grouped list rendering section  */}
+
           {projectEntries.map(([projectName, project]) => (
             <section key={projectName} className="mb-6">
               <div className="flex justify-between items-center mb-2 mx-4">
                 <div className="text-white pb-4">
-                  <StyledText as="h3" className="text-2xl font-bold" text={projectName} />
                   <StyledText
-                    className="text-md font-semibold text-gray-300"
+                    as="h3"
+                    className="text-2xl font-bold text-gray-300"
+                    text={projectName}
+                  />
+                  <StyledText
+                    className="text-md font-semibold text-green-400"
                     text={formatCurrency(project.totalPrice)}
                   />
                 </div>
@@ -85,6 +96,8 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
           ))}
         </div>
 
+        {/* Cart summary and checkout section  */}
+
         {projectEntries.length > 0 && (
           <section className="pt-4">
             <div className="text-white mb-2">
@@ -97,7 +110,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
             </div>
             <CheckoutButton
               totalPrice={totalPrice}
-              className="w-full cursor-pointer active:shadow-md active:border-l-0 active:border-t-transparent active:border-b-transparent bg-yellow-300  text-black shadow-lg shadow-yellow-400/50 hover:border-l-0 hover:border-b-transparent hover:border-t-transparent transition-all duration-75 font-bold hover:shadow-md hover:bg-yellow-400 py-3 text-lg border-b-6 border-l-8 border-t-6 border-t-yellow-400 border-l-yellow-600 border-b-transparent"
+              className="w-full cursor-pointer active:shadow-md active:border-l-0 active:border-t-transparent active:border-b-transparent bg-yellow-300  text-black shadow-lg shadow-yellow-400/50 hover:border-l-0 hover:border-b-transparent hover:border-t-transparent transition-all duration-75 font-bold hover:shadow-md hover:bg-yellow-400 py-3 text-lg border-b-8  border-l-10 border-t-8 border-t-yellow-400 border-l-yellow-600 border-b-transparent"
             />
           </section>
         )}

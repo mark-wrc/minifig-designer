@@ -9,7 +9,6 @@ import { MinifigCartItemDetails } from '../MinifigCartItemDetails';
 
 const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
   ({ onclose, minifig }) => {
-    console.log('Minifig data received in modal:', minifig);
     const { addMinifigToCart } = useMinifigCart();
     const authDisclosure = useDisclosureParam();
 
@@ -39,13 +38,13 @@ const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
         <GeneralDialog
           open={true}
           onOpenChange={handleClose}
-          className="sm:w-[80%] md:w-[70%] lg:w-[35%]"
+          className="sm:w-[80%] md:w-[70%] lg:w-[50%] bg-[#f6f6f6]"
         >
           <GeneralDialogTitle
             title="ADD TO CART"
             className="text-4xl font-black text-center mb-24"
           />
-          <section className="flex flex-col max-h-[60vh]">
+          <section className="flex flex-col min-[h-70vh]: max-h-[75vh]">
             {/*Cart Items details  */}
 
             <MinifigCartItemDetails minifig={minifig} />

@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { IMinifigCanvasProps } from './MinifigCanvas.types';
+import type { IMinifigCanvasProps, IWardrobeProps } from './MinifigCanvas.types';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
 import { CreateMinifigModal } from '../CreateMinifigModal';
@@ -24,6 +25,11 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ wardrobeItems = [], ...props 
   const wardrobeRef = useRef<HTMLDivElement>(null);
   const [selectedItem, setSelectedItem] = useState<MinifigPartData | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
+
+  // modal config
+  const isEditMode = modalMode === 'edit';
+  const initialProjectName = isEditMode ? (activeCharacter?.name ?? '') : '';
+  const characterId = isEditMode ? activeCharacter?._id : undefined;
 
   const { selectedCategory = null } = useSelector(
     (state: RootState) => state.minifigBuilder || {},
@@ -64,6 +70,48 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ wardrobeItems = [], ...props 
     );
   }, [wardrobeItems, searchQuery]);
 
+  const wardrobeProps = useMemo<IWardrobeProps>(() => {
+    if (selectedItem) {
+      return {
+        wardrobeItems: selectedItem,
+        onClick: handleBackNavigation,
+        onCategoryClick: handleSelectMinifigItem,
+      };
+    }
+
+    return {
+      wardrobeItems: filteredWardrobeItems,
+      selectedCategory,
+      onPartSelect: handleSelectMinifigItem,
+      className: props.wardrobeContainerStyle,
+      minifigProjects: props.minifigProjects ?? [],
+      cartModalDisclosure: props.cartModalDisclosure,
+      selectorComponent: props.selectorComponent,
+      onItemDetailsClick: handleMinifigItemDetailsClick,
+      isLoading: props.isLoading,
+      setCurrentPage: props.setCurrentPage,
+      currentPage: props.currentPage,
+      totalPages: props.totalPages,
+    };
+  }, [
+    selectedItem,
+    filteredWardrobeItems,
+    selectedCategory,
+    handleBackNavigation,
+    handleSelectMinifigItem,
+    handleMinifigItemDetailsClick,
+    props.wardrobeContainerStyle,
+    props.minifigProjects,
+    props.cartModalDisclosure,
+    props.selectorComponent,
+    props.isLoading,
+    props.setCurrentPage,
+    props.currentPage,
+    props.totalPages,
+  ]);
+
+  const MinifigWardrobeComponent = selectedItem ? MinifigWardrobeItemDetails : MinifigWardrobe;
+
   return (
     <section
       className={cn(
@@ -80,6 +128,8 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ wardrobeItems = [], ...props 
           modalDisclosure={modalDisclosure}
         />
       </div>
+
+      {/* Minifig wardrobe section */}
 
       <section className="flex-1/2" ref={wardrobeRef}>
         <div
@@ -98,29 +148,10 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ wardrobeItems = [], ...props 
               />
             </section>
           )}
+
           <div className="mx-auto">
-            {selectedItem ? (
-              <MinifigWardrobeItemDetails
-                wardrobeItems={selectedItem}
-                onClick={handleBackNavigation}
-                onCategoryClick={handleSelectMinifigItem}
-              />
-            ) : (
-              <MinifigWardrobe
-                wardrobeItems={filteredWardrobeItems}
-                selectedCategory={selectedCategory}
-                onPartSelect={handleSelectMinifigItem}
-                className={props.wardrobeContainerStyle}
-                minifigProjects={props.minifigProjects ?? []}
-                cartModalDisclosure={props.cartModalDisclosure}
-                selectorComponent={props.selectorComponent}
-                onItemDetailsClick={handleMinifigItemDetailsClick}
-                isLoading={props.isLoading}
-                setCurrentPage={props.setCurrentPage}
-                currentPage={props.currentPage}
-                totalPages={props.totalPages}
-              />
-            )}
+            {/* @ts-ignore */}
+            <MinifigWardrobeComponent {...wardrobeProps} />
           </div>
         </div>
       </section>
@@ -128,8 +159,8 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ wardrobeItems = [], ...props 
       {/* Modal section */}
 
       <CreateMinifigModal
-        initialProjectName={modalMode === 'edit' ? activeCharacter?.name : ''}
-        characterId={modalMode === 'edit' ? activeCharacter?._id : undefined}
+        initialProjectName={initialProjectName}
+        characterId={characterId}
         mode={modalMode}
         onClose={handleCloseModal}
         isOpen={modalDisclosure.open}

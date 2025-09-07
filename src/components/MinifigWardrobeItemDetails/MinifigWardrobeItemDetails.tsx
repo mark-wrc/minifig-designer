@@ -5,7 +5,7 @@ import { CTAButton } from '../CTAButton';
 import { StyledText } from '../StyledText';
 import { cn } from '@/lib/utils';
 import { MinifigProductSpecification } from '../MinifigProductSpecification';
-import { ColorBadge } from '@/ColorBadge';
+import { ColorBadge } from '@/components/ColorBadge';
 import { motion } from 'motion/react';
 import { ProductBackButtonAnimation, WardrobeItemDetailsAnimation } from '@/animations';
 

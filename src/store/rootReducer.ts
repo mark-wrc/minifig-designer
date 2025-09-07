@@ -8,7 +8,6 @@ import storage from 'redux-persist/lib/storage';
 const minifigBuilderPersistConfig = {
   key: 'minifigBuilder',
   storage,
-  //   blacklist: ['selectedCategory'],
 };
 
 const rootReducer = combineReducers({
