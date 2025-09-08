@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 
 const GeneralCard = memo<GeneralCardProps>(({ className, children, onclick }) => (
   <Card onClick={onclick} className={cn('w-fit bg-sunny rounded-sm', className)}>
-    <CardContent>{children}</CardContent>
+    <CardContent className="p-0">{children}</CardContent>
   </Card>
 ));
 

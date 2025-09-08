@@ -38,7 +38,7 @@ const MinifigBuilderCardPopupModal = memo<IMinifigBuilderCardPopupModalProps>(
         <GeneralDialog
           open={true}
           onOpenChange={handleClose}
-          className="sm:w-[80%] md:w-[70%] lg:w-[50%] bg-[#f6f6f6]"
+          className=" h-full sm:w-[80%] md:w-[70%] sm:h-fit lg:w-[40%] bg-[#f6f6f6]"
         >
           <GeneralDialogTitle
             title="ADD TO CART"

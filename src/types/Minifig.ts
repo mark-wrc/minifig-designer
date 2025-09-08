@@ -1,6 +1,8 @@
 import { IMinifigBodyResponse } from './MinifigBodyResponse';
 import { MinifigPartType } from './MinifigActions';
 
+export type ProductImageUsage = 'MAIN_SITE' | 'MINIFIG_BUILDER' | 'BOTH';
+
 export interface MinifigPart {
   type: string;
   image: string;
@@ -12,6 +14,7 @@ export interface IMinifigProductImage {
   public_id: string;
   url: string;
   _id: number;
+  usage: ProductImageUsage;
 }
 
 export interface IMinifigProductBaseDetails {

@@ -22,7 +22,7 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
       <div className=" w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 container mx-auto ">
         {/* Accounts section  */}
         <section className=" grid grid-cols-2">
-          <FooterSectionCard className="flex flex-col" title="Account">
+          <FooterSectionCard className="flex flex-col font-bold" title="Account">
             {Accounts.map((item) =>
               item.title === 'Cart' ? (
                 <div
@@ -48,7 +48,7 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
               ),
             )}
           </FooterSectionCard>
-          <FooterSectionCard className="flex flex-col" title="Quick links">
+          <FooterSectionCard className="flex flex-col font-bold" title="Quick links">
             {QuickLinks.map((item) => (
               <FooterLink
                 href={item.link}
@@ -64,7 +64,7 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
         </section>
 
         {/* Support section  */}
-        <FooterSectionCard title="Support" className="flex flex-col">
+        <FooterSectionCard title="Support" className="flex flex-col font-bold">
           {Support.map((item) => (
             <FooterLink className="flex mb-4  " href={item.link} key={item.title}>
               <p className="translate-all duration-150 font-semibold hover:translate-x-1.5 hover:underline hover:text-yellow-300">
@@ -75,9 +75,9 @@ const FooterSection = memo<IFooterSectionProps>(({ onClick }) => {
         </FooterSectionCard>
 
         {/*  Company description section  */}
-        <FooterSectionCard title="World of Minifigs">
+        <FooterSectionCard className="font-bold" title="World of Minifigs">
           <section>
-            <p className="text-sm font-light">{CompanyDescription.description}</p>
+            <p className="text-sm font-normal">{CompanyDescription.description}</p>
             <div className="flex gap-4 mt-4">
               <FooterLink
                 href={socialMediaLinks.facebookLink}

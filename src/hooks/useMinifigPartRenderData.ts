@@ -1,13 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
-
 import { useMemo } from 'react';
 import { MinifigPartType } from '@/types';
-import type { IMinifigProject, SelectedMinifigItems } from '@/types/Minifig';
+import type { IMinifigProject, MinifigPartData, SelectedMinifigItems } from '@/types/Minifig';
 import { BaseMinifigParts } from '@/constants/BaseMinifigPart';
+import { getBuilderImage } from '@/utils';
 
 export interface IMinifigRenderData {
-  activeProject?: IMinifigProject | null; // allow null now
+  activeProject?: IMinifigProject | null;
 }
 
 export const useMinifigPartRenderData = ({ activeProject }: IMinifigRenderData) => {
@@ -23,10 +21,11 @@ export const useMinifigPartRenderData = ({ activeProject }: IMinifigRenderData) 
           .fill(null)
           .map((_, index) => {
             const slot = accessorySlots[index];
+            const builderImage = getBuilderImage(slot?.product_images);
             return {
               slotIndex: index,
-              currentImage: slot?.product_images?.[0]?.url || defaultImage,
-              hasMinifigParts: Boolean(slot && slot.product_images?.[0]?.url),
+              currentImage: builderImage?.url || defaultImage,
+              hasMinifigParts: Boolean(slot && builderImage?.url),
               slotData: slot,
             };
           });
@@ -38,14 +37,14 @@ export const useMinifigPartRenderData = ({ activeProject }: IMinifigRenderData) 
         };
       } else {
         // Handle single parts (hair, head, torso, legs)
-        const currentPart = activeProject?.selectedItems?.[partKey] as any;
+        const currentPart = activeProject?.selectedItems?.[partKey] as MinifigPartData;
         const defaultImage = BaseMinifigParts[partType]?.image;
-        const currentImage = currentPart?.product_images?.[0]?.url ?? defaultImage;
+        const builderImage = getBuilderImage(currentPart?.product_images);
 
         return {
           type: partType,
-          currentImage,
-          hasMinifigParts: Boolean(currentPart && currentImage !== defaultImage),
+          currentImage: builderImage?.url ?? defaultImage,
+          hasMinifigParts: Boolean(currentPart && builderImage?.url),
           isArray: false,
         };
       }

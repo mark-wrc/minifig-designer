@@ -20,9 +20,11 @@ import type {
   AddCharacterPayload,
   CartProject,
   ICartItem,
+  IMinifigProductImage,
   MinifigPartType,
   selectedMinifigParts,
 } from '@/types';
+import { getBuilderImage } from '@/utils';
 
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
 
@@ -123,11 +125,13 @@ export const useShoppingCart = () => {
       };
       let items = base.items;
       for (const minifigPart of selectedParts) {
+        const builderImage = getBuilderImage(minifigPart.product_images as IMinifigProductImage[]);
+
         const transformedPart: selectedMinifigParts = {
           _id: minifigPart._id,
           type: minifigPart.minifig_part_type as MinifigPartType,
           name: minifigPart.product_name,
-          image: minifigPart.product_images?.[0]?.url || minifigPart.image || '',
+          image: builderImage?.url || minifigPart.image || '',
           price: minifigPart.price,
           stock: minifigPart.stock,
           color: minifigPart.product_color?.name,
@@ -162,12 +166,15 @@ export const useShoppingCart = () => {
           };
           let items = base.items;
           for (const minifigPart of selectedParts) {
+            const builderImage = getBuilderImage(
+              minifigPart.product_images as IMinifigProductImage[],
+            );
             // Transform the part data before upserting
             const transformedPart: selectedMinifigParts = {
               _id: minifigPart._id,
               type: minifigPart.minifig_part_type as MinifigPartType,
               name: minifigPart.product_name,
-              image: minifigPart.product_images?.[0]?.url || minifigPart.image || '',
+              image: builderImage?.url || minifigPart.image || '',
               price: minifigPart.price,
               stock: minifigPart.stock,
               color: minifigPart.product_color?.name,

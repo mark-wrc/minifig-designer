@@ -10,6 +10,7 @@ import { CategorySelectiorAnimation } from '@/animations/CategorySelectorAnimati
 import { RootState } from '@/store';
 import { setSelectedCategory } from '@/store/minifigBuilder/minifigBuilderSlice';
 import { CATEGORY_CONFIG } from './config/CategoryConfig';
+import { getBuilderImage } from '@/utils';
 
 const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
   ({ activeMinifigProject, className, categoryContainerStyle, isMobileMode = false }) => {
@@ -35,7 +36,8 @@ const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
               //Accessories (array of MinifigSlot)
               const accessories = activeMinifigProject.selectedItems.accessory;
               if (accessories && accessories.length > 0 && accessories[0]) {
-                imageSrc = accessories[0].product_images[0]?.url || config.defaultImage;
+                imageSrc =
+                  getBuilderImage(accessories[0].product_images)?.url || config.defaultImage;
               }
             } else {
               const part =
@@ -43,7 +45,7 @@ const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
                   config.key.toLowerCase() as keyof typeof activeMinifigProject.selectedItems
                 ];
               if (part && !Array.isArray(part)) {
-                imageSrc = part.product_images[0]?.url || config.defaultImage;
+                imageSrc = getBuilderImage(part.product_images)?.url || config.defaultImage;
               }
             }
           }

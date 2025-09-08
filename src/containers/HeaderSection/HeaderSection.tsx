@@ -33,10 +33,10 @@ const HeaderSection = memo(() => {
   const handleToggleMenu = useCallback(() => {
     setOpenMenu((prev) => !prev);
   }, []);
-
   const totalCartItems = useMemo(() => {
     return Object.values(projects).reduce((acc, project) => {
-      return acc + project.items.reduce((itemAcc, item) => itemAcc + item.quantity, 0);
+      // Only count unique items, not their quantity
+      return acc + project.items.length;
     }, 0);
   }, [projects]);
 
