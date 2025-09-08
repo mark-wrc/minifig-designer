@@ -8,10 +8,14 @@ import { MinifigProductSpecification } from '../MinifigProductSpecification';
 import { ColorBadge } from '@/components/ColorBadge';
 import { motion } from 'motion/react';
 import { ProductBackButtonAnimation, WardrobeItemDetailsAnimation } from '@/animations';
+import { getBuilderImage } from '@/utils';
 
 const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
   ({ wardrobeItems, onClick, onCategoryClick }) => {
     const outOfstock = wardrobeItems.stock === 0;
+
+    const builderImage = getBuilderImage(wardrobeItems.product_images);
+
     return (
       <section className="border-2 border-gray-950 rounded-md md:border-0 ">
         <div className="bg-minifig-brand-end text-white h-full overflow-y-auto minifig-scrollbar">
@@ -42,14 +46,14 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
             >
               {/*Product image  */}
               <figure className="w-1/2 rounded-md bg-white h-fit p-4 outline-4 outline-yellow-400">
-                {wardrobeItems.product_images.map((item) => (
+                {builderImage && (
                   <img
-                    key={item._id}
+                    key={builderImage._id}
                     className="rounded-md aspect-square "
-                    src={item.url}
-                    alt={item.public_id}
+                    src={builderImage.url}
+                    alt={builderImage.public_id}
                   />
-                ))}
+                )}
               </figure>
 
               {/*Product details Section  */}

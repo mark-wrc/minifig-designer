@@ -7,3 +7,4 @@ export * from './formatCurrency';
 export * from './getColorHex';
 export * from './createEmptyMinifigProject';
 export * from './createEmptySlots';
+export * from './getBuilderImage';

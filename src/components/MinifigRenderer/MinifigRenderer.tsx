@@ -177,14 +177,16 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
                     <MinifigPart
                       key={part.currentImage}
                       type={part.type}
-                      imageSrc={part.currentImage}
+                      imageSrc={part.currentImage ?? ''}
                     />
                   </div>
                 </section>
               );
             }
           })}
-          <p className=" my-5 text-2xl font-bold">Total: {formatCurrency(totalPrice)}</p>
+          <p className=" my-5 text-2xl font-bold flex gap-1">
+            Total: <p className="text-green-700">{formatCurrency(totalPrice)}</p>
+          </p>
         </section>
       </section>
     );

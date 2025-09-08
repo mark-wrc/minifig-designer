@@ -5,16 +5,25 @@ import { ICartHeaderProps } from './CartHeader.types';
 import { formatCurrency } from '@/utils';
 
 const CartHeader = memo<ICartHeaderProps>(({ items, onClose }) => (
-  <section className="flex justify-between flex-col items-center px-4 py-1">
+  <section className="flex justify-between flex-col items-center py-1 p-2">
     <div className="flex justify-between w-full">
-      <div className="text-white">
-        <StyledText className="text-2xl mb-0 font-bold" text={`Cart ${items.totalItems}`} />
-        <StyledText className="text-lg" text={`Sub total: ${formatCurrency(items.totalPrice)}`} />
-      </div>
+      <StyledText
+        className="text-md text-white font-semibold flex"
+        text={
+          <span className="flex gap-1">
+            Sub total:
+            <StyledText
+              as="span"
+              className="text-green-400 mb-0"
+              text={formatCurrency(items.totalPrice)}
+            />
+          </span>
+        }
+      />
 
       <div
         onClick={() => onClose?.()}
-        className=" cursor-pointer hover:bg-red-600 h-fit p-1 rounded-sm"
+        className=" cursor-pointer hover:bg-red-600 h-fit rounded-sm"
       >
         <X color="white" size={32} className="p-1" />
       </div>

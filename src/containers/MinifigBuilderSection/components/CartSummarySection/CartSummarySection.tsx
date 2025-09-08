@@ -7,14 +7,14 @@ const CartSummarySection = memo<ICartSummarySectionProps>(
   ({ totalPrice, validProjects, totalItems }) => (
     <section className="border-2 border-gray-300 pt-4 bg-minifig-brand-end p-4 rounded-lg mb-8">
       <div className="flex justify-between items-center mb-2">
-        <StyledText as="h3" className="font-bold text-xl sm:text-2xl text-gray-300" text="Total" />
+        <StyledText as="h3" className="font-bold text-md m-0 text-gray-300" text="Total:" />
         <StyledText
           as="span"
-          className="font-bold text-xl text-gray-300"
+          className="font-bold text-md m-0 text-green-400"
           text={formatCurrency(totalPrice)}
         />
       </div>
-      <div className="text-lg font-semibold text-gray-300">
+      <div className="text-md font-semibold text-gray-300">
         <StyledText text={`${validProjects} Projects • ${totalItems} total items`} />
       </div>
     </section>

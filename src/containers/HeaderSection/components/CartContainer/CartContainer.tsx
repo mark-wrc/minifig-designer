@@ -42,7 +42,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
         initial="initial"
         animate="enter"
         exit="exit"
-        className="w-full bg-minifig-brand-end sm:w-[55%] md:w-[60%] lg:w-[80%] xl:w-[50%] fixed right-0 top-0 bottom-0 z-[99999] p-2 flex flex-col"
+        className="w-full bg-minifig-brand-end sm:w-[55%] md:w-[60%] lg:w-[80%] xl:w-[40%] fixed right-0 top-0 bottom-0 z-[99999] p-2 flex flex-col"
       >
         <div className="mb-4">
           <CartHeader items={{ totalItems, totalPrice }} onClose={onclose} />
@@ -66,8 +66,8 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
           {/* Grouped list rendering section  */}
 
           {projectEntries.map(([projectName, project]) => (
-            <section key={projectName} className="mb-6">
-              <div className="flex justify-between items-center mb-2 mx-4">
+            <section key={projectName} className="mb-6  px-2">
+              <div className="flex justify-between items-center mb-2 ">
                 <div className="text-white pb-4">
                   <StyledText
                     as="h3"
@@ -99,19 +99,16 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
         {/* Cart summary and checkout section  */}
 
         {projectEntries.length > 0 && (
-          <section className="pt-4">
+          <section className="pt-4 px-2">
             <div className="text-white mb-2">
               <StyledText
-                className="text-lg font-semibold"
+                className="text-sm font-semibold"
                 text={`
                 ${projectEntries.length} Minifig project${projectEntries.length !== 1 ? 's' : ''} •
                 ${totalItems} total items`}
               />
             </div>
-            <CheckoutButton
-              totalPrice={totalPrice}
-              className="w-full cursor-pointer active:shadow-md active:border-l-0 active:border-t-transparent active:border-b-transparent bg-yellow-300  text-black shadow-lg shadow-yellow-400/50 hover:border-l-0 hover:border-b-transparent hover:border-t-transparent transition-all duration-75 font-bold hover:shadow-md hover:bg-yellow-400 py-3 text-lg border-b-8  border-l-10 border-t-8 border-t-yellow-400 border-l-yellow-600 border-b-transparent"
-            />
+            <CheckoutButton className="p-3 bg-yellow-300 text-black font-semiBold text-md w-full hover:bg-yellow-400 active:bg-yellow-400 hover:scale-102 transition-all duration-75" />
           </section>
         )}
       </motion.section>
