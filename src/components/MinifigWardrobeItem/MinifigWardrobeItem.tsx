@@ -4,6 +4,7 @@ import { MinifigPartData } from '@/types/Minifig';
 import { CTAButton } from '../CTAButton';
 import { formatCurrency, getBuilderImage } from '@/utils';
 import { StyledText } from '../StyledText';
+import { WOFLogo } from '@/assets/images';
 
 const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
   ({ onItemDetailsClick, minifigItem, onPartSelect }) => {
@@ -14,16 +15,20 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
         <div
           key={minifigItem?._id}
           className="cursor-pointer w-[80%] mx-auto object-contain outline-3 outline-gray-600 group hover:outline-yellow-600 active:outline-yellow-600 duration-75 transition-all active:outline-4 hover:outline-4
-         bg-white p-4 rounded-sm"
+         bg-white rounded-sm"
           onClick={() => onItemDetailsClick(minifigItem as MinifigPartData)}
         >
-          {builderImage && (
+          {builderImage ? (
             <img
               key={builderImage._id}
-              className="w-fit mx-auto rounded-sm aspect-square object-contain hover:scale-110 transition-al duration-75"
               src={builderImage.url}
+              className="w-fit mx-auto rounded-sm aspect-square object-contain hover:scale-110 transition-al duration-75"
               alt={minifigItem.product_name}
             />
+          ) : (
+            <div className="flex flex-col bg-minifig-brand-end justify-center items-center p-2">
+              <img className="opacity-30 grayscale " src={WOFLogo} />
+            </div>
           )}
         </div>
 
@@ -31,7 +36,8 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
           <CTAButton
             size={null}
             variant="default"
-            className="bg-yellow-300 md:text-lg font-bold hover:bg-yellow-400  py-3 px-8 text-black self-center border-b-8 border-b-yellow-600/50 hover:translate-y-1 active:translate-y-1 border-t-6 border-t-transparent hover:border-b-transparent active:border-b-transparent shadow-lg hover:shadow-md shadow-yellow-600/50 transition-all duration-100"
+            disabled={!builderImage}
+            className="bg-yellow-300 md:text-lg font-bold hover:bg-yellow-400  py-3 px-8 text-black self-center border-b-8 border-b-yellow-600/50 hover:translate-y-1 active:translate-y-1 border-t-6 border-t-transparent hover:border-b-transparent active:border-b-transparent shadow-lg hover:shadow-md shadow-yellow-600/50 transition-all duration-100 "
             onClick={() => onPartSelect(minifigItem)}
           >
             Add

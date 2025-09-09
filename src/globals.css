@@ -141,18 +141,6 @@
     [&::-webkit-scrollbar-thumb]:hover:bg-yellow-600;
 }
 
-body,
-html {
-  @apply [&::-webkit-scrollbar]:w-[12px]
-    [&::-webkit-scrollbar-track]:bg-gray-200
-    [&::-webkit-scrollbar-thumb]:bg-yellow-500
-    [&::-webkit-scrollbar-thumb]:rounded-xs
-    [&::-webkit-scrollbar-thumb]:border
-    [&::-webkit-scrollbar-thumb]:border-gray-950
-    [&::-webkit-scrollbar-thumb]:cursor-pointer
-    [&::-webkit-scrollbar-thumb]:hover:bg-yellow-600;
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50 m-0 p-0;

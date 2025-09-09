@@ -22,14 +22,17 @@ const MinifigWardrobe = memo(
       return <MinifigLoader size={200} />;
     }
 
-    if (!props.wardrobeItems || props.wardrobeItems.length === 0) {
+    if (!props.wardrobeItems) {
       return (
         <StyledText
-          className="text-center font-bold text-3xl"
-          as="p"
+          className="text-center font-bold text-3xl mb-0"
           text="⚠️ Unable to load minifig parts. Please try again later."
         />
       );
+    }
+
+    if (!props.wardrobeItems.length) {
+      return <StyledText className="mb-0 text-gray-800" text="No results match your search." />;
     }
 
     return (
