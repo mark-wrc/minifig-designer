@@ -13,11 +13,11 @@ export interface MinifigProductsResponse {
   totalPages: number;
   currentPage: number;
 }
-
 interface MinifigProductsParams {
   minifig_part_type?: MinifigPartType;
   page?: number;
 }
+
 export const fetchMinifigProducts = async (
   params: MinifigProductsParams,
 ): Promise<MinifigProductsResponse> => {

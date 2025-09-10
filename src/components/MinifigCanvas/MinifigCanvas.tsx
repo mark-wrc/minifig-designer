@@ -134,6 +134,7 @@ const MinifigCanvas = memo<IMinifigCanvasProps>(({ wardrobeItems = [], ...props 
         <div
           className={cn(
             'flex flex-col h-full mx-auto md:mx-0 md:mt-0  md:border-l-4 border-dashed border-gray-800',
+            wardrobeItems.length === 0 && 'justify-center bg-[#FFF8E0]',
             props.isLoading && 'justify-center w-full h-full bg-[#FFF8E0]',
           )}
         >

@@ -20,11 +20,11 @@ const MinifigMobileMode = memo<IMinifigMobileModeProps>(({ ...props }) => {
     <>
       <header className="mb-10 text-black text-center pt-12 md:hidden">
         <StyledText
-          className=" text-[2.5em] font-bold leading-none mx-0.5 mb-3"
+          className="text-[1.5em] font-black leading-none mx-0.5 mb-3 text-gray-900"
           text=" BUILD YOUR OWN MINIFIG"
           as="h1"
         />
-        <StyledText className="font-bold text-md" as="h3" text="START BUILDING" />
+        <StyledText className="font-bold text-md text-gray-900" as="h3" text="START BUILDING" />
       </header>
 
       <MinifigCategoryOptions activeMinifigProject={activeMinifigProject} />

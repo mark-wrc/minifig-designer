@@ -71,7 +71,7 @@ const GeneralPagination = memo<IGeneralPaginationProps>(
                   <PaginationEllipsis />
                 ) : (
                   <PaginationLink
-                    className={cn(isCurrentPage && 'bg-yellow-400 text-black ')}
+                    className={cn(isCurrentPage && 'bg-yellow-400 text-black hover:text-white')}
                     isActive={isCurrentPage}
                     onClick={() => handlePageChange(page)}
                   >

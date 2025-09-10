@@ -16,8 +16,12 @@ const CategorySection = () => {
   return (
     <section className=" hidden md:block container mx-auto my-4 lg:py-12">
       <header className="mb-12 text-center text-black">
-        <StyledText as="h1" className="text-6xl font-bold mb-3" text="BUILD YOUR OWN MINIFIG" />
-        <StyledText as="h3" className="font-bold  text-2xl" text="START BUILDING" />
+        <StyledText
+          as="h1"
+          className="text-6xl font-black mb-3 text-gray-900"
+          text="BUILD YOUR OWN MINIFIG"
+        />
+        <StyledText as="h3" className="font-bold text-2xl text-gray-900" text="START BUILDING" />
       </header>
       <MinifigCategoryOptions activeMinifigProject={activeMinifigProject} />
     </section>

@@ -8,3 +8,4 @@ export * from './getColorHex';
 export * from './createEmptyMinifigProject';
 export * from './createEmptySlots';
 export * from './getBuilderImage';
+export * from './buildSelectedMinifigParts';

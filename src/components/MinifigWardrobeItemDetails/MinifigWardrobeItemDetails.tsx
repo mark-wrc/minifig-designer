@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { IMinifigWardrobeItemsDetailsProps } from './MinifigWardrobeItemDetails.types';
-import { ArrowLeft } from 'lucide-react';
+import { MoveLeft } from 'lucide-react';
 import { CTAButton } from '../CTAButton';
 import { StyledText } from '../StyledText';
 import { cn } from '@/lib/utils';
@@ -14,7 +14,6 @@ import { WOFLogo } from '@/assets/images';
 const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
   ({ wardrobeItems, onClick, onCategoryClick }) => {
     const outOfstock = wardrobeItems.stock === 0;
-
     const builderImage = getBuilderImage(wardrobeItems.product_images);
 
     return (
@@ -23,19 +22,18 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
           {/* Inner Wrapper  */}
           <section className="p-3">
             <motion.div
-              className="w-fit h-fit"
+              className="w-fit h-fit mb-8"
               variants={ProductBackButtonAnimation}
               initial="initial"
               animate="enter"
             >
-              <CTAButton
-                variant="default"
-                onClick={onClick}
-                icon={ArrowLeft}
-                className="bg-yellow-300 mb-4 text-black text-lg font-bold hover:text-white p-6"
+              <span
+                className="flex gap-1 cursor-pointer items-center hover:bg-black/40 px-2 rounded-md"
+                onClick={() => onClick?.()}
               >
-                Back
-              </CTAButton>
+                <MoveLeft size={38} strokeWidth={1} />
+                <StyledText className="uppercase font-bold mb-0 text-xs" text="Back" />
+              </span>
             </motion.div>
 
             <motion.section
@@ -46,7 +44,7 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
               className="flex flex-col lg:flex-row gap-4 justify-between"
             >
               {/*Product image  */}
-              <figure className="w-1/2 rounded-md bg-white h-fit p-4 outline-4 outline-yellow-400">
+              <figure className="w-1/2 rounded-md bg-white h-fit p-1">
                 {builderImage ? (
                   <img
                     key={builderImage._id}
@@ -71,9 +69,12 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
                 {/* Product Unavailability indicator  */}
 
                 {outOfstock && (
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 mb-1">
                     <div className="w-2 h-2 rounded-full animate-pulse bg-destructive" />
-                    <StyledText className="text-destructive" text="Unavailable" />
+                    <StyledText
+                      className="text-destructive mb-0 font-semibold"
+                      text="Unavailable"
+                    />
                   </div>
                 )}
 
@@ -90,6 +91,7 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
                   <div className="flex gap-2">
                     {wardrobeItems.product_sub_categories.map((subCategory) => (
                       <StyledText
+                        key={subCategory._id}
                         className="rounded-full px-2.5 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-blue-600/10 text-blue-400 hover:bg-blue-600/20 border border-blue-600/20 "
                         text={subCategory.name}
                       />
@@ -119,8 +121,15 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
                 </section>
 
                 {/* Additional Product details */}
-                <StyledText showCheckMark text={wardrobeItems.product_description_1} />
-                <StyledText showCheckMark text={wardrobeItems.product_description_2} />
+
+                {wardrobeItems.product_description_1 && (
+                  <StyledText showCheckMark text={wardrobeItems.product_description_1} />
+                )}
+
+                {wardrobeItems.product_description_2 && (
+                  <StyledText showCheckMark text={wardrobeItems.product_description_2} />
+                )}
+
                 {wardrobeItems.product_description_3 && (
                   <StyledText showCheckMark text={wardrobeItems.product_description_3} />
                 )}
@@ -133,7 +142,8 @@ const MinifigWardrobeItemDetails = memo<IMinifigWardrobeItemsDetailsProps>(
                     disabled={outOfstock || !builderImage}
                     className={cn(
                       'bg-yellow-300 text-md font-bold border-l-8 border-t-6 border-b-6 border-b-transparent border-l-yellow-600 border-t-yellow-400 shadow-lg shadow-yellow-400/50 hover:shadow-md hover:border-l-0 hover:border-t-transparent active:border-l-0 active:border-t-transparent transition-all duration-75 w-fit py-3 px-6 self-end rounded-sm text-black',
-                      outOfstock && 'bg-red-500',
+                      outOfstock &&
+                        'bg-red-500 border-l-red-700 border-t-red-400 shadow-md shadow-red-400/30 text-white',
                     )}
                     onClick={() => onCategoryClick(wardrobeItems)}
                   >

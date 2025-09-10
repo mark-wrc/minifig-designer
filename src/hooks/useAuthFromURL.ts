@@ -36,7 +36,6 @@ export const createAuthHook = (config: AuthConfig = {}) => {
     Object.keys(finalConfig.parameterMap).forEach((key) => {
       localStorage.removeItem(getStorageKey(key));
     });
-    console.log('Auth data cleared from localStorage');
   };
 
   const validateRequiredFields = (data: AuthData): boolean => {
@@ -64,9 +63,6 @@ export const createAuthHook = (config: AuthConfig = {}) => {
         }
       });
 
-      console.log('🔍 Final auth data:', data);
-      console.log('🔍 Token specifically:', data.token);
-
       if (hasUrlParams) {
         window.history.replaceState({}, '', window.location.pathname);
       }
@@ -78,8 +74,6 @@ export const createAuthHook = (config: AuthConfig = {}) => {
         window.location.href = finalConfig.redirectUrl;
         return;
       }
-
-      console.log('Auth data processed:', data);
 
       const user: IUser = {
         userName: data.userName || '',

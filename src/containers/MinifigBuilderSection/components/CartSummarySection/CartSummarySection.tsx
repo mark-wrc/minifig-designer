@@ -10,12 +10,15 @@ const CartSummarySection = memo<ICartSummarySectionProps>(
         <StyledText as="h3" className="font-bold text-md m-0 text-gray-300" text="Total:" />
         <StyledText
           as="span"
-          className="font-bold text-md m-0 text-green-400"
+          className="font-bold text-md mb-0 text-green-400"
           text={formatCurrency(totalPrice)}
         />
       </div>
       <div className="text-md font-semibold text-gray-300">
-        <StyledText text={`${validProjects} Projects • ${totalItems} total items`} />
+        <StyledText
+          className="mb-0"
+          text={`${validProjects} Projects • ${totalItems} total items`}
+        />
       </div>
     </section>
   ),

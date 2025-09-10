@@ -1,4 +1,6 @@
-import { IMinifigProject, MinifigPartData } from './Minifig';
+// This file is no longer used due to changes in requirements
+
+import { IMinifigProject, SelectedMinifigItems } from './Minifig';
 import { IMinifigBodyResponse } from './MinifigBodyResponse';
 
 export type IMinifigProjectPayloadResponse = {
@@ -17,12 +19,7 @@ export type IDeleteMinifigProjectResponse = {
 export type IMinifigProjectPayload = IMinifigProject;
 export interface ICreateMinifigProjectPayload {
   name: string;
-  selectedItems: {
-    hair?: MinifigPartData | null;
-    head?: MinifigPartData | null;
-    torso?: MinifigPartData | null;
-    leg?: MinifigPartData | null;
-  };
+  selectedItems: SelectedMinifigItems;
 }
 
 export interface IMinifigProjectResponse {

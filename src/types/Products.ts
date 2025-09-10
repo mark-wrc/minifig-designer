@@ -1,3 +1,5 @@
+// This file is no longer used due to changes in requirements
+
 interface Category {
   _id: string;
   name: string;

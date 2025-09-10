@@ -37,7 +37,7 @@ const CartItem = memo<ICartItemProps>(({ projectName }) => {
       {cartItems.map((item) => {
         const itemQuantity = item.quantity <= 1;
         return (
-          <GeneralCard key={item._id} className="bg-transparent border-none mb-4 w-full">
+          <GeneralCard key={item._id} className="bg-transparent border-none w-full">
             <section className="flex flex-col md:flex-row gap-2 text-white justify-between">
               {/* details */}
 
@@ -47,7 +47,7 @@ const CartItem = memo<ICartItemProps>(({ projectName }) => {
               <div className="flex flex-col gap-0 md:gap-4 p-2">
                 <CTAButton
                   variant="ghost"
-                  className="self-end bg-red-700 hover:bg-red-600 shadow-md shadow-red-500/50"
+                  className="self-end bg-red-700 hover:bg-red-600"
                   onClick={() => handleRemoveCartItem(projectName, item._id)}
                 >
                   <Trash2 color="white" />
@@ -55,25 +55,27 @@ const CartItem = memo<ICartItemProps>(({ projectName }) => {
 
                 {/* Quantity control section */}
 
-                <div className=" mt-4 flex items-center gap-4 justify-end self-end p-2 border-2 border-gray-600/30 w-fit rounded-md ">
+                <div className=" mt-4 flex items-center gap-1 justify-end self-end p-1 border-2 border-gray-600 w-fit rounded-md ">
                   <CTAButton
-                    className={cn(itemQuantity && 'opacity-50')}
+                    variant="default"
+                    className={cn('bg-transparent', itemQuantity && 'opacity-50')}
                     onClick={() => updateQuantity(item._id, -1)}
                     disabled={itemQuantity}
                   >
                     <Minus
-                      strokeWidth={4}
-                      className="group-hover:-translate-x-1 transition-all duration-75"
+                      strokeWidth={3}
+                      className="group-hover:-translate-x-1 transition-all duration-75 "
                     />
                   </CTAButton>
                   <span className="min-w-[2rem] text-center">{item.quantity}</span>
                   <CTAButton
-                    className="cursor-pointer  "
+                    variant="default"
+                    className="cursor-pointer bg-transparent"
                     onClick={() => updateQuantity(item._id, 1)}
                     disabled={item.quantity >= item.stock}
                   >
                     <Plus
-                      strokeWidth={4}
+                      strokeWidth={3}
                       className="group-hover:-translate-x-1 transition-all duration-75"
                     />
                   </CTAButton>

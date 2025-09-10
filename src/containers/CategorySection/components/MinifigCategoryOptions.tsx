@@ -2,7 +2,7 @@ import { memo, useCallback, useMemo } from 'react';
 import { IMinifigCategoryOptions } from './MinifigCategoryOptions.types';
 import { ICategoryItem, MinifigPartType } from '@/types';
 
-import { CategorySelector } from '@/components';
+import { CategorySelector, StyledText } from '@/components';
 import { useDispatch, useSelector } from 'react-redux';
 import { cn } from '@/lib/utils';
 import { motion } from 'motion/react';
@@ -82,7 +82,9 @@ const MinifigCategoryOptions = memo<IMinifigCategoryOptions>(
               isCategoryTab={isMobileMode}
             />
 
-            {!isMobileMode && <p className="text-lg font-bold">{category.title}</p>}
+            {!isMobileMode && (
+              <StyledText className="text-md mt-2 font-bold mb-0" text={category.title} />
+            )}
           </motion.div>
         ))}
       </section>

@@ -184,9 +184,9 @@ const MinifigRenderer = memo<IMinifigRendererProps>(
               );
             }
           })}
-          <p className=" my-5 text-2xl font-bold flex gap-1">
+          <span className=" my-5 text-2xl font-bold flex gap-1">
             Total: <p className="text-green-700">{formatCurrency(totalPrice)}</p>
-          </p>
+          </span>
         </section>
       </section>
     );

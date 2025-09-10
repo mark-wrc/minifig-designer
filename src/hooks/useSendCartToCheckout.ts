@@ -1,3 +1,9 @@
+/**
+ * This hook prepares the current minifig cart data and provides a function
+ * to redirect the user to the checkout page with the cart details
+ *
+ */
+
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
