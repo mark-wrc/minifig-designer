@@ -1,3 +1,5 @@
+// This file is no longer used due to changes in requirements
+
 import { IMinifigProject } from '@/types/Minifig';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateMinifigProject } from '../minifigProject';

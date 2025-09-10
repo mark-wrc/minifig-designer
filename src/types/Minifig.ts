@@ -32,6 +32,7 @@ export interface IBaseMinifigPart {
   stock: number;
   product_color: IMinifigProductBaseDetails;
   product_images: IMinifigProductImage[];
+  product_sub_collections?: IMinifigProductBaseDetails[];
 }
 
 export interface MinifigPartData {
@@ -67,6 +68,7 @@ export interface IApiMinifigSelectedPart {
   price: number;
   stock: number;
   color: string;
+  displayType: string;
   product_images: IMinifigProductImage[];
 }
 

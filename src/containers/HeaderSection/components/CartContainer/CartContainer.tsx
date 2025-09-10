@@ -42,7 +42,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
         initial="initial"
         animate="enter"
         exit="exit"
-        className="w-full bg-minifig-brand-end sm:w-[55%] md:w-[60%] lg:w-[80%] xl:w-[40%] fixed right-0 top-0 bottom-0 z-[99999] p-2 flex flex-col"
+        className="w-full bg-minifig-brand-end sm:w-[70%] lg:w-[50%] 2xl:w-[40%] fixed right-0 top-0 bottom-0 z-[99999] p-2 flex flex-col"
       >
         <div className="mb-4">
           <CartHeader items={{ totalItems, totalPrice }} onClose={onclose} />
@@ -66,7 +66,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
           {/* Grouped list rendering section  */}
 
           {projectEntries.map(([projectName, project]) => (
-            <section key={projectName} className="mb-6  px-2">
+            <section key={projectName} className="mb-6 px-2">
               <div className="flex justify-between items-center mb-2 ">
                 <div className="text-white pb-4">
                   <StyledText
@@ -83,7 +83,7 @@ const CartContainer = memo<ICartContainerProps>(({ onclose, setOpenCart }) => {
                   variant="destructive"
                   size="sm"
                   onClick={() => handleRemoveProject(projectName)}
-                  className="text-sm shadow-md shadow-red-500/50 "
+                  className="text-sm shadow-md"
                 >
                   Remove All
                 </CTAButton>

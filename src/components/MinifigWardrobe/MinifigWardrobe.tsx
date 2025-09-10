@@ -22,12 +22,11 @@ const MinifigWardrobe = memo(
       return <MinifigLoader size={200} />;
     }
 
-    if (!props.wardrobeItems || props.wardrobeItems.length === 0) {
+    if (props.wardrobeItems.length === 0) {
       return (
         <StyledText
-          className="text-center font-bold text-3xl"
-          as="p"
-          text="⚠️ Unable to load minifig parts. Please try again later."
+          className="text-center font-semibold text-md mb-0 text-gray-700"
+          text="Oops! We couldn’t load the minifigure models right now. Please try again shortly."
         />
       );
     }

@@ -44,11 +44,11 @@ const MinifigCartItemDetails = memo<IMinifigCartItemDetailsProps>(({ minifig }) 
       {/* Warning message if no valid minifig projects */}
 
       {!hasValidProjects && (
-        <div className="text-red-500 text-center mt-4 mb-4 p-3 bg-red-50 rounded">
+        <div className="text-red-500 text-center mt-4 mb-4 p-4 bg-red-100 rounded">
           <StyledText
             as="h1"
-            className="text-base"
-            text=" Please customize at least one project before adding to cart"
+            className="text-sm font-semibold mb-0"
+            text="Customize at least one project before adding it to your cart."
           />
         </div>
       )}

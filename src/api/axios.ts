@@ -17,11 +17,11 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    console.log('Request:', {
-      url: config.url,
-      method: config.method,
-      data: config.data,
-    });
+    // console.log('Request:', {
+    //   url: config.url,
+    //   method: config.method,
+    //   data: config.data,
+    // });
     return config;
   },
   (error) => {

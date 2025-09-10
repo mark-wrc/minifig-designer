@@ -1,3 +1,5 @@
+// This file is no longer used due to changes in requirements
+
 import { IMinifigProject } from '@/types/Minifig';
 import { useQuery } from '@tanstack/react-query';
 import { fetchMinifigProjects } from '../minifigProject';

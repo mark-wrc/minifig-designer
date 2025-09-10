@@ -8,10 +8,12 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AuthProvider } from './context/AuthContext';
 import { useAuthFromURL } from './hooks';
+import 'react-toastify/dist/ReactToastify.css';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { ToastContainer } from 'react-toastify';
+import '@/toast.css';
 
 const router = createAppRouter();
-
 const queryClient = new QueryClient();
 
 function App() {
@@ -32,6 +34,20 @@ function App() {
                 />
               </Helmet>
               <RouterProvider router={router} />
+
+              <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar={true}
+                newestOnTop
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="colored"
+                className="toast-container"
+                toastClassName="toast-item"
+                progressClassName="toast-progress"
+              />
             </PersistGate>
           </Provider>
         </AuthProvider>

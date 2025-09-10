@@ -23,8 +23,8 @@ const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
       </div>
 
       {!hasCustomParts ? (
-        <div className="text-orange-500 text-sm bg-orange-50 p-2 rounded">
-          <StyledText text="⚠️ No Minifig parts selected" />
+        <div className="text-orange-500 font-semibold text-sm flex flex-col items-center jusce bg-orange-100 p-4 rounded">
+          <StyledText className="mb-0" text="No minifigure parts selected yet." />
         </div>
       ) : (
         <>
@@ -63,8 +63,8 @@ const MinifigProjectCard = memo<IMinifigProjectProps>(({ summary, index }) => {
                           text={part.product_color.name}
                         />
                         <StyledText
-                          className="text-sm font-bold transition-colors mb-0 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-yellow-400/10 text-yellow-400 hover:bg-yellow-400/20 border border-yellow-400/20 w-fit rounded-full px-2"
-                          text={part.minifig_part_type}
+                          className="text-sm capitalize font-semibold transition-colors mb-0 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-yellow-400/10 text-yellow-400 hover:bg-yellow-400/20 border border-yellow-400/20 w-fit rounded-full px-2"
+                          text={` Minifigure ${part.minifig_part_type}`}
                         />
                       </section>
                     </div>

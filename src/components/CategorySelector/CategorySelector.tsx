@@ -39,7 +39,11 @@ const CategorySelector = memo<CategorySelectorProps>(
           )}
         >
           {!isCategoryTab ? (
-            <img src={item.image} alt={item.title} className="w-28 aspect-square object-contain" />
+            <img
+              src={item.image}
+              alt={item.title}
+              className="w-20 md:w-28 aspect-square object-contain"
+            />
           ) : (
             <StyledText as="span" text={item.title} className="mb-0 px-2" />
           )}

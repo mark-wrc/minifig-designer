@@ -60,7 +60,7 @@ const HeaderSection = memo(() => {
         <div className="lg:container mx-auto flex justify-between  align-middle">
           {/* LOGO */}
           <img src={WOFLogo} className="w-[100px] md:w-1/12" alt="world of minifigs logo" />
-          <section className="flex items-center gap-2">
+          <section className="flex items-center gap-4">
             <div
               className="cursor-pointer relative hover:bg-black/50 p-1 rounded-sm"
               onClick={handleToggleCart}
