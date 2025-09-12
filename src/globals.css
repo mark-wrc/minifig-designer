@@ -49,7 +49,7 @@
   --color-frosted-white: oklch(0.9683 0.0069 247.9);
 
   /* Fonts */
-  --font-sans: 'Fredoka', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
