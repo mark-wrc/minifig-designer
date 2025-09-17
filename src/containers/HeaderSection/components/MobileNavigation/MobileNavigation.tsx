@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { IMobileNavigation } from './MobileNavigation.types';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { CTAButton, Divider, MenuItemNavigation, Overlay, UserContent } from '@/components';
 import { motion } from 'motion/react';
 import { X, LogOut } from 'lucide-react';

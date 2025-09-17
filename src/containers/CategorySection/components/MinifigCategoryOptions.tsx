@@ -4,7 +4,7 @@ import { ICategoryItem, MinifigPartType } from '@/types';
 
 import { CategorySelector, StyledText } from '@/components';
 import { useDispatch, useSelector } from 'react-redux';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { motion } from 'motion/react';
 import { CategorySelectiorAnimation } from '@/animations/CategorySelectorAnimation';
 import { RootState } from '@/store';

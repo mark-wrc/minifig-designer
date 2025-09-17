@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { IUserAvatarProps } from './UserAvatar.types';
 import { CTAButton } from '../CTAButton';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 const UserAvatar = memo<IUserAvatarProps>(({ user, className }) => (
   <section>

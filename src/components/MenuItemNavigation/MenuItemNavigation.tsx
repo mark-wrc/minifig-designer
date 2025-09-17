@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { IMenuItemNavigation } from './MenuItemNavigation.types';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 const MenuItemNavigation = memo<IMenuItemNavigation>(({ menuItems, className }) => (
   <>

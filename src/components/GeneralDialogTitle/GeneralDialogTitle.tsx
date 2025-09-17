@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { IGeneralDialogTitleProps } from './GeneralDialogTitle.types';
 
 const GeneralDialogTitle = memo<IGeneralDialogTitleProps>(({ title, className }) => (

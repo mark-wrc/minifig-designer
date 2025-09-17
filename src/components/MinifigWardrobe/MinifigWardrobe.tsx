@@ -1,6 +1,6 @@
 import { forwardRef, memo } from 'react';
 import { IMinifigWardrobeProps } from './MinifigWardrobe.types';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { MinifigWardrobeItem } from '../MinifigWardrobeItem';
 import { EmptyStateComponent } from '../EmptyStateComponent';
 import { MinifigLoader } from '../MinifigLoader';

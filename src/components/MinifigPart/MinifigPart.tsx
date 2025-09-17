@@ -1,5 +1,5 @@
 import { memo, useCallback } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { CreateMinifigModal } from '../CreateMinifigModal';
 import { IMinifigPartProps } from './MinifigPart.types';
 import { useDisclosureParam } from '@/hooks';
@@ -19,12 +19,14 @@ const MinifigPart = memo<IMinifigPartProps>(({ type, imageSrc, className }) => {
             <img
               src={imageSrc}
               alt={type.toLowerCase()}
+              //  styles are adjusted per model/part type to align correctly with the placehoder/base minfig model
+
               className={cn(
-                'object-contain block w-full h-full -mt-4 relative z-10 ',
+                'object-contain block w-full h-full -mt-4 relative z-10',
                 type === MinifigPartType.HAIR && ' z-20 -mb-18',
                 type === MinifigPartType.HEAD && 'relative z-40 scale-65 translate-y-5.5',
                 type === MinifigPartType.TORSO && 'z-30 scale-150 translate-y-0.5',
-                type === MinifigPartType.LEGS && ' z-10 -mt-10 ',
+                type === MinifigPartType.LEGS && 'z-10 -mt-10',
                 type === MinifigPartType.ACCESSORY && 'mt-0 rounded-md border-2 border-gray-800',
               )}
             />

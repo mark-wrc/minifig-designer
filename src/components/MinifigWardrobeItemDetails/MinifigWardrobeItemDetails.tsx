@@ -3,7 +3,7 @@ import { IMinifigWardrobeItemsDetailsProps } from './MinifigWardrobeItemDetails.
 import { MoveLeft } from 'lucide-react';
 import { CTAButton } from '../CTAButton';
 import { StyledText } from '../StyledText';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { MinifigProductSpecification } from '../MinifigProductSpecification';
 import { ColorBadge } from '@/components/ColorBadge';
 import { motion } from 'motion/react';

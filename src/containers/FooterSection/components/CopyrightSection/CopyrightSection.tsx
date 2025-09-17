@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import dayjs from 'dayjs';
 import { ICopyrightSectionProps } from './CopyrightSection.types';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { Divider } from '@/components';
 
 const CopyRightSection = memo<ICopyrightSectionProps>(({ className }) => {

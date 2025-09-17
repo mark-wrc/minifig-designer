@@ -6,7 +6,7 @@ import { Trash2, Plus, Minus } from 'lucide-react';
 import { useShoppingCart } from '@/hooks/useShoppingCart';
 import { CTAButton } from '../CTAButton';
 import { CartItemDetails } from '../CartItemDetails';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 const CartItem = memo<ICartItemProps>(({ projectName }) => {
   const { getMinifigProject, removeItemFromCart, updateItemQuantity } = useShoppingCart();

@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { IUserContentProps } from './UserContent.types';
 import { UserAvatar } from '../UserAvatar';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 const UserContent = memo<IUserContentProps>(({ className, user, userAvatarStyles }) => (
   <section className={cn(' flex gap-2 text-white mb-4', className)}>

@@ -9,7 +9,7 @@ import {
 } from '../ui/dialog';
 import { ICreateMinifigModalProps } from './CreateMinifigModal.types';
 import { Input } from '../ui/input';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { CTAButton } from '../CTAButton';
 import { useProjectValidation } from '@/hooks';
 import { useDispatch, useSelector } from 'react-redux';

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { IFooterSectionCardProps } from './FooterSectionCard.types';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 const FooterSectonCard = memo<IFooterSectionCardProps>(({ title, children, className }) => (
   <section className={cn(className, 'text-white')}>

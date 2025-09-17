@@ -1,7 +1,10 @@
+import { memo } from 'react';
 import { CTAButton } from '../CTAButton';
+import { ILoginMenuProps } from './LoginMenu.types';
+import { cn } from '@/utils';
 
-const LoginMenu = () => (
-  <section className="flex gap-3 items-center">
+const LoginMenu = memo<ILoginMenuProps>(({ className }) => (
+  <section className={cn('flex gap-3 items-center', className)}>
     <CTAButton variant={null} size={null} className="bg-none px-8 py-2">
       <a href="https://www.worldofminifigs.com/login" rel="noopener noreferrer">
         <span className=" text-white hover:underline text-lg">Login</span>
@@ -13,7 +16,7 @@ const LoginMenu = () => (
       </a>
     </CTAButton>
   </section>
-);
+));
 LoginMenu.displayName = 'LoginMenu';
 
 export default LoginMenu;

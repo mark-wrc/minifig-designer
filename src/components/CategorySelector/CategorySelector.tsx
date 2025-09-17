@@ -1,5 +1,5 @@
 import { memo, useCallback } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { CategorySelectorProps } from './CategorySelector.types';
 import { useMinifigCreation } from '@/hooks';
 import { CreateMinifigModal } from '../CreateMinifigModal';
