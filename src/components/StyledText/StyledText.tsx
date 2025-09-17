@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { CircleCheckBig } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { IStyledTextProps } from './StyledText.types';
 
 const StyledText = memo<IStyledTextProps>(

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { IEmptyStateComponentProps } from './EmptyStateComponent.types';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 const EmptyStateComponent = memo<IEmptyStateComponentProps>(({ className, message }) => (
   <section className={cn('', className)}>

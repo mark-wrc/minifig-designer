@@ -9,7 +9,7 @@ import {
   PaginationEllipsis,
 } from '@/components/ui/pagination';
 import { IGeneralPaginationProps } from './GeneralPagination.types';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 const GeneralPagination = memo<IGeneralPaginationProps>(
   ({ currentPage, totalPages, onPageChange }) => {

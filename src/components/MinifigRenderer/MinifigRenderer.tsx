@@ -3,7 +3,7 @@ import { memo, useCallback, useRef } from 'react';
 import { MinifigPart } from '../MinifigPart';
 import { MinifigPartType } from '@/types';
 import type { IMinifigRendererProps } from './MinifigRenderer.types';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { Trash2, Plus } from 'lucide-react';
 import { removePart, setSelectedCategory } from '@/store/minifigBuilder/minifigBuilderSlice';
 import { useDispatch, useSelector } from 'react-redux';

@@ -7,7 +7,7 @@ import { CreateMinifigModal } from '../CreateMinifigModal';
 import { MinifigPartData } from '@/types/Minifig';
 import MinifigRenderer from '../MinifigRenderer/MinifigRenderer';
 import { useMinifigCreation, useScrollIntoView } from '@/hooks';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { MinifigWardrobe } from '../MinifigWardrobe';
 import { MinifigWardrobeItemDetails } from '../MinifigWardrobeItemDetails';
 import { SearchBox } from '../SearchBox';

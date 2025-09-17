@@ -1,6 +1,5 @@
 import { PageLayout } from '@/layout';
-import CustomErrorPage from '@/pages/CustomErrorPage';
-import Home from '@/pages/Home';
+import { CustomErrorPage, Home } from '@/pages';
 import { RouteObject } from 'react-router-dom';
 
 const routes: RouteObject[] = [

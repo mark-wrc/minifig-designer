@@ -1,7 +1,7 @@
 import { memo, useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { ISearchBoxProps } from './SearchBox.types';
 
 const SearchBox = memo<ISearchBoxProps>(({ onSearch, placeholder = 'Search...', className }) => {

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { IFooterLinkProps } from './FooterLink.types';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 const FooterLink = memo<IFooterLinkProps>(({ children, className, ...props }) => (
   <a

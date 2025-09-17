@@ -5,7 +5,7 @@ import { CTAButton } from '../CTAButton';
 import { formatCurrency, getBuilderImage } from '@/utils';
 import { StyledText } from '../StyledText';
 import { WOFLogo } from '@/assets/images';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
   ({ onItemDetailsClick, minifigItem, onPartSelect }) => {
@@ -27,6 +27,7 @@ const MinifigWardrobeItem = memo<IMinifigWardrobeItemProps>(
         >
           {builderImage ? (
             <img
+              loading="lazy"
               key={builderImage._id}
               src={builderImage.url}
               className="w-fit mx-auto rounded-sm aspect-square object-contain hover:scale-110 transition-all duration-75"

@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { memo } from 'react';
 import { IOverlayProps } from './Overlay.types';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 const Overlay = memo<IOverlayProps>(({ className, onClick, ...props }) => (
   <motion.div

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { IConfirmationDialogProps } from './ConfirmationDialog.types';
 import { CTAButton } from '../CTAButton';
 

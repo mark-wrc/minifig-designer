@@ -5,7 +5,7 @@ import { Tabs, TabsList } from '../ui/tabs';
 import { TabsTrigger } from '@radix-ui/react-tabs';
 import { deleteMinifigure, setActiveMinifigure } from '@/store/minifigBuilder/minifigBuilderSlice';
 import { CreateMinifigModal } from '../CreateMinifigModal';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 import { useDisclosureParam } from '@/hooks';
 import { ConfirmationDialog } from '../ConfirmationDialog';
 import { CTAButton } from '../CTAButton';

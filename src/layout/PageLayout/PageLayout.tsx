@@ -1,6 +1,6 @@
 import { FooterSection, HeaderSection } from '@/containers';
 import { CartContainer } from '@/containers/HeaderSection/components/CartContainer';
-import CustomErrorPage from '@/pages/CustomErrorPage';
+import { CustomErrorPage } from '@/pages';
 import { AnimatePresence } from 'motion/react';
 import { useCallback, useState } from 'react';
 import { Outlet, useRouteError } from 'react-router-dom';
