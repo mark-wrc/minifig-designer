@@ -7,10 +7,23 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
 dist
 dist-ssr
 *.local
+
+# Environment variables (contains sensitive API keys and secrets)
+.env
+.env.local
+.env.development
+.env.development.local
+.env.prod
+.env.production
+.env.production.local
+.env.sit
+.env.test
+.env.*.local
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +35,19 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# OS files
+Thumbs.db
+.DS_Store
+._*
+
+# Build and cache
+.cache
+.temp
+.tmp
+*.tsbuildinfo
+
+# Optional: Lock files (uncomment if you want to ignore them)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
