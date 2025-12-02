@@ -101,7 +101,7 @@ const MinifigTabs = memo(() => {
             className="bg-yellow-300 cursor-pointer text-black font-bold hover:bg-yellow-400 active:bg-yellow-400  border-b-6 active:border-b-transparent border-b-transparent hover:border-t-transparent active:border-t-tr active:border-l-0 text-md p-6 borderborder-gray-950 border-t-6 border-l-8 border-l-yellow-600 border-t-yellow-400 shadow-lg shadow-yellow-500/40  hover:-translate-x-0.5 active:-translate-x-0.5 transition-all duration-75 hover:border-l-0"
             onClick={() => openModal.onDisclosureOpen()}
           >
-            Add New Project
+            Start New Design
           </CTAButton>
         </motion.div>
       </Tabs>

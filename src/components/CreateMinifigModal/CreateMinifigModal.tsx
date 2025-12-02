@@ -101,7 +101,7 @@ const CreateMinifigModal = memo<ICreateMinifigModalProps>(
             </section>
             <DialogFooter className="mt-4 ">
               <CTAButton
-                title=" Save & Start Building"
+                title=" Save & Start Designing"
                 variant="ghost"
                 className=" cursor-pointer text-lg bg-yellow-300 hover:shadow-md hover:bg-yellow-400 border-b-6 border-b-transparent  active:bg-yellow-400 hover:border-l-0 transition-all duration-75 active:border-l-0 border-l-8 border-t-8 border-l-yellow-600 border-t-yellow-400 shadow-lg shadow-yellow-500/40  text-black font-bold py-6 px-6 "
               />

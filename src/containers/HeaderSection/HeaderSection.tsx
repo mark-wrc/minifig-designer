@@ -56,10 +56,10 @@ const HeaderSection = memo(() => {
   }, []);
 
   return (
-    <section className="py-6 ">
+    <section className="py-5 ">
       <section
         className={cn(
-          'w-full px-4 fixed z-50 bg-minifig-brand-end top-0 py-4 shadow-lg shadow-minifig-brand-end/50 ',
+          'w-full px-4 fixed z-50 bg-minifig-brand-end top-0 shadow-lg shadow-minifig-brand-end/50 ',
           isScrolled && 'border-b-2 border-b-gray-800 transition-all duration-75',
         )}
       >
@@ -68,7 +68,7 @@ const HeaderSection = memo(() => {
           <span onClick={handleLogoClick}>
             <img
               src={WOFLogo}
-              className="w-[100px] md:w-1/12 hover:scale-105 duration-75 transition-all cursor-pointer"
+              className="h-21 cursor-pointer"
               alt="world of minifigs logo"
             />
           </span>

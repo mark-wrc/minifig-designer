@@ -21,7 +21,7 @@ const CategorySection = () => {
           className="text-6xl font-black mb-3 text-gray-900"
           text="BUILD YOUR OWN MINIFIG"
         />
-        <StyledText as="h3" className="font-bold text-2xl text-gray-900" text="START BUILDING" />
+        <StyledText as="h3" className="font-bold text-2xl text-gray-900" text="START DESIGNING" />
       </header>
       <MinifigCategoryOptions activeMinifigProject={activeMinifigProject} />
     </section>
