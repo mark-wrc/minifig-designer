@@ -59,18 +59,14 @@ const HeaderSection = memo(() => {
     <section className="py-5 ">
       <section
         className={cn(
-          'w-full px-4 fixed z-50 bg-minifig-brand-end top-0 shadow-lg shadow-minifig-brand-end/50 ',
+          'w-full px-5 py-0.5 fixed z-50 bg-minifig-brand-end top-0 shadow-lg shadow-minifig-brand-end/50 ',
           isScrolled && 'border-b-2 border-b-gray-800 transition-all duration-75',
         )}
       >
         <div className="lg:container mx-auto flex justify-between  align-middle">
           {/* LOGO */}
           <span onClick={handleLogoClick}>
-            <img
-              src={WOFLogo}
-              className="h-21 cursor-pointer"
-              alt="world of minifigs logo"
-            />
+            <img src={WOFLogo} className="h-20 cursor-pointer" alt="world of minifigs logo" />
           </span>
 
           <section className="flex items-center gap-4">
