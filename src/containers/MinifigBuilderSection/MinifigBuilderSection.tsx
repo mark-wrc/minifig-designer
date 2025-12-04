@@ -29,6 +29,7 @@ const MinifigBuilderSection = () => {
   });
 
   const wardrobeItemsRaw = data?.products || [];
+  console.log("Checking Raw:", wardrobeItemsRaw);
   const wardrobeItems = wardrobeItemsRaw.filter((product: any) =>
     product.product_images?.some((img: any) => img.is_minifig_builder === true),
   );
