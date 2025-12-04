@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       proxy: {
         '/api/v1': {
-          target: env.VITE_PUBLIC_API_URL || 'http://localhost:4000',
+          target: env.VITE_PUBLIC_API_URL || 'http://localhost:4001',
           changeOrigin: true,
           secure: false,
         },
