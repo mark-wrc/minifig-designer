@@ -25,8 +25,15 @@ export const fetchMinifigProducts = async (
     params,
     paramsSerializer: (params) => qs.stringify(params),
   });
+  const source = data.allProducts ?? data.products;
+
+  const filtered = source.filter(
+    (product: { product_images?: { is_minifig_builder?: boolean }[] }) =>
+      product.product_images?.some((img) => img.is_minifig_builder === true),
+  );
+
   console.log('Minifig Product Params:', data);
-  return data;
+  return filtered;
 };
 
 // export const fetchMinifigProducts = async (
