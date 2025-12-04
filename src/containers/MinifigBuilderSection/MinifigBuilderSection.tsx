@@ -29,6 +29,7 @@ const MinifigBuilderSection = () => {
   });
 
   const wardrobeItems = data?.products || [];
+  console.log('WardrobeItems:', wardrobeItems);
   const totalPages = data?.totalPages ?? 1;
 
   const activeCharacter = characters.find((c) => c._id === activeCharacterId);
