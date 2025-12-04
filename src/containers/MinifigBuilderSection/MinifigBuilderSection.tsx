@@ -28,7 +28,10 @@ const MinifigBuilderSection = () => {
     page: currentPage,
   });
 
-  const wardrobeItems = data?.products || [];
+  const wardrobeItemsRaw = data?.products || [];
+  const wardrobeItems = wardrobeItemsRaw.filter((product: any) =>
+    product.product_images?.some((img: any) => img.is_minifig_builder === true),
+  );
   console.log('WardrobeItems:', wardrobeItems);
   const totalPages = data?.totalPages ?? 1;
 
