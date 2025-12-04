@@ -25,12 +25,10 @@ export const fetchMinifigProducts = async (
     params,
     paramsSerializer: (params) => qs.stringify(params),
   });
-  console.log('fetchMinifigProducts: ', data);
   return data;
 };
 
 export const fetchAllMinifigProducts = async () => {
   const { data } = await axios.get('/products');
-  console.log('FetchAllMinifigProducts:', data);
   return data;
 };
