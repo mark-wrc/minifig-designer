@@ -25,62 +25,12 @@ export const fetchMinifigProducts = async (
     params,
     paramsSerializer: (params) => qs.stringify(params),
   });
-  const source = data.allProducts ?? data.products;
-
-  const filtered = source.filter(
-    (product: { product_images?: { is_minifig_builder?: boolean }[] }) =>
-      product.product_images?.some((img) => img.is_minifig_builder === true),
-  );
-
-  console.log('Minifig Product Params:', data);
-  return filtered;
+  console.log('fetchMinifigProducts: ', data);
+  return data;
 };
-
-// export const fetchMinifigProducts = async (
-//   params: MinifigProductsParams,
-// ): Promise<MinifigProductsResponse> => {
-//   const { data } = await axios.get('/products', {
-//     params,
-//     paramsSerializer: (params) => qs.stringify(params),
-//   });
-
-//   type Image = {
-//     is_minifig_builder?: boolean;
-//   };
-
-//   type Product = {
-//     product_images?: Image[];
-//   };
-
-//   // Filter products — only keep ones with a flagged image
-//   const filtered = (data.products as Product[]).filter((product) =>
-//     product.product_images?.some((img) => img.is_minifig_builder === true),
-//   );
-
-//   return {
-//     ...data,
-//     products: filtered,
-//     filteredProductCount: filtered.length,
-//     totalPages: Math.ceil(filtered.length / data.resPerPage),
-//   };
-// };
 
 export const fetchAllMinifigProducts = async () => {
   const { data } = await axios.get('/products');
-  console.log('Data::', data);
+  console.log('FetchAllMinifigProducts:', data);
   return data;
 };
-// export const fetchAllMinifigProducts = async () => {
-//   const { data } = await axios.get('/products');
-
-//   const filtered = data.products.filter(
-//     (product: { product_images?: { is_minifig_builder?: boolean }[] }) =>
-//       product.product_images?.some((img) => img.is_minifig_builder === true),
-//   );
-
-//   return {
-//     ...data,
-//     products: filtered,
-//     filteredProductCount: filtered.length,
-//   };
-// };
